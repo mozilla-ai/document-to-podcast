@@ -9,9 +9,9 @@ license = {text = "Apache-2.0"}
 requires-python = ">=3.10"
 dynamic = ["version"]
 dependencies = [
+  "beautifulsoup4",
   "loguru",
   "PyPDF2[crypto]",
-  "transformers"
 ]
 
 [project.optional-dependencies]

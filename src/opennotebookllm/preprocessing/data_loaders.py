@@ -4,7 +4,7 @@ import PyPDF2.errors
 from loguru import logger
 
 
-def load_pdf(pdf_file):
+def load_pdf(pdf_file: str) -> str | None:
     try:
         with open(pdf_file, "rb") as file:
             pdf_reader = PyPDF2.PdfReader(file)
@@ -14,7 +14,7 @@ def load_pdf(pdf_file):
         return None
 
 
-def load_txt(txt_file):
+def load_txt(txt_file: str) -> str | None:
     try:
         with open(txt_file, "r") as file:
             return file.read()
