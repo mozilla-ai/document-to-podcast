@@ -7,5 +7,5 @@
       },
       "packages": ["libgl1-mesa-dev"]
     },
-    "postCreateCommand": "pip install -e '.[tests]'"
+    "postCreateCommand": "pip install -e '.[demo]'"
 }
