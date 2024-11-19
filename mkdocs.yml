@@ -2,8 +2,16 @@ site_name: Blueprint Docs
 
 nav:
   - Home: index.md
+  - API Reference: api.md
 
 theme:
   name: material
   palette:
     primary: deep orange
+
+plugins:
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          show_root_heading: true
