@@ -16,7 +16,7 @@ def test_clean_with_regex():
     cleaned_text = clean_with_regex(text)
     assert (
         cleaned_text
-        == "This work is licensed under the Creative Commons Attribution 4.0 BY license, which means that the text may be remixed, transformed and built upon, and be copied and redistributed in any medium or format even commercially, provided credit is given to the author. For details go to "
+        == "This work is licensed under the Creative Commons Attribution 4.0 BY license, which means that the text may be remixed, transformed and built upon, and be copied and redistributed in any medium or format even commercially, provided credit is given to the author. For details go to"
     )
 
 
@@ -29,5 +29,5 @@ def test_clean_markdown():
     cleaned_text = clean_markdown(text)
     assert (
         cleaned_text
-        == " This is some text with an image and another one .  Item list here."
+        == "This is some text with an image and another one . Item list here."
     )
