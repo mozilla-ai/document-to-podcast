@@ -1,34 +1,35 @@
-from io import BytesIO
-
 import PyPDF2
-import PyPDF2.errors
+
+from docx import Document
 from loguru import logger
+from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 
-def load_pdf(pdf_file: str | BytesIO) -> str | None:
+def load_pdf(pdf_file: str | UploadedFile) -> str | None:
     try:
-        if isinstance(pdf_file, str):
-            with open(pdf_file, "rb") as file:
-                pdf_reader = PyPDF2.PdfReader(file)
-        else:
-            pdf_reader = PyPDF2.PdfReader(pdf_file)
+        pdf_reader = PyPDF2.PdfReader(pdf_file)
         return "\n".join(page.extract_text() for page in pdf_reader.pages)
     except Exception as e:
         logger.exception(e)
         return None
 
 
-def load_txt(txt_file: str) -> str | None:
+def load_txt(txt_file: str | UploadedFile) -> str | None:
     try:
-        with open(txt_file, "r") as file:
-            return file.read()
+        if isinstance(txt_file, UploadedFile):
+            return txt_file.getvalue().decode("utf-8")
+        else:
+            with open(txt_file, "r") as file:
+                return file.read()
     except Exception as e:
         logger.exception(e)
         return None
 
 
-LOADERS = {
-    "pdf": load_pdf,
-    "txt": load_txt,
-    "html": load_txt,
-}
+def load_docx(docx_file: str | UploadedFile) -> str | None:
+    try:
+        docx_reader = Document(docx_file)
+        return "\n".join(paragraph.text for paragraph in docx_reader.paragraphs)
+    except Exception as e:
+        logger.exception(e)
+        return None

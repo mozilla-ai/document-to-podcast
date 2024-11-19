@@ -12,6 +12,7 @@ dependencies = [
   "beautifulsoup4",
   "loguru",
   "PyPDF2[crypto]",
+  "python-docx"
 ]
 
 [project.optional-dependencies]

@@ -22,4 +22,9 @@ def clean_html(text: str) -> str:
     return clean_with_regex(text)
 
 
-CLEANERS = {"pdf": clean_with_regex, "html": clean_html, "txt": clean_with_regex}
+def clean_markdown_image(text: str) -> str:
+    return re.sub(r'!\[.*?\]\(.*?(".*?")?\)', "", text)
+
+
+def clean_markdown(text: str) -> str:
+    return clean_with_regex(clean_markdown_image(text))

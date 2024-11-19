@@ -1,4 +1,4 @@
-from opennotebookllm.preprocessing.data_loaders import load_pdf, load_txt
+from opennotebookllm.preprocessing.data_loaders import load_pdf, load_txt, load_docx
 
 
 def test_load_pdf(example_data):
@@ -25,4 +25,28 @@ def test_load_html(example_data):
 
 def test_load_invalid_html():
     result = load_txt("invalid.html")
+    assert result is None
+
+
+def test_load_docx(example_data):
+    result = load_docx(example_data / "Mozilla-Trustworthy_AI.docx")
+    assert (
+        "a Mozilla white paper on challenges and opportunities in the AI era" in result
+    )
+
+
+def test_load_invalid_docx():
+    result = load_docx("invalid.docx")
+    assert result is None
+
+
+def test_load_markdown(example_data):
+    result = load_txt(example_data / "Mozilla-Trustworthy_AI.md")
+    assert (
+        "a Mozilla white paper on challenges and opportunities in the AI era" in result
+    )
+
+
+def test_load_invalid_markdown():
+    result = load_txt("invalid.md")
     assert result is None
