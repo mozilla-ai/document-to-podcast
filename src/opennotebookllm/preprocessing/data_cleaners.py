@@ -2,7 +2,7 @@ import re
 from bs4 import BeautifulSoup
 
 
-def apply_common_rules(text: str) -> str:
+def clean_with_regex(text: str) -> str:
     text = re.sub(r"\s+", " ", text).strip()
     text = re.sub(
         r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",
@@ -19,9 +19,7 @@ def clean_html(text: str) -> str:
     for tag in soup(["script", "style", "link", "meta"]):
         tag.decompose()
     text = soup.get_text()
-    return apply_common_rules(text)
+    return clean_with_regex(text)
 
 
-def clean_pdf(text: str) -> str:
-    text = apply_common_rules(text)
-    return text
+CLEANERS = {"pdf": clean_with_regex, "html": clean_html, "txt": clean_with_regex}

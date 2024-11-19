@@ -25,3 +25,10 @@ def load_txt(txt_file: str) -> str | None:
     except Exception as e:
         logger.exception(e)
         return None
+
+
+LOADERS = {
+    "pdf": load_pdf,
+    "txt": load_txt,
+    "html": load_txt,
+}
