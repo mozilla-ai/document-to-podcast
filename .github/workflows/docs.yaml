@@ -27,7 +27,7 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: Install requirements
-        run: pip install '.[docs]'
+        run: pip install -e '.[docs]'
 
       - name: Publish docs
 
