@@ -28,13 +28,6 @@ tests = [
   "pytest-sugar>=0.9.6",
 ]
 
-<<<<<<< HEAD
-=======
-demo = [
-  "streamlit"
-]
-
->>>>>>> origin/main
 [project.urls]
 Documentation = "https://mozilla-ai.github.io/OpenNotebookLLM/"
 Issues = "https://github.com/mozilla-ai/OpenNotebookLLM/issues"
