@@ -1,7 +1,6 @@
 from llama_cpp import Llama
 
 
-
 def load_model(
     model_id: str = "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf",
 ) -> Llama:

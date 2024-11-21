@@ -43,26 +43,30 @@ if uploaded_file is not None:
         )
         clean_text = clean_text[: 4096 * 3]
 
-    model_name = st.selectbox("Select Model", 
+    model_name = st.selectbox(
+        "Select Model",
         [
-            x for x in list_repo_files(REPO)
+            x
+            for x in list_repo_files(REPO)
             if ".gguf" in x
             # The float16 is too big for the 16GB RAM codespace
             and "f16" not in x
         ],
-        index=None
+        index=None,
     )
     if model_name:
         with st.spinner("Downloading and Loading Model..."):
             model = load_model(model_id=f"{REPO}/{model_name}")
-        
+
         system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
 
         if st.button("Generate Podcast Script"):
             with st.spinner("Generating Podcast Script..."):
-                    text = ""
-                    for chunk in text_to_podcast(clean_text, model, system_prompt=system_prompt, stream=True):
-                        text += chunk
-                        if text.endswith("\n"):
-                            st.write(text)
-                            text = ""
+                text = ""
+                for chunk in text_to_podcast(
+                    clean_text, model, system_prompt=system_prompt, stream=True
+                ):
+                    text += chunk
+                    if text.endswith("\n"):
+                        st.write(text)
+                        text = ""
