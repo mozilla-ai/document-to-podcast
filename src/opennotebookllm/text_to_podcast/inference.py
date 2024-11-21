@@ -1,17 +1,10 @@
 from llama_cpp import Llama
 
-PROMPT = """
-Convert this text into a podcast script.
-The conversation should be between 2 speakers.
-Use [SPEAKER1] and [SPEAKER2] to limit sections.
-Do not include [INTRO], [OUTRO] or any other [SECTION].
-Text:
-"""
 
 
 def load_model(
     model_id: str = "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf",
-):
+) -> Llama:
     org, repo, filename = model_id.split("/")
     model = Llama.from_pretrained(
         repo_id=f"{org}/{repo}",
@@ -23,7 +16,7 @@ def load_model(
 
 
 def text_to_podcast(
-    input_text: str, model: Llama, system_prompt: str = PROMPT, stream: bool = False
+    input_text: str, model: Llama, system_prompt: str, stream: bool = False
 ):
     response = model.create_chat_completion(
         messages=[
