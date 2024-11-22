@@ -29,14 +29,14 @@ In this step, the cleaned text from the pre-processing stage is processed by an 
 
 - **Model Loader (`model_loader.py`)**: Loads GGUF-type LLM models from repositories using the llama_cpp library. This enables the models to run efficiently on CPUs, making them more accessible and suitable for local setups.
 
-- **Text-to-Text Interaction (`text_to_text.py`)**:
-  - Combines the text from the input doc and a user-defined 'system prompt' and feeds this to loaded LLM to generate the desired text output, such as conversational transcript.
+- **Text-to-Text Interaction (`text_to_text.py`)**: Combines the text from the input doc and a user-defined 'system prompt' and feeds this to loaded LLM to generate the desired text output, such as conversational transcript.
 
-Together, **Model Loading** and **Text-to-Text Interaction** can be combined, as demonstrated in `app.py`, to produce a podcast transcript. For example:  
+Together, **Model Loading** and **Text-to-Text Interaction** can be combined, as demonstrated in `app.py`, to produce a podcast transcript:  
 ```json
 {
     "Speaker 1": "Welcome to the podcast on AI advancements.",
-    "Speaker 2": "Thank you! What are the latest trends?"
+    "Speaker 2": "Thank you! What are the latest trends?",
+    ...
 }
 ```
 
