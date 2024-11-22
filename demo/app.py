@@ -8,11 +8,14 @@ from opennotebookllm.inference import load_llama_cpp_model
 from opennotebookllm.inference import text_to_text
 
 PODCAST_PROMPT = """
-Convert this text into a podcast script.
-The conversation should be between 2 speakers.
-Use [SPEAKER1] and [SPEAKER2] to limit sections.
-Do not include [INTRO], [OUTRO] or any other [SECTION].
-Text:
+You are a helpful podcast writer that outputs in JSON.
+You will take the input text and generate a conversation between 2 speakers.
+Example of response:
+{
+    "Speaker 1": "Welcome to our podcast, where we explore the latest advancements in AI and technology. I'm your host, and today we're going to dive into the exciting world of TrustWorthy AI.",
+    "Speaker 2": "Hi, I'm excited to be here, so what is TrustWorthy AI?",
+    "Speaker 1",:"Ah, great question! It is a term used by the European High Level Expert Group on AI. Mozilla defines trustworthy AI as AI that is demonstrably worthy of trust, tech that considers accountability, agency, and individual and collective well-being."
+}
 """
 
 CURATED_REPOS = [

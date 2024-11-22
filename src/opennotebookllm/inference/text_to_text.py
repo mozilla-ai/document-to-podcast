@@ -24,6 +24,9 @@ def text_to_text(
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": input_text},
         ],
+        response_format={
+            "type": "json_object",
+        },
         stream=stream,
     )
     if stream:
