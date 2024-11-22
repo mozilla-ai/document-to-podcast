@@ -8,7 +8,7 @@ def load_LLama_model(
     Loads the given model_id using Llama.from_pretrained.
 
     Args:
-        model_id (str): The model id to load. 
+        model_id (str): The model id to load.
         Format is expected to be `{org}/{repo}/{filename}`.
 
     Returns:
