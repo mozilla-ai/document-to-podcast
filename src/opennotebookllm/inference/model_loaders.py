@@ -7,16 +7,16 @@ def load_llama_cpp_model(
     """
     Loads the given model_id using Llama.from_pretrained.
 
+    Examples:
+        >>> model = load_model(
+            "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf")
+
     Args:
         model_id (str): The model id to load.
-        Format is expected to be `{org}/{repo}/{filename}`.
+            Format is expected to be `{org}/{repo}/{filename}`.
 
     Returns:
         Llama: The loaded model.
-
-    Example:
-        >>> model = load_model(
-            "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf")
     """
     org, repo, filename = model_id.split("/")
     model = Llama.from_pretrained(
