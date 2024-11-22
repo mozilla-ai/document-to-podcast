@@ -1,7 +1,7 @@
 from llama_cpp import Llama
 
 
-def load_LLama_model(
+def load_llama_cpp_model(
     model_id: str,
 ) -> Llama:
     """

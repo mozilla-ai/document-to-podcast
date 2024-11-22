@@ -4,7 +4,7 @@ import streamlit as st
 from huggingface_hub import list_repo_files
 
 from opennotebookllm.preprocessing import DATA_LOADERS, DATA_CLEANERS
-from opennotebookllm.inference import load_LLama_model
+from opennotebookllm.inference import load_llama_cpp_model
 from opennotebookllm.inference import text_to_text
 
 PODCAST_PROMPT = """
@@ -15,7 +15,14 @@ Do not include [INTRO], [OUTRO] or any other [SECTION].
 Text:
 """
 
-REPO = "allenai/OLMoE-1B-7B-0924-Instruct-GGUF"
+CURATED_REPOS = [
+    "allenai/OLMoE-1B-7B-0924-Instruct-GGUF",
+    "MaziyarPanahi/SmolLM2-1.7B-Instruct-GGUF",
+    "microsoft/Phi-3-mini-4k-instruct-gguf",
+    "HuggingFaceTB/SmolLM2-360M-Instruct-GGUF",
+    "Qwen/Qwen2.5-1.5B-Instruct-GGUF",
+    "Qwen/Qwen2.5-3B-Instruct-GGUF",
+]
 
 uploaded_file = st.file_uploader(
     "Choose a file", type=["pdf", "html", "txt", "docx", "md"]
@@ -43,20 +50,19 @@ if uploaded_file is not None:
         )
         clean_text = clean_text[: 4096 * 3]
 
+    repo_name = st.selectbox("Select Repo", CURATED_REPOS)
     model_name = st.selectbox(
         "Select Model",
         [
             x
-            for x in list_repo_files(REPO)
-            if ".gguf" in x
-            # The float16 is too big for the 16GB RAM codespace
-            and "f16" not in x
+            for x in list_repo_files(repo_name)
+            if ".gguf" in x.lower() and ("q8" in x.lower() or "fp16" in x.lower())
         ],
         index=None,
     )
     if model_name:
         with st.spinner("Downloading and Loading Model..."):
-            model = load_LLama_model(model_id=f"{REPO}/{model_name}")
+            model = load_llama_cpp_model(model_id=f"{repo_name}/{model_name}")
 
         system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
 
