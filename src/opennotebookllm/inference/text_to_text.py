@@ -1,22 +1,24 @@
 from llama_cpp import Llama
 
 
-def load_model(
-    model_id: str = "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf",
-) -> Llama:
-    org, repo, filename = model_id.split("/")
-    model = Llama.from_pretrained(
-        repo_id=f"{org}/{repo}",
-        filename=filename,
-        # 0 means that the model limit will be used, instead of the default (512) or other hardcoded value
-        n_ctx=0,
-    )
-    return model
-
-
-def text_to_podcast(
+def text_to_text(
     input_text: str, model: Llama, system_prompt: str, stream: bool = False
 ):
+    """
+    Transforms input_text using the given model and system prompt.
+
+    Args:
+        input_text (str): The text to be transformed.
+        model (Llama): The model to use for conversion.
+        system_prompt (str): The system prompt to use for conversion.
+        stream (bool, optional): Whether to stream the response. Defaults to False.
+
+    Yields:
+        str: Chunks of the transformed text as they are available. If stream=True
+
+    Returns:
+        str: The full transformed text. If stream=False.
+    """
     response = model.create_chat_completion(
         messages=[
             {"role": "system", "content": system_prompt},

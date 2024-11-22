@@ -4,8 +4,8 @@ import streamlit as st
 from huggingface_hub import list_repo_files
 
 from opennotebookllm.preprocessing import DATA_LOADERS, DATA_CLEANERS
-from opennotebookllm.text_to_podcast import load_model
-from opennotebookllm.text_to_podcast import text_to_podcast
+from opennotebookllm.inference import load_LLama_model
+from opennotebookllm.inference import text_to_text
 
 PODCAST_PROMPT = """
 Convert this text into a podcast script.
@@ -56,14 +56,14 @@ if uploaded_file is not None:
     )
     if model_name:
         with st.spinner("Downloading and Loading Model..."):
-            model = load_model(model_id=f"{REPO}/{model_name}")
+            model = load_LLama_model(model_id=f"{REPO}/{model_name}")
 
         system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
 
         if st.button("Generate Podcast Script"):
             with st.spinner("Generating Podcast Script..."):
                 text = ""
-                for chunk in text_to_podcast(
+                for chunk in text_to_text(
                     clean_text, model, system_prompt=system_prompt.strip(), stream=True
                 ):
                     text += chunk
