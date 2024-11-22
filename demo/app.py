@@ -14,7 +14,7 @@ Example of response:
 {
     "Speaker 1": "Welcome to our podcast, where we explore the latest advancements in AI and technology. I'm your host, and today we're going to dive into the exciting world of TrustWorthy AI.",
     "Speaker 2": "Hi, I'm excited to be here, so what is TrustWorthy AI?",
-    "Speaker 1",:"Ah, great question! It is a term used by the European High Level Expert Group on AI. Mozilla defines trustworthy AI as AI that is demonstrably worthy of trust, tech that considers accountability, agency, and individual and collective well-being."
+    "Speaker 1":"Ah, great question! It is a term used by the European High Level Expert Group on AI. Mozilla defines trustworthy AI as AI that is demonstrably worthy of trust, tech that considers accountability, agency, and individual and collective well-being."
 }
 """
 
