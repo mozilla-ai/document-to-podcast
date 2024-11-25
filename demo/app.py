@@ -76,7 +76,7 @@ if uploaded_file is not None:
             with st.spinner("Generating Podcast Script..."):
                 text = ""
                 for chunk in text_to_text_stream(
-                    clean_text, model, system_prompt=system_prompt.strip(), stream=True
+                    clean_text, model, system_prompt=system_prompt.strip()
                 ):
                     text += chunk
                     if text.endswith("\n"):
