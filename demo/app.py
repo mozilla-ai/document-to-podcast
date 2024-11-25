@@ -5,7 +5,7 @@ from huggingface_hub import list_repo_files
 
 from opennotebookllm.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from opennotebookllm.inference import load_llama_cpp_model
-from opennotebookllm.inference import text_to_text
+from opennotebookllm.inference import text_to_text_stream
 
 PODCAST_PROMPT = """
 You are a helpful podcast writer that outputs in JSON.
@@ -21,7 +21,8 @@ Example of response:
 CURATED_REPOS = [
     "allenai/OLMoE-1B-7B-0924-Instruct-GGUF",
     "MaziyarPanahi/SmolLM2-1.7B-Instruct-GGUF",
-    "microsoft/Phi-3-mini-4k-instruct-gguf",
+    # system prompt seems to be ignored for this model.
+    # "microsoft/Phi-3-mini-4k-instruct-gguf",
     "HuggingFaceTB/SmolLM2-360M-Instruct-GGUF",
     "Qwen/Qwen2.5-1.5B-Instruct-GGUF",
     "Qwen/Qwen2.5-3B-Instruct-GGUF",
@@ -74,7 +75,7 @@ if uploaded_file is not None:
         if st.button("Generate Podcast Script"):
             with st.spinner("Generating Podcast Script..."):
                 text = ""
-                for chunk in text_to_text(
+                for chunk in text_to_text_stream(
                     clean_text, model, system_prompt=system_prompt.strip(), stream=True
                 ):
                     text += chunk
