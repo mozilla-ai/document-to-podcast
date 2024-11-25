@@ -11,6 +11,8 @@ def chat_completion(
     stream: bool,
     stop: str | list[str] | None = None,
 ) -> str | Iterator[str]:
+    # create_chat_completion uses an empty list as default
+    stop = stop or []
     return model.create_chat_completion(
         messages=[
             {"role": "system", "content": system_prompt},
