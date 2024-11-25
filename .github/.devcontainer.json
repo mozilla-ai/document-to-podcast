@@ -4,8 +4,7 @@
     "features": {
       "ghcr.io/devcontainers/features/python": {
         "version": "latest"
-      },
-      "packages": ["libgl1-mesa-dev"]
+      }
     },
-    "postCreateCommand": "pip install -e '.[demo]'"
+    "postCreateCommand": "pip install -e . --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu"
 }

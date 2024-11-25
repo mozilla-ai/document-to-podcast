@@ -10,9 +10,12 @@ requires-python = ">=3.10"
 dynamic = ["version"]
 dependencies = [
   "beautifulsoup4",
+  "huggingface-hub",
+  "llama-cpp-python",
   "loguru",
   "PyPDF2[crypto]",
-  "python-docx"
+  "python-docx",
+  "streamlit",
 ]
 
 [project.optional-dependencies]
@@ -25,10 +28,6 @@ docs = [
 tests = [
   "pytest>=8,<9",
   "pytest-sugar>=0.9.6",
-]
-
-demo = [
-  "streamlit"
 ]
 
 [project.urls]
