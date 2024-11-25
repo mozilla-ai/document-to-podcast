@@ -4,8 +4,8 @@ import streamlit as st
 from huggingface_hub import list_repo_files
 
 from opennotebookllm.preprocessing import DATA_LOADERS, DATA_CLEANERS
-from opennotebookllm.inference import load_llama_cpp_model
-from opennotebookllm.inference import text_to_text_stream
+from opennotebookllm.inference.model_loaders import load_llama_cpp_model
+from opennotebookllm.inference.text_to_text import text_to_text_stream
 
 PODCAST_PROMPT = """
 You are a helpful podcast writer that outputs in JSON.
