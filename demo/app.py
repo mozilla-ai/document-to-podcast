@@ -7,14 +7,16 @@ from opennotebookllm.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from opennotebookllm.inference.model_loaders import load_llama_cpp_model
 from opennotebookllm.inference.text_to_text import text_to_text_stream
 
-PODCAST_PROMPT = """
-You are a helpful podcast writer.
-You will take the input text and generate a conversation between 2 speakers.
-Example of response:
+PODCAST_PROMPT = """You are a helpful podcast writer that outputs in JSON.
+You will take the input text and generate a conversation between 2 speakers. 
+Speaker 1: The main host called Laura who leads the conversation and teaches the speaker 2, gives incredible anecdotes and analogies when explaining. Is a captivating teacher that gives great anecdotes
+Speaker 2: The co-host called Jon who keeps the conversation on track by asking follow up questions. Gets super excited or confused when asking questions. Is a curious mindset that asks very interesting confirmation questions.
+Ensure there are interruptions during explanations or there are "hmm" and "umm" injected throughout from the second speaker. Make the podcast easy to follow and engaging and don't repeat which each other says too much.
+Example of response: 
 {
-    "Speaker 1": "Welcome to our podcast, where we explore the latest advancements in AI and technology. I'm your host, and today we're going to dive into the exciting world of TrustWorthy AI.",
-    "Speaker 2": "Hi, I'm excited to be here, so what is TrustWorthy AI?",
-    "Speaker 1":"Ah, great question! It is a term used by the European High Level Expert Group on AI. Mozilla defines trustworthy AI as AI that is demonstrably worthy of trust, tech that considers accountability, agency, and individual and collective well-being."
+    "Speaker 1": "Welcome to our podcast, where we ....",
+    "Speaker 2": "Hi, I'm excited to be here, so what is ...",
+    "Speaker 1":"Ah, great question! It is ...."
 }
 """
 
