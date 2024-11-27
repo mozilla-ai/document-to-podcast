@@ -1,65 +1,98 @@
 <img src="./images/Blueprints-logo.png" alt="Project Logo" style="width:25%;">
 
-# OpenNotebookLLM - a Blueprint for generating podcasts from documents using AI
+# Document-to-podcast: a Blueprint by Mozilla.ai for generating podcasts from documents using local AI
 
-This blueprint shows you can use open-source models & tools to convert input documents into a podcast featuring two speakers. 
-It is designed to work on most local setups or with [GitHub Codespaces](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true), meaning no external API calls or GPU access is required. This makes it more accessible and privacy-friendly by keeping everything local.
-
-![Blueprint Diagram](./images/blueprint-diagram.png)
+This blueprint demonstrate how you can use open-source models & tools to convert input documents into a podcast featuring two speakers. 
+It is designed to work on most local setups or with [GitHub Codespaces](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb), meaning no external API calls or GPU access is required. This makes it more accessible and privacy-friendly by keeping everything local.
 
 ## Quick-start
 
+Get started with OpenNotebookLLM using one of the two options below: **GitHub Codespaces** for a hassle-free setup or **Local Installation** for running on your own machine.
+
 ---
 
+### **Option 1: GitHub Codespaces**
+
+The fastest way to get started. Click the button below to launch the project directly in GitHub Codespaces:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb)
+
+Once the Codespaces environment launches, follow these steps:
+
+1. **Install Dependencies**  
+   Inside the Codespaces terminal, run:
+   ```bash
+   pip install -e . --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+2. **Run the Demo**  
+   Inside the Codespaces terminal, start the Streamlit demo by running:
+   ```bash
+   python -m streamlit run demo/app.py
+   ```
+
+### **Option 2: Local Installation**
+
+1. **Clone the Repository**  
+   Inside the Codespaces terminal, run:
+   ```bash
+   git clone https://github.com/mozilla-ai/OpenNotebookLLM.git
+   cd OpenNotebookLLM
+   ```
+
+2. **Install Dependencies**  
+   Inside the terminal, run:
+   ```bash
+   pip install -e . --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+3. **Run the Demo**  
+   Inside the terminal, start the Streamlit demo by running:
+   ```bash
+   python -m streamlit run demo/app.py
+   ```
+
 ## How it Works
+### 👉 📖 For more detailed guidance on using this project, please visit our [Docs here](https://mozilla-ai.github.io/Blueprint-template/).
 
-Architecture diagram to be added
+<img src="./images/document-to-podcast-diagram.png" width="1200" />
 
-1. **Document Pre-Processing**  
-This step extracts and cleans text from input documents to prepare it for the language model.
 
-- **File Loading (`data_loaders.py`)**: Supports PDF, .txt, and .docx formats, extracting readable text from these files.  
-- **Text Cleaning (`data_cleaners.py`)**: Removes noise like URLs, email addresses, and special characters to ensure a clean input.
+1. **Document Upload**  
+   Start by uploading a document in a supported format (e.g., PDF, .txt, or .docx).  
 
-These steps ensure the document text is structured and ready for generating high-quality podcast transcripts.
+2. **Document Pre-Processing**  
+   The uploaded document is processed to extract and clean the text. This involves:  
+   - Extracting readable text from the document.  
+   - Removing noise such as URLs, email addresses, and special characters to ensure the text is clean and structured.
 
-2. **Podcast Transcript Generation**  
+3. **Script Generation**  
+   The cleaned text is passed to a language model to generate a podcast transcript in the form of a conversation between two speakers.  
+   - **Model Loading**: The system selects and loads a pre-trained LLM optimized for running locally, using the llama_cpp library. This enables the model to run efficiently on CPUs, making them more accessible and suitable for local setups.
+   - **Customizable Prompt**: A user-defined "system prompt" guides the LLM in shaping the conversation, specifying tone, content, speaker interaction, and format. 
+   - **Output Transcript**: The model generates a podcast script in structured format, with each speaker's dialogue clearly labeled.  
+     Example output:  
+     ```json
+     {
+         "Speaker 1": "Welcome to the podcast on AI advancements.",
+         "Speaker 2": "Thank you! So what's new this week for the latest AI trends?",
+         "Speaker 1": "Where should I start.. Lots has been happening!",
+         ...
+     }
+     ```
+   This step ensures that the podcast script is engaging, relevant, and ready for audio conversion.
 
-In this step, the cleaned text from the pre-processing stage is processed by an LLM to generate a podcast transcript in the form of a conversation between two speakers.
-
-- **Model Loader (`model_loader.py`)**: Loads GGUF-type LLM models from repositories using the llama_cpp library. This enables the models to run efficiently on CPUs, making them more accessible and suitable for local setups.
-
-- **Text-to-Text Interaction (`text_to_text.py`)**: Combines the text from the input doc and a user-defined 'system prompt' and feeds this to loaded LLM to generate the desired text output, such as conversational transcript.
-
-Together, **Model Loading** and **Text-to-Text Interaction** can be combined, as demonstrated in `app.py`, to produce a podcast transcript:  
-```json
-{
-    "Speaker 1": "Welcome to the podcast on AI advancements.",
-    "Speaker 2": "Thank you! What are the latest trends?",
-    ...
-}
-```
-
-3. **Audio Podcast Creation**  
-   - Converts the transcript into audio using a TTS (Text-to-Speech) model with distinct voices for each speaker.
-   - Outputs an audio file in formats like MP3 or WAV.
-
+4. **Audio Generation**  
+  - The generated transcript is converted into audio using a Text-to-Speech (TTS) model.
+  -	Each speaker is assigned a distinct voice.
+	- The final output is saved as an audio file in formats like MP3 or WAV.
 
 ## Pre-requisites
 
 - **System requirements**:
   - OS: Windows, macOS, or Linux
   - Python 3.10 or higher
-  - Minimum RAM: 4 GB
-  - Disk space: 1 GB minimum
+  - Minimum RAM: 16 GB
+  - Disk space: 32 GB minimum
 
 - **Dependencies**:
-  - Dependencies listed in `requirements.txt`
-
-## Installation
-
----
-
+  - Dependencies listed in `pyproject.toml`
 
 ## License
 
