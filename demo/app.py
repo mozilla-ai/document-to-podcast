@@ -8,11 +8,11 @@ from opennotebookllm.inference.model_loaders import load_llama_cpp_model
 from opennotebookllm.inference.text_to_text import text_to_text_stream
 
 PODCAST_PROMPT = """You are a helpful podcast writer that outputs in JSON.
-You will take the input text and generate a conversation between 2 speakers. 
+You will take the input text and generate a conversation between 2 speakers.
 Speaker 1: The main host called Laura who leads the conversation and teaches the speaker 2, gives incredible anecdotes and analogies when explaining. Is a captivating teacher that gives great anecdotes
 Speaker 2: The co-host called Jon who keeps the conversation on track by asking follow up questions. Gets super excited or confused when asking questions. Is a curious mindset that asks very interesting confirmation questions.
 Ensure there are interruptions during explanations or there are "hmm" and "umm" injected throughout from the second speaker. Make the podcast easy to follow and engaging and don't repeat which each other says too much.
-Example of response: 
+Example of response:
 {
     "Speaker 1": "Welcome to our podcast, where we ....",
     "Speaker 2": "Hi, I'm excited to be here, so what is ...",
