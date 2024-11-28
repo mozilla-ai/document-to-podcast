@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --md-default-font: "Inter", sans-serif;
+    --md-code-font: "Fira Code", monospace;
+    --md-primary-font: "Inter", sans-serif;
+}

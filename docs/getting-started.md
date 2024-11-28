@@ -1,0 +1,40 @@
+Get started with OpenNotebookLLM using one of the two options below: **GitHub Codespaces** for a hassle-free setup or **Local Installation** for running on your own machine.
+
+---
+
+### **Option 1: GitHub Codespaces**
+
+The fastest way to get started. Click the button below to launch the project directly in GitHub Codespaces:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb)
+
+Once the Codespaces environment launches, follow these steps:
+
+1. **Install Dependencies**  
+   Inside the Codespaces terminal, run:
+   ```bash
+   pip install -e . --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+2. **Run the Demo**  
+   Inside the Codespaces terminal, start the Streamlit demo by running:
+   ```bash
+   python -m streamlit run demo/app.py
+   ```
+
+### **Option 2: Local Installation**
+
+1. **Clone the Repository**  
+   Inside the Codespaces terminal, run:
+   ```bash
+   git clone https://github.com/mozilla-ai/OpenNotebookLLM.git
+   cd OpenNotebookLLM
+   ```
+
+2. **Install Dependencies**  
+   Inside the terminal, run:
+   ```bash
+   pip install -e . --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+3. **Run the Demo**  
+   Inside the terminal, start the Streamlit demo by running:
+   ```bash
+   python -m streamlit run demo/app.py
+   ```

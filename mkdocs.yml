@@ -1,13 +1,28 @@
-site_name: Blueprint Docs
+site_name: Blueprints Docs
 
 nav:
   - Home: index.md
+  - Getting Started: getting-started.md
+  - Step-by-Step Guide: step-by-step-guide.md
+  - Customization Guide: customization.md
   - API Reference: api.md
+  - Future Features & Contributions: future-features-contributions.md
 
 theme:
   name: material
   palette:
-    primary: deep orange
+    - scheme: default
+      primary: "#005F6F" 
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+    - scheme: slate
+      primary: "#005F6F"  
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+  extra_css:
+    - assets/custom.css
 
 plugins:
 - mkdocstrings:
