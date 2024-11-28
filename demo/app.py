@@ -122,6 +122,10 @@ if uploaded_file is not None:
                 )
 
                 with st.spinner("Generating Audio..."):
-                    waveform = parse_script_to_waveform(final_script, demo_podcast_config)
-                save_waveform_as_file(waveform, demo_podcast_config.sampling_rate, filename)
+                    waveform = parse_script_to_waveform(
+                        final_script, demo_podcast_config
+                    )
+                save_waveform_as_file(
+                    waveform, demo_podcast_config.sampling_rate, filename
+                )
                 st.audio(filename)
