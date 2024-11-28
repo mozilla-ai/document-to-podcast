@@ -2,6 +2,7 @@ from pathlib import Path
 
 import streamlit as st
 from huggingface_hub import list_repo_files
+from huggingface_hub import list_repo_files
 
 from opennotebookllm.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from opennotebookllm.inference.model_loaders import load_llama_cpp_model
@@ -48,10 +49,48 @@ if uploaded_file is not None:
     with col1:
         st.title("Raw Text")
         st.text_area(f"Total Length: {len(raw_text)}", f"{raw_text[:500]} . . .")
+        st.text_area(f"Total Length: {len(raw_text)}", f"{raw_text[:500]} . . .")
 
     clean_text = DATA_CLEANERS[extension](raw_text)
     with col2:
         st.title("Cleaned Text")
+        st.text_area(f"Total Length: {len(clean_text)}", f"{clean_text[:500]} . . .")
+
+    repo_name = st.selectbox("Select Repo", CURATED_REPOS)
+    model_name = st.selectbox(
+        "Select Model",
+        [
+            x
+            for x in list_repo_files(repo_name)
+            if ".gguf" in x.lower() and ("q8" in x.lower() or "fp16" in x.lower())
+        ],
+        index=None,
+    )
+    if model_name:
+        with st.spinner("Downloading and Loading Model..."):
+            model = load_llama_cpp_model(model_id=f"{repo_name}/{model_name}")
+
+        # ~4 characters per token is considered a reasonable default.
+        max_characters = model.n_ctx() * 4
+        if len(clean_text) > max_characters:
+            st.warning(
+                f"Input text is too big ({len(clean_text)})."
+                f" Using only a subset of it ({max_characters})."
+            )
+            clean_text = clean_text[:max_characters]
+
+        system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
+
+        if st.button("Generate Podcast Script"):
+            with st.spinner("Generating Podcast Script..."):
+                text = ""
+                for chunk in text_to_text_stream(
+                    clean_text, model, system_prompt=system_prompt.strip()
+                ):
+                    text += chunk
+                    if text.endswith("\n"):
+                        st.write(text)
+                        text = ""
         st.text_area(f"Total Length: {len(clean_text)}", f"{clean_text[:500]} . . .")
 
     repo_name = st.selectbox("Select Repo", CURATED_REPOS)
