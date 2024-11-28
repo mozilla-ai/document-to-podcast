@@ -26,10 +26,10 @@ Instructions:
 - Format output as a JSON conversation.
 Example:
 {
-  "Speaker 1": "Welcome to our podcast! Today, we’re exploring...",
-  "Speaker 2": "Hi Laura! I’m excited to hear about this. Can you explain...",
+  "Speaker 1": "Welcome to our podcast! Today, we're exploring...",
+  "Speaker 2": "Hi Laura! I'm excited to hear about this. Can you explain...",
   "Speaker 1": "Sure! Imagine it like this...",
-  "Speaker 2": "Oh, that’s cool! But how does..."
+  "Speaker 2": "Oh, that's cool! But how does..."
 }
 """
 
@@ -76,9 +76,29 @@ if uploaded_file is not None:
         index=None,
     )
     if model_name:
-        with st.spinner("Downloading and Loading Model..."):
+        with st.spinner("Downloading and Loading text-to-text Model..."):
             model = load_llama_cpp_model(model_id=f"{repo_name}/{model_name}")
 
+        with st.spinner("Downloading and Loading text-to-speech Model..."):
+            tts_model, tokenizer = load_parler_tts_model_and_tokenizer(
+                "parler-tts/parler-tts-mini-v1", "cpu"
+            )
+        
+        speaker_1 = SpeakerConfig(
+            model=tts_model,
+            speaker_id="1",
+            tokenizer=tokenizer,
+            speaker_description=SPEAKER_1_DESC,
+        )
+        speaker_2 = SpeakerConfig(
+            model=tts_model,
+            speaker_id="2",
+            tokenizer=tokenizer,
+            speaker_description=SPEAKER_2_DESC,
+        )
+        demo_podcast_config = PodcastConfig(
+            speakers={s.speaker_id: s for s in [speaker_1, speaker_2]}
+        )
         # ~4 characters per token is considered a reasonable default.
         max_characters = model.n_ctx() * 4
         if len(clean_text) > max_characters:
@@ -91,48 +111,18 @@ if uploaded_file is not None:
         system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
 
         if st.button("Generate Podcast"):
-            final_script = ""
             with st.spinner("Generating Podcast Script..."):
                 text = ""
                 for chunk in text_to_text_stream(
                     clean_text, model, system_prompt=system_prompt.strip()
                 ):
+                    print(chunk)
                     text += chunk
-                    final_script += chunk
-                    if text.endswith("\n"):
+                    if text.endswith("\n") and "Speaker" in text:
                         st.write(text)
+                        with st.spinner("Generating Audio..."):
+                            waveform = parse_script_to_waveform(
+                                text, demo_podcast_config
+                            )
+                        st.audio(waveform, sample_rate=demo_podcast_config.sampling_rate)
                         text = ""
-
-            if final_script:
-                model.close()  # Free up memory in order to load the TTS model
-
-                filename = "demo_podcast.wav"
-
-                with st.spinner("Downloading and Loading TTS Model..."):
-                    tts_model, tokenizer = load_parler_tts_model_and_tokenizer(
-                        "parler-tts/parler-tts-mini-v1", "cpu"
-                    )
-                speaker_1 = SpeakerConfig(
-                    model=tts_model,
-                    speaker_id="1",
-                    tokenizer=tokenizer,
-                    speaker_description=SPEAKER_1_DESC,
-                )
-                speaker_2 = SpeakerConfig(
-                    model=tts_model,
-                    speaker_id="2",
-                    tokenizer=tokenizer,
-                    speaker_description=SPEAKER_2_DESC,
-                )
-                demo_podcast_config = PodcastConfig(
-                    speakers={s.speaker_id: s for s in [speaker_1, speaker_2]}
-                )
-
-                with st.spinner("Generating Audio..."):
-                    waveform = parse_script_to_waveform(
-                        final_script, demo_podcast_config
-                    )
-                save_waveform_as_file(
-                    waveform, demo_podcast_config.sampling_rate, filename
-                )
-                st.audio(filename)
