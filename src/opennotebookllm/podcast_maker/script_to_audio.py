@@ -41,17 +41,24 @@ def parse_script_to_waveform(script: str, podcast_config: PodcastConfig):
 def save_waveform_as_file(
     waveform: np.ndarray, sampling_rate: int, filename: str
 ) -> None:
+    # Normalize the float32 waveform into int16, which is what the wave module requires
+    waveform_int16 = np.int16(
+        waveform / np.max(np.abs(waveform)) * 32767
+    )  # 32767 = max int16
     with wave.open(filename, "w") as f:
-        f.setnchannels(2)  # 2 for Stereo, 1 for Mono
-        f.setsampwidth(1)  # bytes per sample
+        f.setnchannels(1)  # 2 for Stereo, 1 for Mono
+        f.setsampwidth(2)  # bytes per sample
         f.setframerate(sampling_rate)
-        f.writeframes(waveform.tobytes())
+        f.writeframes(waveform_int16.tobytes())
 
 
 if __name__ == "__main__":
     test_filename = "test_podcast.wav"
     test_podcast_script = (
-        "Speaker 1: Welcome to our podcast. Speaker 2: It's great to be here!"
+        "Speaker 1: Welcome to our podcast. "
+        "Speaker 2: It's great to be here!"
+        "Speaker 1: So what do you want to talk about today? "
+        "Speaker 2: I wish I had a clue!"
     )
 
     model, tokenizer = load_parler_tts_model_and_tokenizer(

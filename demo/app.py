@@ -26,10 +26,8 @@ Example of response:
 }
 """
 
-speaker_1_description = "Laura's voice is exciting and fast in delivery with very clear audio and no background noise."
-speaker_2_description = (
-    "Jon's voice is calm with very clear audio and no background noise."
-)
+SPEAKER_1_DESC = "Laura's voice is exciting and fast in delivery with very clear audio and no background noise."
+SPEAKER_2_DESC = "Jon's voice is calm with very clear audio and no background noise."
 
 CURATED_REPOS = [
     "allenai/OLMoE-1B-7B-0924-Instruct-GGUF",
@@ -99,33 +97,31 @@ if uploaded_file is not None:
                         text = ""
 
             if final_script:
+                model.close()  # Free up memory in order to load the TTS model
+
                 filename = "demo_podcast.wav"
 
                 with st.spinner("Downloading and Loading TTS Model..."):
-                    model, tokenizer = load_parler_tts_model_and_tokenizer(
+                    tts_model, tokenizer = load_parler_tts_model_and_tokenizer(
                         "parler-tts/parler-tts-mini-v1", "cpu"
                     )
                 speaker_1 = SpeakerConfig(
-                    model=model,
+                    model=tts_model,
                     speaker_id="1",
                     tokenizer=tokenizer,
-                    speaker_description=speaker_1_description,
+                    speaker_description=SPEAKER_1_DESC,
                 )
                 speaker_2 = SpeakerConfig(
-                    model=model,
+                    model=tts_model,
                     speaker_id="2",
                     tokenizer=tokenizer,
-                    speaker_description=speaker_2_description,
+                    speaker_description=SPEAKER_2_DESC,
                 )
                 demo_podcast_config = PodcastConfig(
                     speakers={s.speaker_id: s for s in [speaker_1, speaker_2]}
                 )
 
                 with st.spinner("Generating Audio..."):
-                    waveform = parse_script_to_waveform(
-                        final_script, demo_podcast_config
-                    )
-                save_waveform_as_file(
-                    waveform, demo_podcast_config.sampling_rate, filename
-                )
+                    waveform = parse_script_to_waveform(final_script, demo_podcast_config)
+                save_waveform_as_file(waveform, demo_podcast_config.sampling_rate, filename)
                 st.audio(filename)
