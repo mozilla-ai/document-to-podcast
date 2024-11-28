@@ -85,10 +85,10 @@ if uploaded_file is not None:
 
         system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
 
-        if st.button("Generate Podcast Script"):
+        if st.button("Generate Podcast"):
+            final_script = ""
             with st.spinner("Generating Podcast Script..."):
                 text = ""
-                final_script = ""
                 for chunk in text_to_text_stream(
                     clean_text, model, system_prompt=system_prompt.strip()
                 ):
@@ -98,7 +98,7 @@ if uploaded_file is not None:
                         st.write(text)
                         text = ""
 
-            if st.button("Generate Audio"):
+            if final_script:
                 filename = "demo_podcast.wav"
 
                 with st.spinner("Downloading and Loading TTS Model..."):
