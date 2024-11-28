@@ -3,8 +3,8 @@ from typing import Iterator
 
 import pytest
 
-from opennotebookllm.inference.model_loaders import load_llama_cpp_model
-from opennotebookllm.inference.text_to_text import text_to_text, text_to_text_stream
+from document_to_podcast.inference.model_loaders import load_llama_cpp_model
+from document_to_podcast.inference.text_to_text import text_to_text, text_to_text_stream
 
 
 def test_model_load_and_inference_text_to_text():

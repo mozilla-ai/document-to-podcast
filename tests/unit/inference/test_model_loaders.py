@@ -1,6 +1,6 @@
 from llama_cpp import Llama
 
-from opennotebookllm.inference.model_loaders import load_llama_cpp_model
+from document_to_podcast.inference.model_loaders import load_llama_cpp_model
 
 
 def test_load_llama_cpp_model():

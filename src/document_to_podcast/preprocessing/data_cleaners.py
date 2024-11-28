@@ -42,7 +42,7 @@ def clean_html(text: str) -> str:
         - links
         - meta tags
 
-    In addition, it calls [clean_with_regex][opennotebookllm.preprocessing.data_cleaners.clean_with_regex].
+    In addition, it calls [clean_with_regex][document_to_podcast.preprocessing.data_cleaners.clean_with_regex].
 
     Examples:
         >>> clean_html("<html><body><p>Hello,  world!  </p></body></html>"")
@@ -67,7 +67,7 @@ def clean_markdown(text: str) -> str:
     This function removes:
         - markdown images
 
-    In addition, it calls [clean_with_regex][opennotebookllm.preprocessing.data_cleaners.clean_with_regex].
+    In addition, it calls [clean_with_regex][document_to_podcast.preprocessing.data_cleaners.clean_with_regex].
 
     Examples:
         >>> clean_markdown('# Title   with image ![alt text](image.jpg "Image Title")')

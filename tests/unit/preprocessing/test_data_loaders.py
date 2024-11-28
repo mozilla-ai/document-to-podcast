@@ -1,4 +1,4 @@
-from opennotebookllm.preprocessing.data_loaders import load_pdf, load_txt, load_docx
+from document_to_podcast.preprocessing.data_loaders import load_pdf, load_txt, load_docx
 
 
 def test_load_pdf(example_data):

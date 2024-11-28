@@ -3,9 +3,9 @@ from pathlib import Path
 import streamlit as st
 from huggingface_hub import list_repo_files
 
-from opennotebookllm.preprocessing import DATA_LOADERS, DATA_CLEANERS
-from opennotebookllm.inference.model_loaders import load_llama_cpp_model
-from opennotebookllm.inference.text_to_text import text_to_text_stream
+from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
+from document_to_podcast.inference.model_loaders import load_llama_cpp_model
+from document_to_podcast.inference.text_to_text import text_to_text_stream
 
 PODCAST_PROMPT = """
 You are a podcast scriptwriter generating engaging and natural-sounding conversations in JSON format. The script features two speakers:
