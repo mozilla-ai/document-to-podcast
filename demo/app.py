@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 import streamlit as st
@@ -9,7 +10,7 @@ from opennotebookllm.inference.model_loaders import (
     load_llama_cpp_model,
     load_parler_tts_model_and_tokenizer,
 )
-from opennotebookllm.inference.text_to_speech import text_to_speech
+from opennotebookllm.inference.text_to_speech import _speech_generation_parler
 from opennotebookllm.inference.text_to_text import text_to_text_stream
 
 
@@ -47,6 +48,7 @@ uploaded_file = st.file_uploader(
 if uploaded_file is not None:
     st.header("Loading and Cleaning")
 
+    st.markdown("[API Reference for data cleaners](https://mozilla-ai.github.io/document-to-podcast/api/#opennotebookllm.preprocessing.data_cleaners)")
     extension = Path(uploaded_file.name).suffix
 
     col1, col2 = st.columns(2)
@@ -62,7 +64,8 @@ if uploaded_file is not None:
         st.text_area(f"Total Length: {len(clean_text)}", f"{clean_text[:500]} . . .")
 
     with st.spinner("Downloading and Loading text-to-text Model..."):
-        model = load_llama_cpp_model(model_id=f"{repo_name}/{model_name}")
+        model = load_llama_cpp_model(
+            model_id="allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf")
 
     with st.spinner("Downloading and Loading text-to-speech Model..."):
         tts_model, tts_tokenizer = load_parler_tts_model_and_tokenizer(
@@ -89,10 +92,10 @@ if uploaded_file is not None:
                     text += chunk
                     if text.endswith("\n") and "Speaker" in text:
                         st.write(text)
-                        speaker = 
+                        speaker_id = re.search(r'Speaker (\d+)', text).group(1) 
                         with st.spinner("Generating Audio..."):
-                            waveform = parse_script_to_waveform(
-                                text, demo_podcast_config
+                            speech = _speech_generation_parler(
+                                text, tts_model, tts_tokenizer, SPEAKER_DESCRIPTIONS[speaker_id]
                             )
-                        st.audio(waveform, sample_rate=demo_podcast_config.sampling_rate)
+                        st.audio(speech, sample_rate=44_100)
                         text = ""
