@@ -6,9 +6,9 @@ import streamlit as st
 from opennotebookllm.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from opennotebookllm.inference.model_loaders import (
     load_llama_cpp_model,
-    load_parler_tts_model_and_tokenizer,
+    load_outetts_interface
 )
-from opennotebookllm.inference.text_to_speech import _speech_generation_parler
+from opennotebookllm.inference.text_to_speech import text_to_speech
 from opennotebookllm.inference.text_to_text import text_to_text_stream
 
 
@@ -30,9 +30,9 @@ Example:
 }
 """
 
-SPEAKER_DESCRIPTIONS = {
-    "1": "Laura's voice is exciting and fast in delivery with very clear audio and no background noise.",
-    "2": "Jon's voice is calm with very clear audio and no background noise.",
+SPEAKER_PROFILES = {
+    "1": "female_2",
+    "2": "male_2",
 }
 
 
@@ -44,8 +44,8 @@ def load_text_to_text_model():
 
 
 @st.cache_resource
-def load_text_to_speech_model_and_tokenizer():
-    return load_parler_tts_model_and_tokenizer("parler-tts/parler-tts-mini-v1", "cpu")
+def load_text_to_speech_model():
+    return load_outetts_interface("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
 
 
 st.title("Document To Podcast")
@@ -85,7 +85,7 @@ if uploaded_file is not None:
     )
 
     text_model = load_text_to_text_model()
-    speech_model, speech_tokenizer = load_text_to_speech_model_and_tokenizer()
+    speech_model = load_text_to_speech_model()
 
     # ~4 characters per token is considered a reasonable default.
     max_characters = text_model.n_ctx() * 4
@@ -112,11 +112,10 @@ if uploaded_file is not None:
                     st.write(text)
                     speaker_id = re.search(r"Speaker (\d+)", text).group(1)
                     with st.spinner("Generating Audio..."):
-                        speech = _speech_generation_parler(
+                        speech = text_to_speech(
                             text.split(f'"Speaker {speaker_id}":')[-1],
                             speech_model,
-                            speech_tokenizer,
-                            SPEAKER_DESCRIPTIONS[speaker_id],
+                            SPEAKER_PROFILES[speaker_id],
                         )
-                    st.audio(speech, sample_rate=44_100)
+                    st.audio(speech.audio.cpu().numpy(), sample_rate=speech.sr)
                     text = ""

@@ -34,8 +34,7 @@ def load_llama_cpp_model(
 def load_outetts_interface(
     model_id: str,
 ) -> InterfaceGGUF:
-    local_path = hf_hub_download("OuteAI/OuteTTS-0.2-500M-GGUF", "OuteTTS-0.2-500M-FP16.gguf")
-
+    org, repo, filename = model_id.split("/")
+    local_path = hf_hub_download(repo_id=f"{org}/{repo}", filename=filename)
     model_config = GGUFModelConfig_v1(model_path=local_path,language="en")
-
     return InterfaceGGUF(model_version="0.2", cfg=model_config)
