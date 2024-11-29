@@ -37,6 +37,19 @@ SPEAKER_DESCRIPTIONS = {
     "2": "Jon's voice is calm with very clear audio and no background noise."
 }
 
+
+@st.cache_resource
+def load_text_to_text_model():
+    return load_llama_cpp_model(
+        model_id="allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf")
+
+@st.cache_resource
+def load_text_to_speech_model_and_tokenizer():
+    return load_parler_tts_model_and_tokenizer(
+        "parler-tts/parler-tts-mini-v1", "cpu"
+    )
+
+
 st.title("Document To Podcast")
 
 st.header("Uploading Data")
@@ -45,10 +58,11 @@ uploaded_file = st.file_uploader(
     "Choose a file", type=["pdf", "html", "txt", "docx", "md"]
 )
 
-if uploaded_file is not None:
-    st.header("Loading and Cleaning")
 
-    st.markdown("[API Reference for data cleaners](https://mozilla-ai.github.io/document-to-podcast/api/#opennotebookllm.preprocessing.data_cleaners)")
+if uploaded_file is not None:
+    st.header("Loading and Cleaning Data")
+    st.markdown("[API Reference for data_cleaners](https://mozilla-ai.github.io/document-to-podcast/api/#opennotebookllm.preprocessing.data_cleaners)")
+
     extension = Path(uploaded_file.name).suffix
 
     col1, col2 = st.columns(2)
@@ -63,41 +77,40 @@ if uploaded_file is not None:
         st.subheader("Cleaned Text")
         st.text_area(f"Total Length: {len(clean_text)}", f"{clean_text[:500]} . . .")
 
-    with st.spinner("Downloading and Loading text-to-text Model..."):
-        model = load_llama_cpp_model(
-            model_id="allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf")
+    st.header("Downloading and Loading models")
+    st.markdown("[API Reference for model_loaders](https://mozilla-ai.github.io/document-to-podcast/api/#opennotebookllm.inference.model_loaders)")
 
-    with st.spinner("Downloading and Loading text-to-speech Model..."):
-        tts_model, tts_tokenizer = load_parler_tts_model_and_tokenizer(
-            "parler-tts/parler-tts-mini-v1", "cpu"
+    text_model = load_text_to_text_model()
+    speech_model, speech_tokenizer = load_text_to_speech_model_and_tokenizer()
+
+    # ~4 characters per token is considered a reasonable default.
+    max_characters = text_model.n_ctx() * 4
+    if len(clean_text) > max_characters:
+        st.warning(
+            f"Input text is too big ({len(clean_text)})."
+            f" Using only a subset of it ({max_characters})."
         )
+        clean_text = clean_text[:max_characters]
 
-        # ~4 characters per token is considered a reasonable default.
-        max_characters = model.n_ctx() * 4
-        if len(clean_text) > max_characters:
-            st.warning(
-                f"Input text is too big ({len(clean_text)})."
-                f" Using only a subset of it ({max_characters})."
-            )
-            clean_text = clean_text[:max_characters]
+    system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
 
-        system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
-
-        if st.button("Generate Podcast"):
-            with st.spinner("Generating Podcast..."):
-                text = ""
-                for chunk in text_to_text_stream(
-                    clean_text, model, system_prompt=system_prompt.strip()
-                ):
-                    print(chunk)
-                    text += chunk
-                    if text.endswith("\n") and "Speaker" in text:
-                        st.write(text)
-                        speaker_id = re.search(r'Speaker (\d+)', text).group(1) 
-                        input_text = text.split(f'"Speaker {speaker_id}":')[-1]
-                        with st.spinner("Generating Audio..."):
-                            speech = _speech_generation_parler(
-                                input_text, tts_model, tts_tokenizer, SPEAKER_DESCRIPTIONS[speaker_id]
-                            )
-                        st.audio(speech, sample_rate=44_100)
-                        text = ""
+    if st.button("Generate Podcast"):
+        with st.spinner("Generating Podcast..."):
+            text = ""
+            for chunk in text_to_text_stream(
+                clean_text, text_model, system_prompt=system_prompt.strip()
+            ):
+                print(chunk)
+                text += chunk
+                if text.endswith("\n") and "Speaker" in text:
+                    st.write(text)
+                    speaker_id = re.search(r'Speaker (\d+)', text).group(1) 
+                    with st.spinner("Generating Audio..."):
+                        speech = _speech_generation_parler(
+                            text.split(f'"Speaker {speaker_id}":')[-1], 
+                            speech_model, 
+                            speech_tokenizer, 
+                            SPEAKER_DESCRIPTIONS[speaker_id]
+                        )
+                    st.audio(speech, sample_rate=44_100)
+                    text = ""
