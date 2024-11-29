@@ -13,7 +13,7 @@ dependencies = [
   "huggingface-hub",
   "llama-cpp-python",
   "loguru",
-  "parler_tts @ git+https://github.com/huggingface/parler-tts.git",
+  "parler_tts @ git+https://github.com/daavoo/parler-tts.git",
   "pydantic",
   "PyPDF2[crypto]",
   "python-docx",
