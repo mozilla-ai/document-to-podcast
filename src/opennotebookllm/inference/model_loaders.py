@@ -1,8 +1,7 @@
-from typing import Tuple
-
 from huggingface_hub import hf_hub_download
 from llama_cpp import Llama
 from outetts import GGUFModelConfig_v1, InterfaceGGUF
+
 
 def load_llama_cpp_model(
     model_id: str,
@@ -36,5 +35,5 @@ def load_outetts_interface(
 ) -> InterfaceGGUF:
     org, repo, filename = model_id.split("/")
     local_path = hf_hub_download(repo_id=f"{org}/{repo}", filename=filename)
-    model_config = GGUFModelConfig_v1(model_path=local_path,language="en")
+    model_config = GGUFModelConfig_v1(model_path=local_path, language="en")
     return InterfaceGGUF(model_version="0.2", cfg=model_config)

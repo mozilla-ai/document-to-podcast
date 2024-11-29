@@ -6,7 +6,7 @@ import streamlit as st
 from opennotebookllm.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from opennotebookllm.inference.model_loaders import (
     load_llama_cpp_model,
-    load_outetts_interface
+    load_outetts_interface,
 )
 from opennotebookllm.inference.text_to_speech import text_to_speech
 from opennotebookllm.inference.text_to_text import text_to_text_stream
@@ -45,7 +45,9 @@ def load_text_to_text_model():
 
 @st.cache_resource
 def load_text_to_speech_model():
-    return load_outetts_interface("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
+    return load_outetts_interface(
+        "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf"
+    )
 
 
 st.title("Document To Podcast")
@@ -116,6 +118,7 @@ if uploaded_file is not None:
                             text.split(f'"Speaker {speaker_id}":')[-1],
                             speech_model,
                             SPEAKER_PROFILES[speaker_id],
+                            temperature=0.3,
                         )
                     st.audio(speech.audio.cpu().numpy(), sample_rate=speech.sr)
                     text = ""
