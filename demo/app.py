@@ -89,13 +89,15 @@ if uploaded_file is not None:
                 for chunk in text_to_text_stream(
                     clean_text, model, system_prompt=system_prompt.strip()
                 ):
+                    print(chunk)
                     text += chunk
                     if text.endswith("\n") and "Speaker" in text:
                         st.write(text)
                         speaker_id = re.search(r'Speaker (\d+)', text).group(1) 
+                        input_text = text.split(f'"Speaker {speaker_id}":')[-1]
                         with st.spinner("Generating Audio..."):
                             speech = _speech_generation_parler(
-                                text, tts_model, tts_tokenizer, SPEAKER_DESCRIPTIONS[speaker_id]
+                                input_text, tts_model, tts_tokenizer, SPEAKER_DESCRIPTIONS[speaker_id]
                             )
                         st.audio(speech, sample_rate=44_100)
                         text = ""
