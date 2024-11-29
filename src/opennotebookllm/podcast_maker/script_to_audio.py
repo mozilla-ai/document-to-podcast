@@ -21,7 +21,7 @@ def parse_script_to_waveform(script: str, podcast_config: PodcastConfig):
     podcast_waveform = []
     for part in parts:
         if ":" in part:
-            speaker_id, speaker_text = part.replace("\"", "").split(":")
+            speaker_id, speaker_text = part.replace('"', "").split(":")
             speaker_model = podcast_config.speakers[speaker_id].model
             speaker_tokenizer = podcast_config.speakers[speaker_id].tokenizer
             speaker_description = podcast_config.speakers[

@@ -2,9 +2,7 @@ import re
 from pathlib import Path
 
 import streamlit as st
-from huggingface_hub import list_repo_files
 
-from opennotebookllm.podcast_maker.config import PodcastConfig, SpeakerConfig
 from opennotebookllm.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from opennotebookllm.inference.model_loaders import (
     load_llama_cpp_model,
@@ -34,20 +32,20 @@ Example:
 
 SPEAKER_DESCRIPTIONS = {
     "1": "Laura's voice is exciting and fast in delivery with very clear audio and no background noise.",
-    "2": "Jon's voice is calm with very clear audio and no background noise."
+    "2": "Jon's voice is calm with very clear audio and no background noise.",
 }
 
 
 @st.cache_resource
 def load_text_to_text_model():
     return load_llama_cpp_model(
-        model_id="allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf")
+        model_id="allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf"
+    )
+
 
 @st.cache_resource
 def load_text_to_speech_model_and_tokenizer():
-    return load_parler_tts_model_and_tokenizer(
-        "parler-tts/parler-tts-mini-v1", "cpu"
-    )
+    return load_parler_tts_model_and_tokenizer("parler-tts/parler-tts-mini-v1", "cpu")
 
 
 st.title("Document To Podcast")
@@ -60,10 +58,11 @@ uploaded_file = st.file_uploader(
 
 
 if uploaded_file is not None:
-
     st.divider()
     st.header("Loading and Cleaning Data")
-    st.markdown("[API Reference for data_cleaners](https://mozilla-ai.github.io/document-to-podcast/api/#opennotebookllm.preprocessing.data_cleaners)")
+    st.markdown(
+        "[API Reference for data_cleaners](https://mozilla-ai.github.io/document-to-podcast/api/#opennotebookllm.preprocessing.data_cleaners)"
+    )
 
     extension = Path(uploaded_file.name).suffix
 
@@ -81,7 +80,9 @@ if uploaded_file is not None:
 
     st.divider()
     st.header("Downloading and Loading models")
-    st.markdown("[API Reference for model_loaders](https://mozilla-ai.github.io/document-to-podcast/api/#opennotebookllm.inference.model_loaders)")
+    st.markdown(
+        "[API Reference for model_loaders](https://mozilla-ai.github.io/document-to-podcast/api/#opennotebookllm.inference.model_loaders)"
+    )
 
     text_model = load_text_to_text_model()
     speech_model, speech_tokenizer = load_text_to_speech_model_and_tokenizer()
@@ -109,13 +110,13 @@ if uploaded_file is not None:
                 text += chunk
                 if text.endswith("\n") and "Speaker" in text:
                     st.write(text)
-                    speaker_id = re.search(r'Speaker (\d+)', text).group(1) 
+                    speaker_id = re.search(r"Speaker (\d+)", text).group(1)
                     with st.spinner("Generating Audio..."):
                         speech = _speech_generation_parler(
-                            text.split(f'"Speaker {speaker_id}":')[-1], 
-                            speech_model, 
-                            speech_tokenizer, 
-                            SPEAKER_DESCRIPTIONS[speaker_id]
+                            text.split(f'"Speaker {speaker_id}":')[-1],
+                            speech_model,
+                            speech_tokenizer,
+                            SPEAKER_DESCRIPTIONS[speaker_id],
                         )
                     st.audio(speech, sample_rate=44_100)
                     text = ""
