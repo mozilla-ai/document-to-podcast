@@ -100,7 +100,6 @@ if uploaded_file is not None:
             for chunk in text_to_text_stream(
                 clean_text, text_model, system_prompt=system_prompt.strip()
             ):
-                print(chunk)
                 text += chunk
                 if text.endswith("\n") and "Speaker" in text:
                     st.write(text)
