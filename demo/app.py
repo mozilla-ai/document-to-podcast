@@ -60,6 +60,8 @@ uploaded_file = st.file_uploader(
 
 
 if uploaded_file is not None:
+
+    st.divider()
     st.header("Loading and Cleaning Data")
     st.markdown("[API Reference for data_cleaners](https://mozilla-ai.github.io/document-to-podcast/api/#opennotebookllm.preprocessing.data_cleaners)")
 
@@ -77,6 +79,7 @@ if uploaded_file is not None:
         st.subheader("Cleaned Text")
         st.text_area(f"Total Length: {len(clean_text)}", f"{clean_text[:500]} . . .")
 
+    st.divider()
     st.header("Downloading and Loading models")
     st.markdown("[API Reference for model_loaders](https://mozilla-ai.github.io/document-to-podcast/api/#opennotebookllm.inference.model_loaders)")
 
@@ -91,6 +94,9 @@ if uploaded_file is not None:
             f" Using only a subset of it ({max_characters})."
         )
         clean_text = clean_text[:max_characters]
+
+    st.divider()
+    st.header("Podcast generation")
 
     system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
 
