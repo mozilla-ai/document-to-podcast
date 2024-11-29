@@ -1,9 +1,8 @@
 from typing import Tuple
 
+from huggingface_hub import hf_hub_download
 from llama_cpp import Llama
-from parler_tts import ParlerTTSForConditionalGeneration
-from transformers import AutoTokenizer, PreTrainedModel, PreTrainedTokenizerBase
-
+from outetts import GGUFModelConfig_v1, InterfaceGGUF
 
 def load_llama_cpp_model(
     model_id: str,
@@ -32,24 +31,11 @@ def load_llama_cpp_model(
     return model
 
 
-def load_parler_tts_model_and_tokenizer(
-    model_id: str, device: str = "cpu"
-) -> Tuple[PreTrainedModel, PreTrainedTokenizerBase]:
-    """
-    Loads the given model_id using parler_tts.from_pretrained.
+def load_outetts_interface(
+    model_id: str,
+) -> InterfaceGGUF:
+    local_path = hf_hub_download("OuteAI/OuteTTS-0.2-500M-GGUF", "OuteTTS-0.2-500M-FP16.gguf")
 
-    Examples:
-        >>> model, tokenizer = load_parler_tts_model_and_tokenizer("parler-tts/parler-tts-mini-v1", "cpu")
+    model_config = GGUFModelConfig_v1(model_path=local_path,language="en")
 
-    Args:
-        model_id (str): The model id to load.
-            Format is expected to be `{repo}/{filename}`.
-        device (str): The device to load the model on, such as "cuda:0" or "cpu".
-
-    Returns:
-        PreTrainedModel: The loaded model.
-    """
-    model = ParlerTTSForConditionalGeneration.from_pretrained(model_id).to(device)
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-
-    return model, tokenizer
+    return InterfaceGGUF(model_version="0.2", cfg=model_config)
