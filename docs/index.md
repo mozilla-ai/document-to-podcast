@@ -1,12 +1,12 @@
-# **Welcome to the Document-to-Podcast Blueprint Guide**
+# **Document-to-Podcast Blueprint**
 
 <div style="text-align: center;">
-  <img src="./images/Blueprints-logo.png" alt="Project Logo" style="width: 30%; margin-bottom: 20px;">
+  <img src="./images/Blueprints-logo.png" alt="Project Logo" style="width: 30%; margin-bottom: 2px; margin-top: 2px;">
 </div>
 
 Blueprints empower developers to easily integrate AI capabilities into their projects using open-source models and tools.
 
-This guide is your companion to mastering the **Document-to-Podcast Blueprint**—a local-first approach for transforming documents into engaging podcasts.
+These docs are your your companion to mastering the **Document-to-Podcast Blueprint**—a local-first approach for transforming documents into engaging podcasts.
 
 ---
 
@@ -35,7 +35,3 @@ Have more questions? Reach out to us on Discord and we'll see how we can help:
 ## **Why Blueprints?**
 
 Blueprints are more than starter code—they’re your gateway to building AI-powered solutions with confidence. With step-by-step guidance, modular design, and open-source tools, we make AI accessible for developers of all skill levels.
-
----
-
-Happy building! 🎉
