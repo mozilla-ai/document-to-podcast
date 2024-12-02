@@ -2,7 +2,7 @@
 
 # Document-to-podcast: a Blueprint by Mozilla.ai for generating podcasts from documents using local AI
 
-This blueprint demonstrate how you can use open-source models & tools to convert input documents into a podcast featuring two speakers. 
+This blueprint demonstrate how you can use open-source models & tools to convert input documents into a podcast featuring two speakers.
 It is designed to work on most local setups or with [GitHub Codespaces](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb), meaning no external API calls or GPU access is required. This makes it more accessible and privacy-friendly by keeping everything local.
 
 ## Quick-start
@@ -19,11 +19,11 @@ The fastest way to get started. Click the button below to launch the project dir
 
 Once the Codespaces environment launches, follow these steps:
 
-1. **Install Dependencies**  
+1. **Install Dependencies**
    Inside the Codespaces terminal, run:
    ```bash
    pip install -e . --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
-2. **Run the Demo**  
+2. **Run the Demo**
    Inside the Codespaces terminal, start the Streamlit demo by running:
    ```bash
    python -m streamlit run demo/app.py
@@ -31,18 +31,18 @@ Once the Codespaces environment launches, follow these steps:
 
 ### **Option 2: Local Installation**
 
-1. **Clone the Repository**  
+1. **Clone the Repository**
    Inside the Codespaces terminal, run:
    ```bash
    git clone https://github.com/mozilla-ai/OpenNotebookLLM.git
    cd OpenNotebookLLM
    ```
 
-2. **Install Dependencies**  
+2. **Install Dependencies**
    Inside the terminal, run:
    ```bash
    pip install -e . --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
-3. **Run the Demo**  
+3. **Run the Demo**
    Inside the terminal, start the Streamlit demo by running:
    ```bash
    python -m streamlit run demo/app.py
@@ -54,20 +54,20 @@ Once the Codespaces environment launches, follow these steps:
 <img src="./images/document-to-podcast-diagram.png" width="1200" />
 
 
-1. **Document Upload**  
-   Start by uploading a document in a supported format (e.g., PDF, .txt, or .docx).  
+1. **Document Upload**
+   Start by uploading a document in a supported format (e.g., PDF, .txt, or .docx).
 
-2. **Document Pre-Processing**  
-   The uploaded document is processed to extract and clean the text. This involves:  
-   - Extracting readable text from the document.  
+2. **Document Pre-Processing**
+   The uploaded document is processed to extract and clean the text. This involves:
+   - Extracting readable text from the document.
    - Removing noise such as URLs, email addresses, and special characters to ensure the text is clean and structured.
 
-3. **Script Generation**  
-   The cleaned text is passed to a language model to generate a podcast transcript in the form of a conversation between two speakers.  
+3. **Script Generation**
+   The cleaned text is passed to a language model to generate a podcast transcript in the form of a conversation between two speakers.
    - **Model Loading**: The system selects and loads a pre-trained LLM optimized for running locally, using the llama_cpp library. This enables the model to run efficiently on CPUs, making them more accessible and suitable for local setups.
-   - **Customizable Prompt**: A user-defined "system prompt" guides the LLM in shaping the conversation, specifying tone, content, speaker interaction, and format. 
-   - **Output Transcript**: The model generates a podcast script in structured format, with each speaker's dialogue clearly labeled.  
-     Example output:  
+   - **Customizable Prompt**: A user-defined "system prompt" guides the LLM in shaping the conversation, specifying tone, content, speaker interaction, and format.
+   - **Output Transcript**: The model generates a podcast script in structured format, with each speaker's dialogue clearly labeled.
+     Example output:
      ```json
      {
          "Speaker 1": "Welcome to the podcast on AI advancements.",
@@ -78,7 +78,7 @@ Once the Codespaces environment launches, follow these steps:
      ```
    This step ensures that the podcast script is engaging, relevant, and ready for audio conversion.
 
-4. **Audio Generation**  
+4. **Audio Generation**
   - The generated transcript is converted into audio using a Text-to-Speech (TTS) model.
   -	Each speaker is assigned a distinct voice.
 	- The final output is saved as an audio file in formats like MP3 or WAV.

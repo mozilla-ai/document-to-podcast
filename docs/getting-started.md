@@ -10,12 +10,12 @@ The fastest way to get started. Click the button below to launch the project dir
 
 Once the Codespaces environment launches, follow these steps:
 
-1. **Install Dependencies**  
+1. **Install Dependencies**
    Inside the Codespaces terminal, run:
 ```bash
 pip install -e . --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
 ```
-2. **Run the Demo**  
+2. **Run the Demo**
    Inside the Codespaces terminal, start the Streamlit demo by running:
 ```bash
 python -m streamlit run demo/app.py
@@ -24,7 +24,7 @@ python -m streamlit run demo/app.py
 
 ### 💻  **Option 2: Local Installation**
 
-1. **Clone the Repository**  
+1. **Clone the Repository**
    Inside the Codespaces terminal, run:
 
 ```bash
@@ -33,7 +33,7 @@ cd OpenNotebookLLM
 ```
 
 
-2. **Install Dependencies**  
+2. **Install Dependencies**
    Inside the terminal, run:
 
 
@@ -41,9 +41,9 @@ cd OpenNotebookLLM
 pip install -e . --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
 ```
 
-3. **Run the Demo**  
+3. **Run the Demo**
    Inside the terminal, start the Streamlit demo by running:
-   
+
 ```bash
 python -m streamlit run demo/app.py
 ```

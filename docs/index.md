@@ -11,7 +11,7 @@ These docs are your your companion to mastering the **Document-to-Podcast Bluepr
 ---
 
 ### 🚀 **Get Started Quickly**
-#### _Start building your own Document-to-Podcast pipeline in minutes:_ 
+#### _Start building your own Document-to-Podcast pipeline in minutes:_
 - **[Getting Started](getting-started.md):** Quick setup and installation instructions.
 
 ### 🔍 **Understand the System**

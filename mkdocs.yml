@@ -12,12 +12,12 @@ theme:
   name: material
   palette:
     - scheme: default
-      primary: "#005F6F" 
+      primary: "#005F6F"
       toggle:
         icon: material/lightbulb
         name: Switch to dark mode
     - scheme: slate
-      primary: "#005F6F"  
+      primary: "#005F6F"
       toggle:
         icon: material/lightbulb-outline
         name: Switch to light mode
