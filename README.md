@@ -1,13 +1,16 @@
-<img src="./images/Blueprints-logo.png" alt="Project Logo" style="width:25%;">
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+<p align="center"><img src="./images/Blueprints-logo.png" width="25%" alt="Project logo"/></p>
 
 # Document-to-podcast: a Blueprint by Mozilla.ai for generating podcasts from documents using local AI
 
 This blueprint demonstrate how you can use open-source models & tools to convert input documents into a podcast featuring two speakers.
 It is designed to work on most local setups or with [GitHub Codespaces](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb), meaning no external API calls or GPU access is required. This makes it more accessible and privacy-friendly by keeping everything local.
 
+### 👉 📖 For more detailed guidance on using this project, please visit our [Docs here](https://mozilla-ai.github.io/document-to-podcast/).
+
 ## Quick-start
 
-Get started with OpenNotebookLLM using one of the two options below: **GitHub Codespaces** for a hassle-free setup or **Local Installation** for running on your own machine.
+Get started with Document-to-Podcast using one of the two options below: **GitHub Codespaces** for a hassle-free setup or **Local Installation** for running on your own machine.
 
 ---
 
@@ -34,8 +37,8 @@ Once the Codespaces environment launches, follow these steps:
 1. **Clone the Repository**
    Inside the Codespaces terminal, run:
    ```bash
-   git clone https://github.com/mozilla-ai/OpenNotebookLLM.git
-   cd OpenNotebookLLM
+   git clone https://github.com/mozilla-ai/document-to-podcast.git
+   cd document-to-podcast
    ```
 
 2. **Install Dependencies**
@@ -49,7 +52,6 @@ Once the Codespaces environment launches, follow these steps:
    ```
 
 ## How it Works
-### 👉 📖 For more detailed guidance on using this project, please visit our [Docs here](https://mozilla-ai.github.io/Blueprint-template/).
 
 <img src="./images/document-to-podcast-diagram.png" width="1200" />
 

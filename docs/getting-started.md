@@ -1,4 +1,4 @@
-Get started with OpenNotebookLLM using one of the two options below: **GitHub Codespaces** for a hassle-free setup or **Local Installation** for running on your own machine.
+Get started with Document-to-Podcast using one of the two options below: **GitHub Codespaces** for a hassle-free setup or **Local Installation** for running on your own machine.
 
 ---
 
@@ -28,8 +28,8 @@ python -m streamlit run demo/app.py
    Inside the Codespaces terminal, run:
 
 ```bash
-git clone https://github.com/mozilla-ai/OpenNotebookLLM.git
-cd OpenNotebookLLM
+git clone https://github.com/mozilla-ai/document-to-podcast.git
+cd document-to-podcast
 ```
 
 

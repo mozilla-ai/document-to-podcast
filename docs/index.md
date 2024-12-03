@@ -1,7 +1,7 @@
 # **Document-to-Podcast Blueprint**
 
 <div style="text-align: center;">
-  <img src="./images/Blueprints-logo.png" alt="Project Logo" style="width: 30%; margin-bottom: 2px; margin-top: 2px;">
+  <img src="../images/document-to-podcast-diagram.png" alt="Project Logo" style="width: 100%; margin-bottom: 1px; margin-top: 1px;">
 </div>
 
 Blueprints empower developers to easily integrate AI capabilities into their projects using open-source models and tools.
