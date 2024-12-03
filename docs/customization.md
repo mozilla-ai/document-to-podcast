@@ -37,7 +37,7 @@ Example:
 ```python
 PODCAST_PROMPT = """
 You are a radio show scriptwriter generating lively and humorous dialogues.
-Speaker 1: A comedian who is interested in learning new things. 
+Speaker 1: A comedian who is interested in learning new things.
 Speaker 2: A scientist explaining concepts in a fun way.
 """
 ```
