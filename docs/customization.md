@@ -14,6 +14,7 @@ Customizing the app:
 3. Replace the `model_id` with the ID of your desired model from a supported repository (e.g., Hugging Face). Note: The model repository must be in GGFUF format, for example: `Qwen/Qwen2.5-1.5B-Instruct-GGUF`
 
 Example:
+
 ```python
 @st.cache_resource
 def load_text_to_text_model():
@@ -32,10 +33,12 @@ Customizing the app:
 3.	Edit the instructions to suit your desired conversation style.
 
 Example:
+
 ```python
 PODCAST_PROMPT = """
 You are a radio show scriptwriter generating lively and humorous dialogues.
-Speaker 1: A comedian who is interested in learning new things. Speaker 2: A scientist explaining concepts in a fun way.
+Speaker 1: A comedian who is interested in learning new things. 
+Speaker 2: A scientist explaining concepts in a fun way.
 """
 ```
 
@@ -49,6 +52,7 @@ Customizing the app:
 2.	Locate the SPEAKER_DESCRIPTIONS dictionary.
 3.	Update the descriptions to define new voice characteristics for each speaker
 Example:
+
 ```python
 PODCAST_PROMPT = """
 SPEAKER_DESCRIPTIONS = {
@@ -67,12 +71,13 @@ Customizing the app:
 1. Open the `app.py` file.
 2. Locate the `load_text_to_speech_model_and_tokenizer` function.
 3.	Replace the model_id with your preferred TTS model.
+
 Example:
 ```python
 @st.cache_resource
 def load_text_to_speech_model_and_tokenizer():
-    return load_parler_tts_model_and_tokenizer("parler-tts/parler-tts-mini-expresso", "cpu")
-```
+    return load_parler_tts_model_and_tokenizer(
+        "parler-tts/parler-tts-mini-expresso", "cpu")
 
 ## 💡 Other Customization Ideas
 
