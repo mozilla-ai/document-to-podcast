@@ -31,9 +31,9 @@ tests = [
 ]
 
 [project.urls]
-Documentation = "https://mozilla-ai.github.io/OpenNotebookLLM/"
-Issues = "https://github.com/mozilla-ai/OpenNotebookLLM/issues"
-Source = "https://github.com/mozilla-ai/OpenNotebookLLM"
+Documentation = "https://mozilla-ai.github.io/document-to-podcast/"
+Issues = "https://github.com/mozilla-ai/document-to-podcast/issues"
+Source = "https://github.com/mozilla-ai/document-to-podcast"
 
 [tool.setuptools.packages.find]
 exclude = ["tests", "tests.*"]
