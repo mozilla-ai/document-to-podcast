@@ -1,0 +1,848 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../getting-started/">
+      
+      
+        <link rel="next" href="../customization/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+    
+    
+      
+        <title>Step-by-Step Guide - Blueprints Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="#005F6F" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#step-by-step-guide-how-the-document-to-podcast-blueprint-works" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Blueprints Docs" class="md-header__button md-logo" aria-label="Blueprints Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Blueprints Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Step-by-Step Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="#005F6F" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="#005F6F" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Blueprints Docs" class="md-nav__button md-logo" aria-label="Blueprints Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Blueprints Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Step-by-Step Guide
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Step-by-Step Guide
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-document-pre-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Document Pre-Processing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Document Pre-Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components-in-this-doc-pre-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Key Components in this Doc Pre-Processing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-podcast-script-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Podcast Script Generation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Podcast Script Generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components-in-script-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Key Components in Script Generation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-audio-podcast-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Audio Podcast Generation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Audio Podcast Generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components-in-this-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Key Components in this Step
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bringing-it-all-together-in-apppy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bringing It All Together in app.py
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bringing It All Together in app.py">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-apppy-applies-each-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 How app.py Applies Each Step
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customizing-the-blueprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 Customizing the Blueprint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing-to-the-blueprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤝 Contributing to the Blueprint
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customization Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../future-features-contributions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Future Features & Contributions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-document-pre-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Document Pre-Processing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Document Pre-Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components-in-this-doc-pre-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Key Components in this Doc Pre-Processing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-podcast-script-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Podcast Script Generation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Podcast Script Generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components-in-script-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Key Components in Script Generation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-audio-podcast-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Audio Podcast Generation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Audio Podcast Generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components-in-this-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Key Components in this Step
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bringing-it-all-together-in-apppy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bringing It All Together in app.py
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bringing It All Together in app.py">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-apppy-applies-each-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 How app.py Applies Each Step
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customizing-the-blueprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 Customizing the Blueprint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing-to-the-blueprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤝 Contributing to the Blueprint
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="step-by-step-guide-how-the-document-to-podcast-blueprint-works"><strong>Step-by-Step Guide: How the Document-to-Podcast Blueprint Works</strong></h1>
+<p>Transforming static documents into engaging podcast episodes involves a  integration of pre-processing, LLM-powered transcript generation, and text-to-speech generation. Here's how it all works under the hood:</p>
+<hr />
+<h2 id="overview"><strong>Overview</strong></h2>
+<p>This system has three core stages:</p>
+<p>📄 <strong>1. Document Pre-Processing</strong>
+   Prepare the input document by extracting and cleaning the text.</p>
+<p>📜 <strong>2. Podcast Script Generation</strong>
+   Use an LLM to transform the cleaned text into a conversational podcast script.</p>
+<p>🎙️ <strong>3. Audio Podcast Generation</strong>
+   Convert the script into an engaging audio podcast with distinct speaker voices.</p>
+<p>We'll also look at how <code>app.py</code> brings all these steps together to build an end-to-end demo application.</p>
+<p>First, let’s dive into each step to understand how this works in practice.</p>
+<hr />
+<h2 id="step-1-document-pre-processing"><strong>Step 1: Document Pre-Processing</strong></h2>
+<p>The process begins with preparing the input document for AI processing. The system handles various document types while ensuring the extracted content is clean and structured.</p>
+<p>Cleaner input data ensures that the model works with reliable and consistent information, reducing the likelihood of confusing with unexpected tokens and therefore helping it to generate better outputs.</p>
+<h3 id="key-components-in-this-doc-pre-processing">⚙️ <strong>Key Components in this Doc Pre-Processing</strong></h3>
+<p><strong>1 - File Loading</strong></p>
+<ul>
+<li>
+<p>Uses functions defined in <code>data_loaders.py</code></p>
+</li>
+<li>
+<p>Supports <code>.html</code>, <code>.pdf</code>, <code>.txt</code>, and <code>.docx</code> formats.</p>
+</li>
+<li>
+<p>Extracts readable text from uploaded files using specialized loaders.</p>
+</li>
+</ul>
+<p><strong>2 - Text Cleaning</strong></p>
+<ul>
+<li>
+<p>Uses functions defined in <a href="../api/#opennotebookllm.inference.data_cleaners"><code>data_cleaners.py</code></a></p>
+</li>
+<li>
+<p>Removes unwanted elements like URLs, email addresses, and special characters using Python's <code>re</code> library, which leverages <strong>Regular Expressions</strong> (regex) to identify and manipulate specific patterns in text.</p>
+</li>
+<li>
+<p>Ensures the document is clean and ready for the next step.</p>
+</li>
+</ul>
+<h2 id="step-2-podcast-script-generation"><strong>Step 2: Podcast Script Generation</strong></h2>
+<p>In this step, the pre-processed text is transformed into a conversational podcast transcript. Using a Language Model, the system generates a dialogue that’s both informative and engaging.</p>
+<h3 id="key-components-in-script-generation">⚙️ <strong>Key Components in Script Generation</strong></h3>
+<p><strong>1 - Model Loading</strong></p>
+<ul>
+<li>
+<p>The <a href="../api/#opennotebookllm.inference.model_loaders"><code>model_loader.py</code></a> script is responsible for loading GGUF-type models using the <code>llama_cpp</code> library.</p>
+</li>
+<li>
+<p>The function <code>load_llama_cpp_model</code> takes a model ID in the format <code>{org}/{repo}/{filename}</code> and loads the specified model.</p>
+</li>
+<li>
+<p>This approach of using the <code>llama_cpp</code> library supports efficient CPU-based inference, making language models accessible even on machines without GPUs.</p>
+</li>
+</ul>
+<p><strong>2 - Text-to-Text Generation</strong></p>
+<ul>
+<li>
+<p>The <a href="../api/#opennotebookllm.inference.text_to_text"><code>text_to_text.py</code></a> script manages the interaction with the language model, converting input text into a structured conversational podcast script.</p>
+</li>
+<li>
+<p>It uses the <code>chat_completion</code> function to process the input text and a customizable system prompt, guiding the language to generate a text output (e.g. a coherent podcast script between speakers).</p>
+</li>
+<li>
+<p>The <code>return_json</code> parameter allows the output to be formatted as a JSON object style, which can make it easier to parse and integrate structured responses into applications.</p>
+</li>
+<li>
+<p>Supports both single-pass outputs (<code>text_to_text</code>) and real-time streamed responses (<code>text_to_text_stream</code>), offering flexibility for different use cases.</p>
+</li>
+</ul>
+<h2 id="step-3-audio-podcast-generation"><strong>Step 3: Audio Podcast Generation</strong></h2>
+<p>In this final step, the generated podcast transcript is brought to life as an audio file. Using a Text-to-Speech (TTS) model, each speaker in the script is assigned a unique voice, creating an engaging and professional-sounding podcast.</p>
+<h3 id="key-components-in-this-step">⚙️ <strong>Key Components in this Step</strong></h3>
+<p><strong>1 - Text-to-Speech Audio Generation</strong></p>
+<ul>
+<li>
+<p>The <code>text_to_speech.py</code> script converts text into audio using a specified TTS model and tokenizer.</p>
+</li>
+<li>
+<p>A <strong>speaker profile</strong> defines the voice characteristics (e.g., tone, speed, clarity) for each speaker.</p>
+</li>
+<li>
+<p>The function <code>text_to_speech</code> takes the input text (e.g podcast script) and speaker profile, generating a waveform (audio data) that represents the spoken version of the text.</p>
+</li>
+</ul>
+<p><strong>2 - Parsing and Combining Voices</strong></p>
+<ul>
+<li>
+<p>The <code>script_to_audio.py</code> script ensures each speaker’s dialogue is spoken in their unique voice.</p>
+</li>
+<li>
+<p>The function <code>parse_script_to_waveform</code> splits the dialogue script by speakers and uses <code>text_to_speech</code> to generate audio for each speaker, stitching them together into a full podcast.</p>
+</li>
+<li>
+<p>Once the podcast waveform is ready, the save_waveform_as_file function saves it as an audio file (e.g., MP3 or WAV), making it ready for distribution.</p>
+</li>
+</ul>
+<h2 id="bringing-it-all-together-in-apppy"><strong>Bringing It All Together in <code>app.py</code></strong></h2>
+<p>The <code>app.py</code> demo app is shows you how all the components of the Document-to-Podcast Blueprint can come together. It demonstrates how you can take the individual steps—Document Pre-Processing, Podcast Script Generation, and Audio Podcast Generation—and integrate them into a functional application. This is the heart of the Blueprint in action, showing how you can build an app using the provided tools and components.</p>
+<p>This demo uses <a href="https://streamlit.io/">Streamlit</a>, an open-source Python framework for interactive apps.</p>
+<div style="text-align: center;">
+  <img src="../images/document-to-podcast-diagram.png" alt="Project Logo" style="width: 100%; margin-bottom: 1px; margin-top: 1px;">
+</div>
+
+<hr />
+<h3 id="how-apppy-applies-each-step">🧠 <strong>How <code>app.py</code> Applies Each Step</strong></h3>
+<p><strong>📄 Document Upload &amp; Pre-Processing</strong></p>
+<ul>
+<li>
+<p>Users upload a file via the Streamlit interface (<code>st.file_uploader</code>), which supports <code>.pdf</code>, <code>.txt</code>, <code>.docx</code>, <code>.html</code>, and <code>.md</code> formats.</p>
+</li>
+<li>
+<p>The uploaded file is passed to the <strong>File Loading</strong> and <strong>Text Cleaning</strong> modules.</p>
+</li>
+<li>
+<p>Raw text is extracted using <code>DATA_LOADERS</code>, and the cleaned version is displayed alongside it using <code>DATA_CLEANERS</code>, and displayed to the end user.</p>
+</li>
+</ul>
+<p><strong>⚙️ Loading Models</strong></p>
+<ul>
+<li>
+<p>The script uses <code>load_llama_cpp_model</code> from <code>model_loader.py</code> to load the LLM for generating the podcast script.</p>
+</li>
+<li>
+<p>Similarly, <code>load_parler_tts_model_and_tokenizer</code> is used to prepare the TTS model and tokenizer for audio generation.</p>
+</li>
+<li>
+<p>These models are cached using <code>@st.cache_resource</code> to ensure fast and efficient reuse during app interactions.</p>
+</li>
+</ul>
+<p><strong>📝 Podcast Script Generation</strong></p>
+<ul>
+<li>
+<p>The cleaned text and a system-defined podcast prompt are fed into the text_to_text_stream function.</p>
+</li>
+<li>
+<p>The <code>PODCAST_PROMPT</code> can be edited by the end-user to enable them to tailor their script results for their needs.</p>
+</li>
+<li>
+<p>The script is streamed back to the user in real-time, allowing them to see the generated conversation between speakers</p>
+</li>
+</ul>
+<p><strong>🎙️ Podcast Generation</strong></p>
+<ul>
+<li>
+<p>For each speaker in the podcast script, audio is generated using the <code>text_to_speech</code> function with distinct speaker profiles</p>
+</li>
+<li>
+<p>The <code>SPEAKER_DESCRIPTION</code> enables the user to edit the podcast speakers voices to fit their needs.</p>
+</li>
+<li>
+<p>The generated audio is displayed with a player so users can listen directly in the app.</p>
+</li>
+</ul>
+<h2 id="customizing-the-blueprint">🎨 <strong>Customizing the Blueprint</strong></h2>
+<p>To better understand how you can tailor this Blueprint to suit your specific needs, please visit the <strong><a href="../customization">Customization Guide</a></strong>.</p>
+<h2 id="contributing-to-the-blueprint">🤝 <strong>Contributing to the Blueprint</strong></h2>
+<p>Want to help improve or extend this Blueprint? Check out the <strong><a href="../future-features-contributions">Future Features &amp; Contributions Guide</a></strong> to see how you can contribute your ideas, code, or feedback to make this Blueprint even better!</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
