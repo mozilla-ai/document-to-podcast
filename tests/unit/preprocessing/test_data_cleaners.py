@@ -1,4 +1,4 @@
-from opennotebookllm.preprocessing.data_cleaners import (
+from document_to_podcast.preprocessing.data_cleaners import (
     clean_html,
     clean_with_regex,
     clean_markdown,

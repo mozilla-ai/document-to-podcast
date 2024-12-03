@@ -3,7 +3,7 @@ requires = ["setuptools>=48", "setuptools_scm[toml]>=6.3.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "opennotebookllm"
+name = "document-to-podcast"
 readme = "README.md"
 license = {text = "Apache-2.0"}
 requires-python = ">=3.10"
@@ -31,9 +31,9 @@ tests = [
 ]
 
 [project.urls]
-Documentation = "https://mozilla-ai.github.io/OpenNotebookLLM/"
-Issues = "https://github.com/mozilla-ai/OpenNotebookLLM/issues"
-Source = "https://github.com/mozilla-ai/OpenNotebookLLM"
+Documentation = "https://mozilla-ai.github.io/document-to-podcast/"
+Issues = "https://github.com/mozilla-ai/document-to-podcast/issues"
+Source = "https://github.com/mozilla-ai/document-to-podcast"
 
 [tool.setuptools.packages.find]
 exclude = ["tests", "tests.*"]
