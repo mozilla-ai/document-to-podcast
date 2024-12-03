@@ -28,6 +28,7 @@ def load_llama_cpp_model(
         filename=filename,
         # 0 means that the model limit will be used, instead of the default (512) or other hardcoded value
         n_ctx=0,
+        verbose=False,
     )
     return model
 
