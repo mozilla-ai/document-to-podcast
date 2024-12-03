@@ -56,7 +56,7 @@ class Config(BaseModel):
     text_to_text_prompt: str = Field(default=PODCAST_PROMPT)
 
 
-@logger.catch(reraise=True)
+@logger.catch()
 def document_to_podcast(
     input_file: str | None = None,
     output_folder: str | None = None,
@@ -70,21 +70,31 @@ def document_to_podcast(
     Args:
         input_file (str): The path to the input file.
             Supported extensions:
+
                 - .pdf
                 - .html
                 - .txt
                 - .docx
                 - .md
+
         output_folder (str): The path to the output folder.
             Two files will be created:
+
                 - {output_folder}/podcast.txt
                 - {output_folder}/podcast.wav
+
         text_to_text_model (str, optional): The path to the text-to-text model.
+
             Need to be formatted as `owner/repo/file`.
+
             Need to be a gguf file.
-            Defaults to "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf".
+
+            Defaults to `allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf`.
+
         text_to_text_prompt (str, optional): The prompt for the text-to-text model.
         from_config (str, optional): The path to the config file. Defaults to None.
+
+            If provided, all other arguments will be ignored.
     """
     if from_config:
         config = Config.model_validate(yaml.safe_load(Path(from_config).read_text()))
