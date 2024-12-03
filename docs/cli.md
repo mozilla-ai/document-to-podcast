@@ -23,3 +23,5 @@ document-to-podcast \
 ::: document_to_podcast.cli.Config
 
 ::: document_to_podcast.cli.document_to_podcast
+
+::: document_to_podcast.cli.PODCAST_PROMPT
