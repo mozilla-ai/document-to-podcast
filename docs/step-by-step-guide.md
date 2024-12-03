@@ -35,7 +35,7 @@ Cleaner input data ensures that the model works with reliable and consistent inf
 
    - Uses functions defined in [`data_loaders.py`](../api/)
 
-   - Supports `.pdf`, `.txt`, and `.docx` formats.
+   - Supports `.html`, `.pdf`, `.txt`, and `.docx` formats.
 
    - Extracts readable text from uploaded files using specialized loaders.
 
