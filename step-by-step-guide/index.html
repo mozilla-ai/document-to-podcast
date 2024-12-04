@@ -148,6 +148,43 @@
     
     
     
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
     
   </nav>
   
@@ -633,7 +670,7 @@
 
 
 <h1 id="step-by-step-guide-how-the-document-to-podcast-blueprint-works"><strong>Step-by-Step Guide: How the Document-to-Podcast Blueprint Works</strong></h1>
-<p>Transforming static documents into engaging podcast episodes involves a  integration of pre-processing, LLM-powered transcript generation, and text-to-speech generation. Here's how it all works under the hood:</p>
+<p>Transforming static documents into engaging podcast episodes involves an integration of pre-processing, LLM-powered transcript generation, and text-to-speech generation. Here's how it all works under the hood:</p>
 <hr />
 <h2 id="overview"><strong>Overview</strong></h2>
 <p>This system has three core stages:</p>
@@ -653,7 +690,7 @@
 <p><strong>1 - File Loading</strong></p>
 <ul>
 <li>
-<p>Uses functions defined in <code>data_loaders.py</code></p>
+<p>Uses functions defined in <a href="../api/#document_to_podcast.preprocessing.data_loaders"><code>data_loaders.py</code></a></p>
 </li>
 <li>
 <p>Supports <code>.html</code>, <code>.pdf</code>, <code>.txt</code>, and <code>.docx</code> formats.</p>
@@ -665,7 +702,7 @@
 <p><strong>2 - Text Cleaning</strong></p>
 <ul>
 <li>
-<p>Uses functions defined in <a href="../api/#document_to_podcast.inference.data_cleaners"><code>data_cleaners.py</code></a></p>
+<p>Uses functions defined in <a href="../api/#document_to_podcast.preprocessing.data_cleaners"><code>data_cleaners.py</code></a></p>
 </li>
 <li>
 <p>Removes unwanted elements like URLs, email addresses, and special characters using Python's <code>re</code> library, which leverages <strong>Regular Expressions</strong> (regex) to identify and manipulate specific patterns in text.</p>
@@ -710,7 +747,7 @@
 <p><strong>1 - Text-to-Speech Audio Generation</strong></p>
 <ul>
 <li>
-<p>The <code>text_to_speech.py</code> script converts text into audio using a specified TTS model and tokenizer.</p>
+<p>The <a href="../api/#document_to_podcast.inference.text_to_speech"><code>text_to_speech.py</code></a> script converts text into audio using a specified TTS model and tokenizer.</p>
 </li>
 <li>
 <p>A <strong>speaker profile</strong> defines the voice characteristics (e.g., tone, speed, clarity) for each speaker.</p>
@@ -722,7 +759,7 @@
 <p><strong>2 - Parsing and Combining Voices</strong></p>
 <ul>
 <li>
-<p>The <code>script_to_audio.py</code> script ensures each speaker’s dialogue is spoken in their unique voice.</p>
+<p>The <a href="../api/#document_to_podcast.podcast_maker.script_to_audio"><code>script_to_audio.py</code></a> script ensures each speaker’s dialogue is spoken in their unique voice.</p>
 </li>
 <li>
 <p>The function <code>parse_script_to_waveform</code> splits the dialogue script by speakers and uses <code>text_to_speech</code> to generate audio for each speaker, stitching them together into a full podcast.</p>
@@ -789,9 +826,9 @@
 </li>
 </ul>
 <h2 id="customizing-the-blueprint">🎨 <strong>Customizing the Blueprint</strong></h2>
-<p>To better understand how you can tailor this Blueprint to suit your specific needs, please visit the <strong><a href="../customization">Customization Guide</a></strong>.</p>
+<p>To better understand how you can tailor this Blueprint to suit your specific needs, please visit the <strong><a href="../customization/">Customization Guide</a></strong>.</p>
 <h2 id="contributing-to-the-blueprint">🤝 <strong>Contributing to the Blueprint</strong></h2>
-<p>Want to help improve or extend this Blueprint? Check out the <strong><a href="../future-features-contributions">Future Features &amp; Contributions Guide</a></strong> to see how you can contribute your ideas, code, or feedback to make this Blueprint even better!</p>
+<p>Want to help improve or extend this Blueprint? Check out the <strong><a href="../future-features-contributions/">Future Features &amp; Contributions Guide</a></strong> to see how you can contribute your ideas, code, or feedback to make this Blueprint even better!</p>
 
 
 
