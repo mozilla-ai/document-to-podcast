@@ -1,6 +1,6 @@
 # **Step-by-Step Guide: How the Document-to-Podcast Blueprint Works**
 
-Transforming static documents into engaging podcast episodes involves a  integration of pre-processing, LLM-powered transcript generation, and text-to-speech generation. Here's how it all works under the hood:
+Transforming static documents into engaging podcast episodes involves an integration of pre-processing, LLM-powered transcript generation, and text-to-speech generation. Here's how it all works under the hood:
 
 ---
 
@@ -33,7 +33,7 @@ Cleaner input data ensures that the model works with reliable and consistent inf
 ### ⚙️ **Key Components in this Doc Pre-Processing**
  **1 - File Loading**
 
-   - Uses functions defined in `data_loaders.py`
+   - Uses functions defined in [`data_loaders.py`](api.md/#document_to_podcast.preprocessing.data_loaders)
 
    - Supports `.html`, `.pdf`, `.txt`, and `.docx` formats.
 
@@ -80,7 +80,7 @@ In this final step, the generated podcast transcript is brought to life as an au
 
 **1 - Text-to-Speech Audio Generation**
 
-   - The `text_to_speech.py` script converts text into audio using a specified TTS model and tokenizer.
+   - The [`text_to_speech.py`](api.md/#document_to_podcast.inference.text_to_speech) script converts text into audio using a specified TTS model and tokenizer.
 
    - A **speaker profile** defines the voice characteristics (e.g., tone, speed, clarity) for each speaker.
 
@@ -88,7 +88,7 @@ In this final step, the generated podcast transcript is brought to life as an au
 
 **2 - Parsing and Combining Voices**
 
-- The `script_to_audio.py` script ensures each speaker’s dialogue is spoken in their unique voice.
+- The [`script_to_audio.py`](api.md/#document_to_podcast.podcast_maker.script_to_audio) script ensures each speaker’s dialogue is spoken in their unique voice.
 
 - The function `parse_script_to_waveform` splits the dialogue script by speakers and uses `text_to_speech` to generate audio for each speaker, stitching them together into a full podcast.
 
