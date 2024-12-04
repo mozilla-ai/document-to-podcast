@@ -5,7 +5,7 @@
 [![Ruff](https://github.com/mozilla-ai/document-to-podcast/actions/workflows/lint.yaml/badge.svg?label=Ruff)](https://github.com/mozilla-ai/document-to-podcast/actions/workflows/lint.yaml/)
 [![GitHub repo size](https://img.shields.io/github/repo-size/mozilla-ai/document-to-podcast?style=flat&logo=github&logoColor=whitesmoke&label=Repo%20Size)](https://github.com/mozilla-ai/document-to-podcast/archive/refs/heads/main.zip)
 
-<p align="center"><img src="./images/Blueprints-logo.png" width="25%" alt="Project logo"/></p>
+<p align="center"><img src="./images/Blueprints-logo.png" width="35%" alt="Project logo"/></p>
 
 # Document-to-podcast: a Blueprint by Mozilla.ai for generating podcasts from documents using local AI
 
