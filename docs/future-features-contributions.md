@@ -6,7 +6,7 @@ The Document-to-Podcast Blueprint is an evolving project designed to grow with t
 ## 🛠️ **This Page is Evolving**
 As the community grows, we’ll use this space to highlight contributions, showcase new ideas, and share guidance on expanding the Blueprint ecosystem.
 
-We have some ideas of how this Blueprint can be extend and improved, will be sharing these ideas and request for contributions shortly.
+We have some ideas of how this Blueprint can be extended and improved, will be sharing these ideas and request for contributions shortly.
 
 ---
 
