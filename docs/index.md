@@ -6,7 +6,14 @@
 
 Blueprints empower developers to easily integrate AI capabilities into their projects using open-source models and tools.
 
-These docs are your your companion to mastering the **Document-to-Podcast Blueprint**—a local-first approach for transforming documents into engaging podcasts.
+These docs are your companion to mastering the **Document-to-Podcast Blueprint**—a local-first approach for transforming documents into engaging podcasts.
+
+### Built with
+- Python 3.10+
+- [Llama-cpp](https://github.com/abetlen/llama-cpp-python) (text-to-text, i.e script generation)
+- [Parler_tts](https://github.com/huggingface/parler-tts) (text-to-speech, i.e audio generation)
+- [Streamlit](https://streamlit.io/) (UI demo)
+
 
 ---
 
