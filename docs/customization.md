@@ -86,4 +86,4 @@ def load_text_to_speech_model_and_tokenizer():
 
 ## 🤝 **Contributing to the Blueprint**
 
-Want to help improve or extend this Blueprint? Check out the **[Future Features & Contributions Guide](../future-features-contributions)** to see how you can contribute your ideas, code, or feedback to make this Blueprint even better!
+Want to help improve or extend this Blueprint? Check out the **[Future Features & Contributions Guide](future-features-contributions.md)** to see how you can contribute your ideas, code, or feedback to make this Blueprint even better!
