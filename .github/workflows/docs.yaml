@@ -31,7 +31,7 @@ jobs:
         run: pip install -e '.[docs]'
 
       - name: Build docs
-        if: github.event_name = 'pull_request'
+        if: github.event_name == 'pull_request'
         run: mkdocs build -s
 
       - name: Publish docs
