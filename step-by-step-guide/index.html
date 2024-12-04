@@ -665,7 +665,7 @@
 <p><strong>2 - Text Cleaning</strong></p>
 <ul>
 <li>
-<p>Uses functions defined in <a href="../api/#opennotebookllm.inference.data_cleaners"><code>data_cleaners.py</code></a></p>
+<p>Uses functions defined in <a href="../api/#document_to_podcast.inference.data_cleaners"><code>data_cleaners.py</code></a></p>
 </li>
 <li>
 <p>Removes unwanted elements like URLs, email addresses, and special characters using Python's <code>re</code> library, which leverages <strong>Regular Expressions</strong> (regex) to identify and manipulate specific patterns in text.</p>
@@ -680,7 +680,7 @@
 <p><strong>1 - Model Loading</strong></p>
 <ul>
 <li>
-<p>The <a href="../api/#opennotebookllm.inference.model_loaders"><code>model_loader.py</code></a> script is responsible for loading GGUF-type models using the <code>llama_cpp</code> library.</p>
+<p>The <a href="../api/#document_to_podcast.inference.model_loaders"><code>model_loader.py</code></a> script is responsible for loading GGUF-type models using the <code>llama_cpp</code> library.</p>
 </li>
 <li>
 <p>The function <code>load_llama_cpp_model</code> takes a model ID in the format <code>{org}/{repo}/{filename}</code> and loads the specified model.</p>
@@ -692,7 +692,7 @@
 <p><strong>2 - Text-to-Text Generation</strong></p>
 <ul>
 <li>
-<p>The <a href="../api/#opennotebookllm.inference.text_to_text"><code>text_to_text.py</code></a> script manages the interaction with the language model, converting input text into a structured conversational podcast script.</p>
+<p>The <a href="../api/#document_to_podcast.inference.text_to_text"><code>text_to_text.py</code></a> script manages the interaction with the language model, converting input text into a structured conversational podcast script.</p>
 </li>
 <li>
 <p>It uses the <code>chat_completion</code> function to process the input text and a customizable system prompt, guiding the language to generate a text output (e.g. a coherent podcast script between speakers).</p>
