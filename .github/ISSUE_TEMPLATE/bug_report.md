@@ -1,31 +1,75 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+name: "\U0001F41B Bug Report"
+description: Submit a bug report to help us improve
+title: "[BUG]: "
+projects:
+  - "document-to-podcast"
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+        Please make sure you have searched for a similar [issue](https://github.com/mozilla-ai/document-to-podcast/issues) before submitting a new one.
 
----
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what the bug is.
+      placeholder: |
+        When I try to...
+    validations:
+      required: true
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: |
+        Provide  a numbered list of steps that one can follow to reproduce this behavior.
+      placeholder: |
+        Steps to reproduce the behavior:
+          1.
+          2.
+          3.
+    validations:
+      required: true
 
-**System Information (please complete the following information):**
- - OS: [e.g. macOS Sonoma]
- - Lumigator version [e.g. commit SHA]
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: |
+        Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+    validations:
+      required: false
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '...'
-3. Scroll down to '...'
-4. See error
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: A clear description of what you would expect to happen.
+      placeholder: "I would expect to..."
+    validations:
+      required: true
 
-**Expected behavior**
-If applicable, a clear and concise description of what you expected to happen.
+  - type: textarea
+    id: system-info
+    attributes:
+      label: System Info
+      description: Please share your system info with us.
+      placeholder: |
+        - OS: [e.g., macOS Sonoma]
+        - Document-to-podcast version: [e.g. commit SHA]
+    validations:
+      required: true
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Additional context**
-Add any other context about the problem here.
+  - type: checkboxes
+    id: search
+    attributes:
+      label: Have you searched for similar issues before submitting this one?
+      options:
+        - label: Yes, I have searched for similar issues
+          required: true
