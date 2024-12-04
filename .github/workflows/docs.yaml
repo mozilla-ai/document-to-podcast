@@ -3,6 +3,7 @@ name: Documentation
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -29,6 +30,10 @@ jobs:
       - name: Install requirements
         run: pip install -e '.[docs]'
 
-      - name: Publish docs
+      - name: Build docs
+        if: github.event_name = 'pull_request'
+        run: mkdocs build -s
 
+      - name: Publish docs
+        if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         run: mkdocs gh-deploy
