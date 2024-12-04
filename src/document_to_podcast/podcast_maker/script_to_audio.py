@@ -40,6 +40,15 @@ def parse_script_to_waveform(script: str, podcast_config: PodcastConfig):
 def save_waveform_as_file(
     waveform: np.ndarray, sampling_rate: int, filename: str
 ) -> None:
+    """
+    Save the output of the TTS (a numpy waveform) to a .wav file using the soundfile library.
+
+    Args:
+        waveform: 2D numpy array of a waveform
+        sampling_rate: Usually 44.100, but check the specifications of the TTS model you are using.
+        filename: the destination filename to save the audio
+
+    """
     sf.write(filename, waveform, sampling_rate)
 
 
