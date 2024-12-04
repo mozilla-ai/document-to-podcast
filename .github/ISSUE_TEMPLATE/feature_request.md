@@ -1,20 +1,55 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+name: "\U0001F680 Feature Request"
+description: Suggest an idea for this project
+title: "[FEATURE]: "
+projects:
+  - "Document-to-podcast"
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this form!
+        Please make sure you have searched for a similar [issue](https://github.com/mozilla-ai/document-to-podcast/issues) before submitting a new one.
 
----
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: |
+        A clear and concise description of the proposal and why this is important.
+      placeholder: |
+          I'm always frustrated when...
+    validations:
+      required: true
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: |
+        A clear and concise description of any alternative solutions or features you've considered.
+      placeholder: |
+          I've considered...
+    validations:
+      required: false
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+  - type: textarea
+    id: contribution
+    attributes:
+      label: Contribution
+      description: |
+        Is there any way that you could help, e.g. by submitting a PR?
+        Make sure to read the [contribution guidelines](https://github.com/mozilla-ai/document-to-podcast/blob/main/CONTRIBUTING.md).
+      placeholder: |
+        I could help by...
+    validations:
+      required: false
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+  - type: checkboxes
+    id: search
+    attributes:
+      label: Have you searched for similar issues before submitting this one?
+      options:
+        - label: Yes, I have searched for similar issues
+          required: true
