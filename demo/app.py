@@ -133,7 +133,14 @@ if uploaded_file is not None:
                     complete_script += text
                     text = ""
 
-            complete_audio = np.concatenate(complete_audio)
-            save_waveform_as_file(waveform=complete_audio, sampling_rate=speech_model.config.sampling_rate, filename="podcast.wav")
+            with st.spinner("Saving Podcast to file..."):
+                complete_audio = np.concatenate(complete_audio)
+                save_waveform_as_file(
+                    waveform=complete_audio,
+                    sampling_rate=speech_model.config.sampling_rate,
+                    filename="podcast.wav",
+                )
             with open("script.txt", "w") as f:
                 f.write(complete_script)
+
+            st.subheader("Podcast and Script saved to disk!")
