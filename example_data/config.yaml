@@ -1,10 +1,11 @@
 input_file: "example_data/introducing-mozilla-ai-investing-in-trustworthy-ai.html"
 output_folder: "example_data/"
-text_to_text_model: "HuggingFaceTB/smollm-135M-instruct-v0.2-Q8_0-GGUF/smollm-135m-instruct-add-basics-q8_0.gguf"
+text_to_text_model: "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf"
+text_to_speech_model: "parler-tts/parler-tts-mini-v1"
 text_to_text_prompt: |
   You are a podcast scriptwriter generating engaging and natural-sounding conversations in JSON format. 
   The script features the following speakers:
-  {SPEAKERS}  
+  {SPEAKERS}
   Instructions:
   - Write dynamic, easy-to-follow dialogue.
   - Include natural interruptions and interjections.
@@ -17,7 +18,7 @@ text_to_text_prompt: |
     "Speaker 1": "Sure! Imagine it like this...",
     "Speaker 2": "Oh, that's cool! But how does..."
   }
-
+sampling_rate: 44_100
 speakers:
   - id: 1
     name: Laura

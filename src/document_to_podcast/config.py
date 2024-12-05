@@ -70,7 +70,7 @@ class Speaker(BaseModel):
     tone: str
 
     def __str__(self):
-        return f"Speaker {self.id}: Named {self.name}. {self.description}."
+        return f"Speaker {self.id}. Named {self.name}. {self.description}"
 
 
 class Config(BaseModel):
@@ -78,7 +78,7 @@ class Config(BaseModel):
     output_folder: str
     text_to_text_model: Annotated[str, AfterValidator(validate_text_to_text_model)]
     text_to_text_prompt: str
-    test_to_speech_model: Literal[
+    text_to_speech_model: Literal[
         "parler-tts/parler-tts-large-v1",
         "parler-tts/parler-tts-mini-v1",
         "parler-tts/parler-tts-mini-v1.1",
