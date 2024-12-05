@@ -118,16 +118,16 @@ def document_to_podcast(
     logger.info("Generating Podcast...")
     podcast_script = ""
     text = ""
+    podcast_audio = []
     system_prompt = config.text_to_text_prompt.strip()
-    system_prompt = system_prompt.format(
-        SPEAKERS="\n".join(str(speaker) for speaker in config.speakers)
+    system_prompt = system_prompt.replace(
+        "{SPEAKERS}", "\n".join(str(speaker) for speaker in config.speakers)
     )
     for chunk in text_to_text_stream(
         clean_text, text_model, system_prompt=system_prompt
     ):
         text += chunk
         podcast_script += chunk
-        podcast_audio = []
         if text.endswith("\n") and "Speaker" in text:
             logger.debug(text)
             speaker_id = re.search(r"Speaker (\d+)", text).group(1)
@@ -147,7 +147,7 @@ def document_to_podcast(
     sf.write(
         str(output_folder / "podcast.wav"),
         np.concatenate(podcast_audio),
-        sampling_rate=sampling_rate,
+        samplerate=sampling_rate,
     )
     (output_folder / "podcast.txt").write_text(podcast_script)
     logger.success("Done!")
