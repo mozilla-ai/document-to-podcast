@@ -131,7 +131,6 @@ def document_to_podcast(
         if text.endswith("\n") and "Speaker" in text:
             logger.debug(text)
             speaker_id = re.search(r"Speaker (\d+)", text).group(1)
-            text = ""
             tone = next(
                 speaker for speaker in config.speakers if speaker.id == int(speaker_id)
             ).tone
@@ -142,6 +141,7 @@ def document_to_podcast(
                 tone,
             )
             podcast_audio.append(speech)
+            text = ""
 
     logger.info("Saving Podcast...")
     sf.write(

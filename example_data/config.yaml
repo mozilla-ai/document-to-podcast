@@ -18,7 +18,7 @@ text_to_text_prompt: |
     "Speaker 1": "Sure! Imagine it like this...",
     "Speaker 2": "Oh, that's cool! But how does..."
   }
-sampling_rate: 44_100
+sampling_rate: 44100
 speakers:
   - id: 1
     name: Laura
