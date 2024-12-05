@@ -20,8 +20,11 @@ document-to-podcast \
 
 ---
 
-::: document_to_podcast.cli.Config
-
 ::: document_to_podcast.cli.document_to_podcast
 
-::: document_to_podcast.cli.PODCAST_PROMPT
+---
+
+::: document_to_podcast.config.Config
+::: document_to_podcast.config.Speaker
+::: document_to_podcast.config.DEFAULT_PROMPT
+::: document_to_podcast.config.DEFAULT_SPEAKERS
