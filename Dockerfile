@@ -19,6 +19,7 @@ COPY . /home/appuser/document-to-podcast
 WORKDIR /home/appuser/document-to-podcast
 
 RUN virtualenv ${VIRTUAL_ENV}
+RUN . ${VIRTUAL_ENV}/bin/activate && pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
 RUN . ${VIRTUAL_ENV}/bin/activate && pip install -e /home/appuser/document-to-podcast
 RUN . ${VIRTUAL_ENV}/bin/activate && python demo/download_models.py
 
