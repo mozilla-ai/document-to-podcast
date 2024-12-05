@@ -1,8 +1,10 @@
 import re
 from pathlib import Path
 
+import numpy as np
 import streamlit as st
 
+from document_to_podcast.podcast_maker.script_to_audio import save_waveform_as_file
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
@@ -46,6 +48,32 @@ def load_text_to_text_model():
 @st.cache_resource
 def load_text_to_speech_model_and_tokenizer():
     return load_parler_tts_model_and_tokenizer("parler-tts/parler-tts-mini-v1", "cpu")
+
+
+gen_pod_button = "generate_podcast_clicked"
+save_audio_button = "save_podcast_clicked"
+save_text_button = "save_script_clicked"
+
+if gen_pod_button not in st.session_state:
+    st.session_state[gen_pod_button] = False
+if save_audio_button not in st.session_state:
+    st.session_state[save_audio_button] = False
+if save_text_button not in st.session_state:
+    st.session_state[save_text_button] = False
+
+
+def click_generate_podcast():
+    st.session_state[gen_pod_button] = True
+    st.session_state[save_audio_button] = False
+    st.session_state[save_text_button] = False
+
+
+def click_save_audio():
+    st.session_state[save_audio_button] = True
+
+
+def click_save_text():
+    st.session_state[save_text_button] = True
 
 
 st.title("Document To Podcast")
@@ -101,9 +129,11 @@ if uploaded_file is not None:
 
     system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
 
-    if st.button("Generate Podcast"):
+    if st.button("Generate Podcast", on_click=click_generate_podcast):
         with st.spinner("Generating Podcast..."):
             text = ""
+            complete_script = ""
+            complete_audio = []
             for chunk in text_to_text_stream(
                 clean_text, text_model, system_prompt=system_prompt.strip()
             ):
@@ -119,4 +149,24 @@ if uploaded_file is not None:
                             SPEAKER_DESCRIPTIONS[speaker_id],
                         )
                     st.audio(speech, sample_rate=speech_model.config.sampling_rate)
+                    complete_audio.append(speech)
+                    complete_script += text
                     text = ""
+            if st.session_state[gen_pod_button]:
+                if st.button("Save Podcast to audio file", on_click=click_save_audio):
+                    complete_audio = np.concatenate(complete_audio)
+                    save_waveform_as_file(
+                        waveform=complete_audio,
+                        sampling_rate=speech_model.config.sampling_rate,
+                        filename="podcast.wav",
+                    )
+                    st.markdown("Podcast saved to disk!")
+
+                if st.button(
+                    "Save Podcast script to text file", on_click=click_save_text
+                ):
+                    with open("script.txt", "w") as f:
+                        complete_script += "}"
+                        f.write(complete_script)
+
+                    st.markdown("Script saved to disk!")
