@@ -1,8 +1,10 @@
 import re
 from pathlib import Path
 
+import numpy as np
 import streamlit as st
 
+from document_to_podcast.podcast_maker.script_to_audio import save_waveform_as_file
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
@@ -110,6 +112,8 @@ if uploaded_file is not None:
     if st.button("Generate Podcast"):
         with st.spinner("Generating Podcast..."):
             text = ""
+            complete_script = ""
+            complete_audio = []
             for chunk in text_to_text_stream(
                 clean_text, text_model, system_prompt=system_prompt.strip()
             ):
@@ -125,4 +129,11 @@ if uploaded_file is not None:
                             SPEAKER_DESCRIPTIONS[speaker_id],
                         )
                     st.audio(speech, sample_rate=speech_model.config.sampling_rate)
+                    complete_audio.append(speech)
+                    complete_script += text
                     text = ""
+
+            complete_audio = np.concatenate(complete_audio)
+            save_waveform_as_file(waveform=complete_audio, sampling_rate=speech_model.config.sampling_rate, filename="podcast.wav")
+            with open("script.txt", "w") as f:
+                f.write(complete_script)
