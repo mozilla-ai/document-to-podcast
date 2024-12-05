@@ -1,59 +1,21 @@
+import re
 from pathlib import Path
-from typing_extensions import Annotated
 
+import numpy as np
+import soundfile as sf
 import yaml
 from fire import Fire
 from loguru import logger
-from pydantic import BaseModel, Field, FilePath
-from pydantic.functional_validators import AfterValidator
 
 
-from document_to_podcast.inference.model_loaders import load_llama_cpp_model
+from document_to_podcast.config import Config, Speaker, DEFAULT_PROMPT, DEFAULT_SPEAKERS
+from document_to_podcast.inference.model_loaders import (
+    load_llama_cpp_model,
+    load_parler_tts_model_and_tokenizer,
+)
 from document_to_podcast.inference.text_to_text import text_to_text_stream
+from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.preprocessing import DATA_CLEANERS, DATA_LOADERS
-
-
-PODCAST_PROMPT = """
-You are a podcast scriptwriter generating engaging and natural-sounding conversations in JSON format. The script features two speakers:
-Speaker 1: Laura, the main host. She explains topics clearly using anecdotes and analogies, teaching in an engaging and captivating way.
-Speaker 2: Jon, the co-host. He keeps the conversation on track, asks curious follow-up questions, and reacts with excitement or confusion, often using interjections like “hmm” or “umm.”
-Instructions:
-- Write dynamic, easy-to-follow dialogue.
-- Include natural interruptions and interjections.
-- Avoid repetitive phrasing between speakers.
-- Format output as a JSON conversation.
-Example:
-{
-  "Speaker 1": "Welcome to our podcast! Today, we’re exploring...",
-  "Speaker 2": "Hi Laura! I’m excited to hear about this. Can you explain...",
-  "Speaker 1": "Sure! Imagine it like this...",
-  "Speaker 2": "Oh, that’s cool! But how does..."
-}
-"""
-
-
-def validate_input_file(value):
-    if Path(value).suffix not in DATA_LOADERS:
-        raise ValueError(
-            f"input_file extension must be one of {list(DATA_LOADERS.keys())}"
-        )
-    return value
-
-
-def validate_text_to_text_model(value):
-    parts = value.split("/")
-    if len(parts) != 3:
-        raise ValueError("text_to_text_model must be formatted as `owner/repo/file`")
-    if not value.endswith(".gguf"):
-        raise ValueError("text_to_text_model must be a gguf file")
-    return value
-
-
-class Config(BaseModel):
-    input_file: Annotated[FilePath, AfterValidator(validate_input_file)]
-    output_folder: str
-    text_to_text_model: Annotated[str, AfterValidator(validate_text_to_text_model)]
-    text_to_text_prompt: str = Field(default=PODCAST_PROMPT)
 
 
 @logger.catch()
@@ -61,7 +23,10 @@ def document_to_podcast(
     input_file: str | None = None,
     output_folder: str | None = None,
     text_to_text_model: str = "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf",
-    text_to_text_prompt: str = PODCAST_PROMPT,
+    text_to_text_prompt: str = DEFAULT_PROMPT,
+    text_to_speech_model: str = "parler-tts/parler-tts-mini-v1",
+    speakers: list[Speaker] | None = None,
+    sampling_rate: int = 44_100,
     from_config: str | None = None,
 ):
     """
@@ -92,6 +57,17 @@ def document_to_podcast(
             Defaults to `allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf`.
 
         text_to_text_prompt (str, optional): The prompt for the text-to-text model.
+            Defaults to DEFAULT_PROMPT.
+
+        text_to_speech_model (str, optional): The path to the text-to-speech model.
+            Defaults to `parler-tts/parler-tts-mini-v1`.
+
+        speakers (list[Speaker] | None, optional): The speakers for the podcast.
+            Defaults to DEFAULT_SPEAKERS.
+
+        sampling_rate (int, optional): The sampling rate for the output audio.
+            Defaults to 44_100.
+
         from_config (str, optional): The path to the config file. Defaults to None.
 
             If provided, all other arguments will be ignored.
@@ -99,11 +75,14 @@ def document_to_podcast(
     if from_config:
         config = Config.model_validate(yaml.safe_load(Path(from_config).read_text()))
     else:
+        speakers = speakers or DEFAULT_SPEAKERS
         config = Config(
             input_file=input_file,
             output_folder=output_folder,
             text_to_text_model=text_to_text_model,
             text_to_text_prompt=text_to_text_prompt,
+            text_to_speech_model=text_to_speech_model,
+            speakers=[Speaker.model_validate(speaker) for speaker in speakers],
         )
 
     output_folder = Path(config.output_folder)
@@ -121,10 +100,14 @@ def document_to_podcast(
     logger.debug(f"Length of cleaned text: {len(clean_text)}")
 
     logger.info(f"Loading {config.text_to_text_model}")
-    model = load_llama_cpp_model(model_id=config.text_to_text_model)
+    text_model = load_llama_cpp_model(model_id=config.text_to_text_model)
+    logger.info(f"Loading {config.text_to_speech_model}")
+    speech_model, speech_tokenizer = load_parler_tts_model_and_tokenizer(
+        model_id=config.text_to_speech_model
+    )
 
     # ~4 characters per token is considered a reasonable default.
-    max_characters = model.n_ctx() * 4
+    max_characters = text_model.n_ctx() * 4
     if len(clean_text) > max_characters:
         logger.warning(
             f"Input text is too big ({len(clean_text)})."
@@ -135,15 +118,39 @@ def document_to_podcast(
     logger.info("Generating Podcast...")
     podcast_script = ""
     text = ""
+    system_prompt = config.text_to_text_prompt.strip()
+    system_prompt = system_prompt.format(
+        SPEAKERS="\n".join(str(speaker) for speaker in config.speakers)
+    )
     for chunk in text_to_text_stream(
-        clean_text, model, system_prompt=config.text_to_text_prompt.strip()
+        clean_text, text_model, system_prompt=system_prompt
     ):
         text += chunk
         podcast_script += chunk
-        if text.endswith("\n"):
+        podcast_audio = []
+        if text.endswith("\n") and "Speaker" in text:
             logger.debug(text)
+            speaker_id = re.search(r"Speaker (\d+)", text).group(1)
             text = ""
+            tone = next(
+                speaker for speaker in config.speakers if speaker.id == int(speaker_id)
+            ).tone
+            speech = text_to_speech(
+                text.split(f'"Speaker {speaker_id}":')[-1],
+                speech_model,
+                speech_tokenizer,
+                tone,
+            )
+            podcast_audio.append(speech)
+
+    logger.info("Saving Podcast...")
+    sf.write(
+        str(output_folder / "podcast.wav"),
+        np.concatenate(podcast_audio),
+        sampling_rate=sampling_rate,
+    )
     (output_folder / "podcast.txt").write_text(podcast_script)
+    logger.success("Done!")
 
 
 def main():
