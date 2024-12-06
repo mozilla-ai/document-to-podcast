@@ -2,6 +2,7 @@ import re
 from pathlib import Path
 
 import streamlit as st
+import torch
 
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
@@ -35,6 +36,8 @@ SPEAKER_DESCRIPTIONS = {
     "2": "Jon's voice is calm with very clear audio and no background noise.",
 }
 
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
+
 
 @st.cache_resource
 def load_text_to_text_model():
@@ -45,7 +48,7 @@ def load_text_to_text_model():
 
 @st.cache_resource
 def load_text_to_speech_model_and_tokenizer():
-    return load_parler_tts_model_and_tokenizer("parler-tts/parler-tts-mini-v1", "cpu")
+    return load_parler_tts_model_and_tokenizer("parler-tts/parler-tts-mini-v1", device)
 
 
 st.title("Document To Podcast")
@@ -117,6 +120,7 @@ if uploaded_file is not None:
                             speech_model,
                             speech_tokenizer,
                             SPEAKER_DESCRIPTIONS[speaker_id],
+                            device=device,
                         )
                     st.audio(speech, sample_rate=speech_model.config.sampling_rate)
                     text = ""
