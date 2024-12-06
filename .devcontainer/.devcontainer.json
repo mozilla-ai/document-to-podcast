@@ -11,5 +11,5 @@
         "version": "latest"
       }
     },
-    "postCreateCommand": "pip install -e . --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu"
+    "postCreateCommand": "bash .github/setup.sh"
 }

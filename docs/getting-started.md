@@ -8,17 +8,7 @@ The fastest way to get started. Click the button below to launch the project dir
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb)
 
-Once the Codespaces environment launches, follow these steps:
-
-1. **Install Dependencies**
-
-   Inside the Codespaces terminal, run:
-```bash
-bash .github/setup.sh
-```
-2. **Run the Demo**
-
-   Inside the Codespaces terminal, start the Streamlit demo by running:
+Once the Codespaces environment launches, inside the terminal, start the Streamlit demo by running:
 ```bash
 python -m streamlit run demo/app.py
 ```
