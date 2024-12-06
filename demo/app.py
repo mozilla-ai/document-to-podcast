@@ -42,7 +42,8 @@ device = "cuda:0" if torch.cuda.is_available() else "cpu"
 @st.cache_resource
 def load_text_to_text_model():
     return load_llama_cpp_model(
-        model_id="allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf"
+        model_id="allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf",
+        device=device,
     )
 
 
