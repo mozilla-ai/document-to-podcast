@@ -71,12 +71,18 @@ if uploaded_file is not None:
     raw_text = DATA_LOADERS[extension](uploaded_file)
     with col1:
         st.subheader("Raw Text")
-        st.text_area(f"Total Length: {len(raw_text)}", f"{raw_text[:500]} . . .")
+        st.text_area(
+            f"Number of characters before cleaning: {len(raw_text)}",
+            f"{raw_text[:500]} . . .",
+        )
 
     clean_text = DATA_CLEANERS[extension](raw_text)
     with col2:
         st.subheader("Cleaned Text")
-        st.text_area(f"Total Length: {len(clean_text)}", f"{clean_text[:500]} . . .")
+        st.text_area(
+            f"Number of characters after cleaning: {len(clean_text)}",
+            f"{clean_text[:500]} . . .",
+        )
 
     st.divider()
     st.header("Downloading and Loading models")
