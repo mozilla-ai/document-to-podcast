@@ -6,7 +6,7 @@ import streamlit as st
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
-    load_parler_tts_model_and_tokenizer,
+    load_outetts_model,
 )
 from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.inference.text_to_text import text_to_text_stream
@@ -30,9 +30,10 @@ Example:
 }
 """
 
+# For a complete list of speakers supported: https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers
 SPEAKER_DESCRIPTIONS = {
-    "1": "Laura's voice is exciting and fast in delivery with very clear audio and no background noise.",
-    "2": "Jon's voice is calm with very clear audio and no background noise.",
+    "1": "en_female_1",
+    "2": "en_male_1",
 }
 
 
@@ -44,8 +45,8 @@ def load_text_to_text_model():
 
 
 @st.cache_resource
-def load_text_to_speech_model_and_tokenizer():
-    return load_parler_tts_model_and_tokenizer("parler-tts/parler-tts-mini-v1", "cpu")
+def load_text_to_speech_model():
+    return load_outetts_model("OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf")
 
 
 st.title("Document To Podcast")
@@ -91,7 +92,7 @@ if uploaded_file is not None:
     )
 
     text_model = load_text_to_text_model()
-    speech_model, speech_tokenizer = load_text_to_speech_model_and_tokenizer()
+    speech_model = load_text_to_speech_model()
 
     # ~4 characters per token is considered a reasonable default.
     max_characters = text_model.n_ctx() * 4
@@ -119,10 +120,9 @@ if uploaded_file is not None:
                     speaker_id = re.search(r"Speaker (\d+)", text).group(1)
                     with st.spinner("Generating Audio..."):
                         speech = text_to_speech(
-                            text.split(f'"Speaker {speaker_id}":')[-1],
-                            speech_model,
-                            speech_tokenizer,
-                            SPEAKER_DESCRIPTIONS[speaker_id],
+                            input_text=text.split(f'"Speaker {speaker_id}":')[-1],
+                            model=speech_model,
+                            speaker_profile=SPEAKER_DESCRIPTIONS[speaker_id],
                         )
-                    st.audio(speech, sample_rate=speech_model.config.sampling_rate)
+                    st.audio(speech, sample_rate=44_100)
                     text = ""
