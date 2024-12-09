@@ -15,7 +15,7 @@ The Document-to-Podcast Blueprint is an evolving project designed to grow with t
 This Blueprint is designed to be a foundation you can build upon. By extending its capabilities, you can open the door to new applications, improve user experience, and adapt the Blueprint to address other use cases. Here are a few ideas for how you can expand its potential:
 
 
-- **Multi-language podcast geneation:** Add support for multi-language podcast generation to expand the reach of this Blueprint.
+- **Multi-language podcast generation:** Add support for multi-language podcast generation to expand the reach of this Blueprint.
 - **New modalities input:** Add support to the Blueprint to be able to handle different input modalities, like audio or images, enabling more flexibility in podcast generation.
 - **Improved audio quality:** Explore and integrate more advanced open-source TTS frameworks to enhance the quality of generated audio, making podcasts sound more natural.
 
