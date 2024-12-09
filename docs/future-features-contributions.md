@@ -12,21 +12,21 @@ The Document-to-Podcast Blueprint is an evolving project designed to grow with t
 
 ### 🎨 **Extensibility Ideas**
 
-This Blueprint is designed to be a foundation you can build upon. By extending its capabilities, you can open the door to new applications, improve user experience, and adapt the Blueprint to address other use cases. Here are a few ideas for how you can expand its potential: 
+This Blueprint is designed to be a foundation you can build upon. By extending its capabilities, you can open the door to new applications, improve user experience, and adapt the Blueprint to address other use cases. Here are a few ideas for how you can expand its potential:
 
 
-- **Multi-language podcast geneation:** Add support for multi-language podcast generation to expand the reach of this Blueprint.  
+- **Multi-language podcast geneation:** Add support for multi-language podcast generation to expand the reach of this Blueprint.
 - **New modalities input:** Add support to the Blueprint to be able to handle different input modalities, like audio or images, enabling more flexibility in podcast generation.
-- **Improved audio quality:** Explore and integrate more advanced open-source TTS frameworks to enhance the quality of generated audio, making podcasts sound more natural. 
+- **Improved audio quality:** Explore and integrate more advanced open-source TTS frameworks to enhance the quality of generated audio, making podcasts sound more natural.
 
 
 We’d love to see how you can enhance this Blueprint! If you create improvements or extend its capabilities, consider contributing them back to the project so others in the community can benefit from your work. Check out our [Contributions Guide](https://github.com/mozilla-ai/document-to-podcast/blob/main/CONTRIBUTING.md) to get started!
 
 ### 💡 **Share Your Ideas**
-Got an idea for how this Blueprint could be improved? You can share your suggestions through [GitHub Discussions](https://github.com/mozilla-ai/document-to-podcast/discussions). 
+Got an idea for how this Blueprint could be improved? You can share your suggestions through [GitHub Discussions](https://github.com/mozilla-ai/document-to-podcast/discussions).
 
 ### 🌍 **Build New Blueprints**
-This project is part of a larger initiative to create a collection of reusable starter code solutions that use open-source AI tools. If you’re inspired to create your own Blueprint, you can use the [Blueprint-template](https://github.com/new?template_name=Blueprint-template&template_owner=mozilla-ai) to get started. 
+This project is part of a larger initiative to create a collection of reusable starter code solutions that use open-source AI tools. If you’re inspired to create your own Blueprint, you can use the [Blueprint-template](https://github.com/new?template_name=Blueprint-template&template_owner=mozilla-ai) to get started.
 
 ---
 

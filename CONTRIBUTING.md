@@ -26,9 +26,9 @@ We welcome all kinds of contributions, from improving customization, to extendin
 - Ensure your branch is up-to-date with the main branch before submitting the PR
 - Please follow the PR template, adding as much detail as possible, including how to test the changes
 
---- 
+---
 
-## **Contribution Ideas**  
+## **Contribution Ideas**
 
 Looking for inspiration? Check out the [Future Features & Contributions page](https://mozilla-ai.github.io/document-to-podcast/future-features-contributions/) to explore meaningful ways you can enhance and extend this Blueprint.
 Please also feel free to get involved in this repo's [GitHub Discussions](https://github.com/mozilla-ai/document-to-podcast/discussions) to engage in ideas, get feedback, or ask questions.
@@ -37,13 +37,12 @@ Please also feel free to get involved in this repo's [GitHub Discussions](https:
 
 ### **Guidelines for Contributions**
 
-**Coding Standards**  
-- Follow PEP 8 for Python formatting.  
-- Use clear variable and function names and add comments to improve readability.  
+**Coding Standards**
+- Follow PEP 8 for Python formatting.
+- Use clear variable and function names and add comments to improve readability.
 
-**Testing**  
-- Test changes locally and in GitHub Codespaces to ensure functionality.   
+**Testing**
+- Test changes locally and in GitHub Codespaces to ensure functionality.
 
-**Documentation**  
-- Update docs for changes to functionality and maintain consistency with existing docs.  
-
+**Documentation**
+- Update docs for changes to functionality and maintain consistency with existing docs.
