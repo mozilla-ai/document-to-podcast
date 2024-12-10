@@ -6,7 +6,7 @@ from document_to_podcast.podcast_maker.config import PodcastConfig
 from document_to_podcast.podcast_maker.script_to_audio import save_waveform_as_file
 
 
-def test_text_to_speech_parler(
+def test_text_to_speech_oute(
     tmp_path: Path, tts_prompt: str, podcast_config: PodcastConfig
 ):
     speaker_cfg = list(podcast_config.speakers.values())[0]
@@ -21,5 +21,5 @@ def test_text_to_speech_parler(
     save_waveform_as_file(
         waveform=waveform,
         sampling_rate=podcast_config.sampling_rate,
-        filename=str(tmp_path / "test_parler_tts.wav"),
+        filename=str(tmp_path / "test_oute_tts.wav"),
     )
