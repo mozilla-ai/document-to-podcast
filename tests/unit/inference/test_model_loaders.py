@@ -22,7 +22,9 @@ def test_load_llama_cpp_model():
 
 
 def test_load_outetts_model():
-    model = load_outetts_model("OuteAI/OuteTTS-0.1-350M")
+    model = load_outetts_model(
+        "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf"
+    )
     assert isinstance(model, InterfaceGGUFClass)
 
 
