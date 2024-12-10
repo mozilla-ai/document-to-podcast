@@ -47,7 +47,6 @@ SPEAKER_DESCRIPTIONS_PARLER = {
 TTS_MODELS = [
     "OuteTTS-0.1-350M",
     "OuteTTS-0.2-500M",
-    "parler-tts-mini-v1.1",
     "parler-tts-large-v1",
     "parler-tts-mini-v1",
     "parler-tts-mini-expresso",
@@ -79,13 +78,13 @@ def load_text_to_speech_model(model_id: str) -> PodcastConfig:
         model=model,
         speaker_id="1",
         tokenizer=tokenizer,
-        speaker_description=speaker_descriptions["1"],
+        speaker_profile=speaker_descriptions["1"],
     )
     speaker_2 = SpeakerConfig(
         model=model,
         speaker_id="2",
         tokenizer=tokenizer,
-        speaker_description=speaker_descriptions["2"],
+        speaker_profile=speaker_descriptions["2"],
     )
 
     return PodcastConfig(
@@ -175,7 +174,7 @@ if uploaded_file is not None:
                                 tokenizer=tts_model.speakers[speaker_id].tokenizer,
                                 speaker_profile=tts_model.speakers[
                                     speaker_id
-                                ].speaker_description,
+                                ].speaker_profile,
                             )
                         st.audio(speech, sample_rate=tts_model.sampling_rate)
                         text = ""
