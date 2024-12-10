@@ -30,7 +30,8 @@ The process begins with preparing the input document for AI processing. The syst
 
 Cleaner input data ensures that the model works with reliable and consistent information, reducing the likelihood of confusing with unexpected tokens and therefore helping it to generate better outputs.
 
-### ⚙️ **Key Components in this Doc Pre-Processing**
+### ⚙️ **Key Components in this Step**
+
  **1 - File Loading**
 
    - Uses functions defined in [`data_loaders.py`](api.md/#document_to_podcast.preprocessing.data_loaders)
@@ -51,7 +52,7 @@ Cleaner input data ensures that the model works with reliable and consistent inf
 
 In this step, the pre-processed text is transformed into a conversational podcast transcript. Using a Language Model, the system generates a dialogue that’s both informative and engaging.
 
-### ⚙️ **Key Components in Script Generation**
+### ⚙️ **Key Components in this Step**
 
  **1 - Model Loading**
 
