@@ -1,9 +1,7 @@
 import numpy as np
 import soundfile as sf
 
-from document_to_podcast.inference.model_loaders import (
-    load_parler_tts_model_and_tokenizer,
-)
+from document_to_podcast.inference.model_loaders import load_outetts_model
 from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.podcast_maker.config import PodcastConfig, SpeakerConfig
 
@@ -54,24 +52,22 @@ if __name__ == "__main__":
     test_filename = "test_podcast.wav"
     test_podcast_script = '{"Speaker 1": "Welcome to our podcast.", "Speaker 2": "It\'s great to be here!", "Speaker 1": "What do you want to talk about today?", "Speaker 2": "Wish I knew!"}'
 
-    model, tokenizer = load_parler_tts_model_and_tokenizer(
-        "parler-tts/parler-tts-mini-v1", "cpu"
+    model = load_outetts_model(
+        "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf", "en", "cpu"
     )
     speaker_1 = SpeakerConfig(
         model=model,
         speaker_id="1",
-        tokenizer=tokenizer,
-        speaker_profile="Laura's voice is exciting and fast in delivery with very clear audio and no background noise.",
+        speaker_profile="female_1",
     )
     speaker_2 = SpeakerConfig(
         model=model,
         speaker_id="2",
-        tokenizer=tokenizer,
-        speaker_profile="Jon's voice is calm with very clear audio and no background noise.",
+        speaker_profile="male_1",
     )
-    demo_podcast_config = PodcastConfig(
-        speakers={s.speaker_id: s for s in [speaker_1, speaker_2]}
-    )
+    speakers = {s.speaker_id: s for s in [speaker_1, speaker_2]}
+    demo_podcast_config = PodcastConfig(speakers=speakers)
+
     test_podcast_waveform = parse_script_to_waveform(
         test_podcast_script, demo_podcast_config
     )
