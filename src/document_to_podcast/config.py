@@ -28,11 +28,13 @@ Example:
 
 DEFAULT_SPEAKERS = [
     {
+        "id": 1,
         "name": "Laura",
         "description": "The main host. She explains topics clearly using anecdotes and analogies, teaching in an engaging and captivating way.",
         "tone": "Laura's voice is exciting and fast in delivery with very clear audio and no background noise.",
     },
     {
+        "id": 2,
         "name": "Jon",
         "description": "The co-host. He keeps the conversation on track, asks curious follow-up questions, and reacts with excitement or confusion, often using interjections like hmm or umm.",
         "tone": "Jon's voice is calm with very clear audio and no background noise.",
