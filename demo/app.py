@@ -61,8 +61,9 @@ if uploaded_file is not None:
     st.divider()
     st.header("Loading and Cleaning Data")
     st.markdown(
-        "[API Reference for data_cleaners](https://mozilla-ai.github.io/document-to-podcast/api/#document_to_podcast.preprocessing.data_cleaners)"
+        "[Docs for this Step](https://mozilla-ai.github.io/document-to-podcast/step-by-step-guide/#step-1-document-pre-processing)"
     )
+    st.divider()
 
     extension = Path(uploaded_file.name).suffix
 
@@ -87,7 +88,18 @@ if uploaded_file is not None:
     st.divider()
     st.header("Downloading and Loading models")
     st.markdown(
-        "[API Reference for model_loaders](https://mozilla-ai.github.io/document-to-podcast/api/#document_to_podcast.inference.model_loaders)"
+        "[Docs for this Step](https://mozilla-ai.github.io/document-to-podcast/step-by-step-guide/#step-2-podcast-script-generation)"
+    )
+    st.divider()
+
+    st.markdown(
+        "For this demo, we are using the following models: \n"
+        "- [OLMoE-1B-7B-0924-Instruct-GGUF](https://huggingface.co/allenai/OLMoE-1B-7B-0924-Instruct-GGUF)\n"
+        "- [parler-tts-mini-v1](https://huggingface.co/parler-tts/parler-tts-mini-v1)"
+    )
+    st.markdown(
+        "You can check the [Customization Guide](https://mozilla-ai.github.io/document-to-podcast/customization/)"
+        " for more information on how to use different models."
     )
 
     text_model = load_text_to_text_model()
@@ -104,6 +116,10 @@ if uploaded_file is not None:
 
     st.divider()
     st.header("Podcast generation")
+    st.markdown(
+        "[Docs for this Step](https://mozilla-ai.github.io/document-to-podcast/step-by-step-guide/#step-3-audio-podcast-generation)"
+    )
+    st.divider()
 
     system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
 

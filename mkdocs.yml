@@ -1,4 +1,6 @@
 site_name: Blueprints Docs
+repo_url: https://github.com/mozilla-ai/document-to-podcast
+repo_name: document-to-podcast
 
 nav:
   - Home: index.md
@@ -9,6 +11,8 @@ nav:
   - Future Features & Contributions: future-features-contributions.md
 
 theme:
+  icon:
+    repo: fontawesome/brands/github
   name: material
   palette:
     - scheme: default
