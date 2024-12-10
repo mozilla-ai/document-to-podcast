@@ -1,3 +1,7 @@
+"""
+Used when building the Dockerfile to download the models that are used in the hosted demo
+"""
+
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
     load_parler_tts_model_and_tokenizer,

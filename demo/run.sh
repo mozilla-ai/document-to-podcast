@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Adapted from https://docs.streamlit.io/deploy/tutorials/kubernetes
+
 APP_PID=
 stopRunningProcess() {
     # Based on https://linuxconfig.org/how-to-propagate-a-signal-to-child-processes-from-a-bash-script
