@@ -35,25 +35,25 @@ def load_llama_cpp_model(
 
 
 def load_outetts_model(
-    model_id: str, language: str = "en", model_version: str = "0.1", device: str = "cpu"
-):
+    model_id: str, language: str = "en", device: str = "cpu"
+) -> InterfaceGGUF:
     """
     Loads the given model_id using the OuteTTS interface. For more info: https://github.com/edwko/OuteTTS
 
     Examples:
-        >>> model = load_outetts_model("OuteAI/OuteTTS-0.1-350M", "en", "0.1", "cpu")
+        >>> model = load_outetts_model("OuteAI/OuteTTS-0.1-350M", "en", "cpu")
 
     Args:
         model_id (str): The model id to load.
-            Format is expected to be `{repo}/{filename}`.
+            Format is expected to be `{org}/{repo}/{filename}`.
         language (str): Supported languages in 0.2-500M: en, zh, ja, ko.
-        model_version (str): Select model version
         device (str): The device to load the model on, such as "cuda:0" or "cpu".
 
     Returns:
         PreTrainedModel: The loaded model.
     """
     n_layers_on_gpu = 0 if device == "cpu" else -1
+    model_version = model_id.split("-")[1]
 
     org, repo, filename = model_id.split("/")
     local_path = hf_hub_download(repo_id=f"{org}/{repo}", filename=filename)
