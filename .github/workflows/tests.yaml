@@ -30,5 +30,8 @@ jobs:
       - name: Install
         run: pip install -e '.[tests]'
 
+      - name: Install parler dependency
+        run: pip install -e '.[parler_tts]'
+
       - name: Run tests
         run: pytest -v tests
