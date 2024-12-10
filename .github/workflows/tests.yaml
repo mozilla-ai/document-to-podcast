@@ -31,7 +31,7 @@ jobs:
         run: pip install -e '.[tests]'
 
       - name: Install parler dependency
-        run: pip install -e '.[parler_tts]'
+        run: pip install -e '.[parler]'
 
       - name: Run tests
         run: pytest -v tests
