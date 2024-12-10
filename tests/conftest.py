@@ -2,9 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from document_to_podcast.inference.model_loaders import (
-    load_parler_tts_model_and_tokenizer,
-)
+from document_to_podcast.inference.model_loaders import load_outetts_model
 from document_to_podcast.podcast_maker.config import (
     PodcastConfig,
     SpeakerConfig,
@@ -28,25 +26,18 @@ def podcast_script():
 
 @pytest.fixture()
 def podcast_config():
-    speaker_1_description = "Laura's voice is exciting and fast in delivery with very clear audio and no background noise."
-    speaker_2_description = (
-        "Jon's voice is calm with very clear audio and no background noise."
-    )
-
-    model, tokenizer = load_parler_tts_model_and_tokenizer(
-        "parler-tts/parler-tts-mini-v1", "cpu"
+    model = load_outetts_model(
+        "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf", "en", "cpu"
     )
     speaker_1 = SpeakerConfig(
         model=model,
         speaker_id="1",
-        tokenizer=tokenizer,
-        speaker_profile=speaker_1_description,
+        speaker_profile="female_1",
     )
     speaker_2 = SpeakerConfig(
         model=model,
         speaker_id="2",
-        tokenizer=tokenizer,
-        speaker_profile=speaker_2_description,
+        speaker_profile="male_1",
     )
     speakers = {s.speaker_id: s for s in [speaker_1, speaker_2]}
     return PodcastConfig(speakers=speakers)
