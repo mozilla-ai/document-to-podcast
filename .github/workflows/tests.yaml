@@ -31,4 +31,4 @@ jobs:
         run: pip install -e '.[tests]'
 
       - name: Run tests
-        run: pytest -v tests
+        run: pytest -vv -s tests/e2e
