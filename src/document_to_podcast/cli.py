@@ -26,7 +26,7 @@ def document_to_podcast(
     text_to_text_prompt: str = DEFAULT_PROMPT,
     text_to_speech_model: str = "parler-tts/parler-tts-mini-v1",
     speakers: list[Speaker] | None = None,
-    sampling_rate: int = 44_100,
+    sampling_rate: int = 44100,
     from_config: str | None = None,
 ):
     """
@@ -83,6 +83,7 @@ def document_to_podcast(
             text_to_text_prompt=text_to_text_prompt,
             text_to_speech_model=text_to_speech_model,
             speakers=[Speaker.model_validate(speaker) for speaker in speakers],
+            sampling_rate=sampling_rate,
         )
 
     output_folder = Path(config.output_folder)
