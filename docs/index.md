@@ -11,7 +11,7 @@ These docs are your companion to mastering the **Document-to-Podcast Blueprint**
 ### Built with
 - Python 3.10+
 - [Llama-cpp](https://github.com/abetlen/llama-cpp-python) (text-to-text, i.e script generation)
-- [Parler_tts](https://github.com/huggingface/parler-tts) (text-to-speech, i.e audio generation)
+- [OuteAI](https://github.com/edwko/OuteTTS) / [Parler_tts](https://github.com/huggingface/parler-tts) (text-to-speech, i.e audio generation)
 - [Streamlit](https://streamlit.io/) (UI demo)
 
 
