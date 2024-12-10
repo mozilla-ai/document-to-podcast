@@ -41,7 +41,7 @@ def load_outetts_model(
     Loads the given model_id using the OuteTTS interface. For more info: https://github.com/edwko/OuteTTS
 
     Examples:
-        >>> model = load_outetts_model("OuteAI/OuteTTS-0.1-350M", "en", "cpu")
+        >>> model = load_outetts_model("OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf", "en", "cpu")
 
     Args:
         model_id (str): The model id to load.
