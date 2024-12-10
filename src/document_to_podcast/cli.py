@@ -18,7 +18,7 @@ from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.preprocessing import DATA_CLEANERS, DATA_LOADERS
 
 
-@logger.catch()
+@logger.catch(reraise=True)
 def document_to_podcast(
     input_file: str | None = None,
     output_folder: str | None = None,
