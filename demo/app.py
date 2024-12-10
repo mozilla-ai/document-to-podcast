@@ -1,41 +1,19 @@
+import json
 import re
 from pathlib import Path
 
 import numpy as np
+import soundfile as sf
 import streamlit as st
 
-from document_to_podcast.podcast_maker.script_to_audio import save_waveform_as_file
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
     load_parler_tts_model_and_tokenizer,
 )
+from document_to_podcast.config import DEFAULT_PROMPT, DEFAULT_SPEAKERS
 from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.inference.text_to_text import text_to_text_stream
-
-
-PODCAST_PROMPT = """
-You are a podcast scriptwriter generating engaging and natural-sounding conversations in JSON format. The script features two speakers:
-Speaker 1: Laura, the main host. She explains topics clearly using anecdotes and analogies, teaching in an engaging and captivating way.
-Speaker 2: Jon, the co-host. He keeps the conversation on track, asks curious follow-up questions, and reacts with excitement or confusion, often using interjections like “hmm” or “umm.”
-Instructions:
-- Write dynamic, easy-to-follow dialogue.
-- Include natural interruptions and interjections.
-- Avoid repetitive phrasing between speakers.
-- Format output as a JSON conversation.
-Example:
-{
-  "Speaker 1": "Welcome to our podcast! Today, we're exploring...",
-  "Speaker 2": "Hi Laura! I'm excited to hear about this. Can you explain...",
-  "Speaker 1": "Sure! Imagine it like this...",
-  "Speaker 2": "Oh, that's cool! But how does..."
-}
-"""
-
-SPEAKER_DESCRIPTIONS = {
-    "1": "Laura's voice is exciting and fast in delivery with very clear audio and no background noise.",
-    "2": "Jon's voice is calm with very clear audio and no background noise.",
-}
 
 
 @st.cache_resource
@@ -138,9 +116,13 @@ if uploaded_file is not None:
     )
     st.divider()
 
-    system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
+    speakers = st.text_area("Speaker configuration", value=DEFAULT_SPEAKERS)
 
     if st.button("Generate Podcast", on_click=gen_button_clicked):
+        speakers = json.loads(speakers)
+        system_prompt = DEFAULT_PROMPT.replace(
+            "{SPEAKERS}", "\n".join(str(speaker) for speaker in speakers)
+        )
         with st.spinner("Generating Podcast..."):
             text = ""
             for chunk in text_to_text_stream(
@@ -152,12 +134,17 @@ if uploaded_file is not None:
                     st.write(st.session_state.script)
 
                     speaker_id = re.search(r"Speaker (\d+)", text).group(1)
+                    tone = next(
+                        speaker["tone"]
+                        for speaker in speakers
+                        if speaker["id"] == int(speaker_id)
+                    )
                     with st.spinner("Generating Audio..."):
                         speech = text_to_speech(
                             text.split(f'"Speaker {speaker_id}":')[-1],
                             speech_model,
                             speech_tokenizer,
-                            SPEAKER_DESCRIPTIONS[speaker_id],
+                            tone,
                         )
                     st.audio(speech, sample_rate=speech_model.config.sampling_rate)
                     st.session_state.audio.append(speech)
@@ -166,10 +153,10 @@ if uploaded_file is not None:
     if st.session_state[gen_button]:
         if st.button("Save Podcast to audio file"):
             st.session_state.audio = np.concatenate(st.session_state.audio)
-            save_waveform_as_file(
-                waveform=st.session_state.audio,
-                sampling_rate=speech_model.config.sampling_rate,
-                filename="podcast.wav",
+            sf.write(
+                "podcast.wav",
+                st.session_state.audio,
+                samplerate=44100,
             )
             st.markdown("Podcast saved to disk!")
 
