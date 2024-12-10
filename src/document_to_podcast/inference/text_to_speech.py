@@ -2,8 +2,7 @@ from typing import Union
 
 import numpy as np
 from outetts.version.v1.interface import InterfaceGGUF as InterfaceGGUFClass
-from parler_tts import ParlerTTSForConditionalGeneration
-from transformers import PreTrainedTokenizerBase
+from transformers import PreTrainedTokenizerBase, PreTrainedModel
 
 
 def _speech_generation_oute(
@@ -28,7 +27,7 @@ def _speech_generation_oute(
 
 def _speech_generation_parler(
     input_text: str,
-    model: ParlerTTSForConditionalGeneration,
+    model: PreTrainedModel,
     tokenizer: PreTrainedTokenizerBase,
     speaker_description: str,
 ) -> np.ndarray:
@@ -43,7 +42,7 @@ def _speech_generation_parler(
 
 def text_to_speech(
     input_text: str,
-    model: Union[ParlerTTSForConditionalGeneration, InterfaceGGUFClass],
+    model: Union[PreTrainedModel, InterfaceGGUFClass],
     tokenizer: PreTrainedTokenizerBase = None,
     speaker_profile: str = "",
 ) -> np.ndarray:
@@ -61,9 +60,9 @@ def text_to_speech(
     Returns:
         numpy array: The waveform of the speech as a 2D numpy array
     """
-    if isinstance(model, ParlerTTSForConditionalGeneration):
-        return _speech_generation_parler(input_text, model, tokenizer, speaker_profile)
-    elif isinstance(model, InterfaceGGUFClass):
+    if isinstance(model, InterfaceGGUFClass):
         return _speech_generation_oute(input_text, model, speaker_profile)
+    elif isinstance(model, PreTrainedModel):
+        return _speech_generation_parler(input_text, model, tokenizer, speaker_profile)
     else:
         raise NotImplementedError("Model not yet implemented for TTS")

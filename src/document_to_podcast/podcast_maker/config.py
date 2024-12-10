@@ -1,8 +1,7 @@
 from typing import Dict, Optional, Union
 
-from parler_tts import ParlerTTSForConditionalGeneration
 from outetts.version.v1.interface import InterfaceGGUF as InterfaceGGUFClass
-from transformers import PreTrainedTokenizerBase
+from transformers import PreTrainedModel, PreTrainedTokenizerBase
 from pydantic import BaseModel, ConfigDict
 
 
@@ -18,7 +17,7 @@ class SpeakerConfig(BaseModel):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    model: Union[ParlerTTSForConditionalGeneration, InterfaceGGUFClass]
+    model: Union[PreTrainedModel, InterfaceGGUFClass]
     speaker_id: str
     speaker_profile: Optional[str] = None
     tokenizer: Optional[PreTrainedTokenizerBase] = None
