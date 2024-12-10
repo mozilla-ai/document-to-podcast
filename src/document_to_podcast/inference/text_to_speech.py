@@ -22,7 +22,7 @@ def _speech_generation_oute(
         speaker=speaker,
     )
 
-    output_as_np = output.cpu().detach().numpy().squeeze()
+    output_as_np = output.audio.cpu().detach().numpy().squeeze()
     return output_as_np
 
 
