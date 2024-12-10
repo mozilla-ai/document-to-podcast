@@ -1,7 +1,11 @@
 from llama_cpp import Llama
 
-from document_to_podcast.inference.model_loaders import load_llama_cpp_model
+from document_to_podcast.inference.model_loaders import (
+    load_llama_cpp_model,
+    load_outetts_model,
+)
 from transformers import PreTrainedModel, PreTrainedTokenizerBase
+from outetts.version.v1.interface import InterfaceGGUF as InterfaceGGUFClass
 
 from document_to_podcast.inference.model_loaders import (
     load_parler_tts_model_and_tokenizer,
@@ -15,6 +19,13 @@ def test_load_llama_cpp_model():
     assert isinstance(model, Llama)
     # we set n_ctx=0 to indicate that we want to use the model's default context
     assert model.n_ctx() == 2048
+
+
+def test_load_outetts_model():
+    model = load_outetts_model(
+        "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf"
+    )
+    assert isinstance(model, InterfaceGGUFClass)
 
 
 def test_load_parler_tts_model_and_tokenizer():
