@@ -32,7 +32,7 @@ tests = [
   "pytest-sugar>=0.9.6",
 ]
 
-parler_tts = [
+parler = [
   "parler_tts @ git+https://github.com/daavoo/parler-tts.git",
 ]
 
