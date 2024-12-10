@@ -26,9 +26,7 @@ def parse_script_to_waveform(script: str, podcast_config: PodcastConfig):
             speaker_id, speaker_text = part.replace('"', "").split(":")
             speaker_model = podcast_config.speakers[speaker_id].model
             speaker_tokenizer = podcast_config.speakers[speaker_id].tokenizer
-            speaker_description = podcast_config.speakers[
-                speaker_id
-            ].speaker_description
+            speaker_description = podcast_config.speakers[speaker_id].speaker_profile
             speaker_waveform = text_to_speech(
                 speaker_text, speaker_model, speaker_tokenizer, speaker_description
             )
@@ -63,13 +61,13 @@ if __name__ == "__main__":
         model=model,
         speaker_id="1",
         tokenizer=tokenizer,
-        speaker_description="Laura's voice is exciting and fast in delivery with very clear audio and no background noise.",
+        speaker_profile="Laura's voice is exciting and fast in delivery with very clear audio and no background noise.",
     )
     speaker_2 = SpeakerConfig(
         model=model,
         speaker_id="2",
         tokenizer=tokenizer,
-        speaker_description="Jon's voice is calm with very clear audio and no background noise.",
+        speaker_profile="Jon's voice is calm with very clear audio and no background noise.",
     )
     demo_podcast_config = PodcastConfig(
         speakers={s.speaker_id: s for s in [speaker_1, speaker_2]}

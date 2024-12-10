@@ -40,13 +40,13 @@ def podcast_config():
         model=model,
         speaker_id="1",
         tokenizer=tokenizer,
-        speaker_description=speaker_1_description,
+        speaker_profile=speaker_1_description,
     )
     speaker_2 = SpeakerConfig(
         model=model,
         speaker_id="2",
         tokenizer=tokenizer,
-        speaker_description=speaker_2_description,
+        speaker_profile=speaker_2_description,
     )
     speakers = {s.speaker_id: s for s in [speaker_1, speaker_2]}
     return PodcastConfig(speakers=speakers)

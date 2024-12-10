@@ -15,7 +15,7 @@ def test_text_to_speech_parler(
         tts_prompt,
         speaker_cfg.model,
         speaker_cfg.tokenizer,
-        speaker_cfg.speaker_description,
+        speaker_cfg.speaker_profile,
     )
 
     save_waveform_as_file(
