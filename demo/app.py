@@ -116,9 +116,13 @@ if uploaded_file is not None:
     st.divider()
 
     st.subheader("Speaker configuration")
+    for s in DEFAULT_SPEAKERS:
+        s.pop("id", None)
     speakers = st.data_editor(DEFAULT_SPEAKERS, num_rows="dynamic")
 
     if st.button("Generate Podcast", on_click=gen_button_clicked):
+        for n, speaker in enumerate(speakers):
+            speaker["id"] = n
         system_prompt = DEFAULT_PROMPT.replace(
             "{SPEAKERS}",
             "\n".join(str(Speaker.model_validate(speaker)) for speaker in speakers),
