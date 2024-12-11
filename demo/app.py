@@ -1,8 +1,10 @@
 import re
 from pathlib import Path
 
+import numpy as np
 import streamlit as st
 
+from document_to_podcast.podcast_maker.script_to_audio import save_waveform_as_file
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
@@ -48,6 +50,21 @@ def load_text_to_speech_model_and_tokenizer():
     return load_parler_tts_model_and_tokenizer("parler-tts/parler-tts-mini-v1", "cpu")
 
 
+script = "script"
+audio = "audio"
+gen_button = "generate podcast button"
+if script not in st.session_state:
+    st.session_state[script] = ""
+if audio not in st.session_state:
+    st.session_state.audio = []
+if gen_button not in st.session_state:
+    st.session_state[gen_button] = False
+
+
+def gen_button_clicked():
+    st.session_state[gen_button] = True
+
+
 st.title("Document To Podcast")
 
 st.header("Uploading Data")
@@ -61,8 +78,9 @@ if uploaded_file is not None:
     st.divider()
     st.header("Loading and Cleaning Data")
     st.markdown(
-        "[API Reference for data_cleaners](https://mozilla-ai.github.io/document-to-podcast/api/#document_to_podcast.preprocessing.data_cleaners)"
+        "[Docs for this Step](https://mozilla-ai.github.io/document-to-podcast/step-by-step-guide/#step-1-document-pre-processing)"
     )
+    st.divider()
 
     extension = Path(uploaded_file.name).suffix
 
@@ -87,7 +105,18 @@ if uploaded_file is not None:
     st.divider()
     st.header("Downloading and Loading models")
     st.markdown(
-        "[API Reference for model_loaders](https://mozilla-ai.github.io/document-to-podcast/api/#document_to_podcast.inference.model_loaders)"
+        "[Docs for this Step](https://mozilla-ai.github.io/document-to-podcast/step-by-step-guide/#step-2-podcast-script-generation)"
+    )
+    st.divider()
+
+    st.markdown(
+        "For this demo, we are using the following models: \n"
+        "- [OLMoE-1B-7B-0924-Instruct-GGUF](https://huggingface.co/allenai/OLMoE-1B-7B-0924-Instruct-GGUF)\n"
+        "- [parler-tts-mini-v1](https://huggingface.co/parler-tts/parler-tts-mini-v1)"
+    )
+    st.markdown(
+        "You can check the [Customization Guide](https://mozilla-ai.github.io/document-to-podcast/customization/)"
+        " for more information on how to use different models."
     )
 
     text_model = load_text_to_text_model()
@@ -104,10 +133,14 @@ if uploaded_file is not None:
 
     st.divider()
     st.header("Podcast generation")
+    st.markdown(
+        "[Docs for this Step](https://mozilla-ai.github.io/document-to-podcast/step-by-step-guide/#step-3-audio-podcast-generation)"
+    )
+    st.divider()
 
     system_prompt = st.text_area("Podcast generation prompt", value=PODCAST_PROMPT)
 
-    if st.button("Generate Podcast"):
+    if st.button("Generate Podcast", on_click=gen_button_clicked):
         with st.spinner("Generating Podcast..."):
             text = ""
             for chunk in text_to_text_stream(
@@ -115,7 +148,9 @@ if uploaded_file is not None:
             ):
                 text += chunk
                 if text.endswith("\n") and "Speaker" in text:
-                    st.write(text)
+                    st.session_state.script += text
+                    st.write(st.session_state.script)
+
                     speaker_id = re.search(r"Speaker (\d+)", text).group(1)
                     with st.spinner("Generating Audio..."):
                         speech = text_to_speech(
@@ -125,4 +160,22 @@ if uploaded_file is not None:
                             SPEAKER_DESCRIPTIONS[speaker_id],
                         )
                     st.audio(speech, sample_rate=speech_model.config.sampling_rate)
+                    st.session_state.audio.append(speech)
                     text = ""
+
+    if st.session_state[gen_button]:
+        if st.button("Save Podcast to audio file"):
+            st.session_state.audio = np.concatenate(st.session_state.audio)
+            save_waveform_as_file(
+                waveform=st.session_state.audio,
+                sampling_rate=speech_model.config.sampling_rate,
+                filename="podcast.wav",
+            )
+            st.markdown("Podcast saved to disk!")
+
+        if st.button("Save Podcast script to text file"):
+            with open("script.txt", "w") as f:
+                st.session_state.script += "}"
+                f.write(st.session_state.script)
+
+            st.markdown("Script saved to disk!")

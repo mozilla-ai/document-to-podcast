@@ -13,7 +13,7 @@ It is designed to work on most local setups or with [GitHub Codespaces](https://
 ### 👉 📖 For more detailed guidance on using this project, please visit our [Docs here](https://mozilla-ai.github.io/document-to-podcast/).
 
 ### Built with
-- Python 3.10+
+- Python 3.10+ (use Python 3.12 for Apple M1/2/3 chips)
 - [Llama-cpp](https://github.com/abetlen/llama-cpp-python) (text-to-text, i.e script generation)
 - [Parler_tts](https://github.com/huggingface/parler-tts) (text-to-speech, i.e audio generation)
 - [Streamlit](https://streamlit.io/) (UI demo)
