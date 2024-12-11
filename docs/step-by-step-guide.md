@@ -30,7 +30,8 @@ The process begins with preparing the input document for AI processing. The syst
 
 Cleaner input data ensures that the model works with reliable and consistent information, reducing the likelihood of confusing with unexpected tokens and therefore helping it to generate better outputs.
 
-### ⚙️ **Key Components in this Doc Pre-Processing**
+### ⚙️ **Key Components in this Step**
+
  **1 - File Loading**
 
    - Uses functions defined in [`data_loaders.py`](api.md/#document_to_podcast.preprocessing.data_loaders)
@@ -51,15 +52,17 @@ Cleaner input data ensures that the model works with reliable and consistent inf
 
 In this step, the pre-processed text is transformed into a conversational podcast transcript. Using a Language Model, the system generates a dialogue that’s both informative and engaging.
 
-### ⚙️ **Key Components in Script Generation**
+### ⚙️ **Key Components in this Step**
 
  **1 - Model Loading**
 
-   - The [`model_loader.py`](api.md/#document_to_podcast.inference.model_loaders) script is responsible for loading GGUF-type models using the `llama_cpp` library.
+   - The [`model_loader.py`](api.md/#document_to_podcast.inference.model_loaders) module is responsible for loading the `text-to-text` and `text-to-speech` models using the `llama_cpp`, `outetts` and `parler_tts` libraries.
 
-   - The function `load_llama_cpp_model` takes a model ID in the format `{org}/{repo}/{filename}` and loads the specified model.
+   - The function `load_llama_cpp_model` takes a model ID in the format `{org}/{repo}/{filename}` and loads the specified model. This approach of using the `llama_cpp` library supports efficient CPU-based inference, making language models accessible even on machines without GPUs.
 
-   - This approach of using the `llama_cpp` library supports efficient CPU-based inference, making language models accessible even on machines without GPUs.
+   - The function `load_outetts_model` takes a model ID in the format `{org}/{repo}/{filename}` and loads the specified model, either on CPU or GPU, based on the `device` parameter. The parameter `language` also enables to swap between the languages the Oute package supports (as of Dec 2024: `en, zh, ja, ko`)
+
+   - The function `load_parler_tts_model_and_tokenizer` takes a model ID in the format `{repo}/{filename}` and loads the specified model and tokenizer, either on CPU or GPU, based on the `device` parameter.
 
  **2 - Text-to-Text Generation**
 
@@ -80,11 +83,11 @@ In this final step, the generated podcast transcript is brought to life as an au
 
 **1 - Text-to-Speech Audio Generation**
 
-   - The [`text_to_speech.py`](api.md/#document_to_podcast.inference.text_to_speech) script converts text into audio using a specified TTS model and tokenizer.
+   - The [`text_to_speech.py`](api.md/#document_to_podcast.inference.text_to_speech) script converts text into audio using a specified TTS model.
 
-   - A **speaker profile** defines the voice characteristics (e.g., tone, speed, clarity) for each speaker.
+   - A **speaker profile** defines the voice characteristics (e.g., tone, speed, clarity) for each speaker. This is specific to each TTS package. Oute models require one of the IDs specified [here](https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers). Parler requires natural language description of the speaker's voice and you have to use a pre-defined name (see [here](https://github.com/huggingface/parler-tts/blob/main/INFERENCE.md#speaker-consistency))
 
-   - The function `text_to_speech` takes the input text (e.g podcast script) and speaker profile, generating a waveform (audio data) that represents the spoken version of the text.
+   - The function `text_to_speech` takes the input text (e.g. podcast script) and speaker profile, generating a waveform (audio data in a numpy array) that represents the spoken version of the text.
 
 **2 - Parsing and Combining Voices**
 
@@ -92,7 +95,7 @@ In this final step, the generated podcast transcript is brought to life as an au
 
 - The function `parse_script_to_waveform` splits the dialogue script by speakers and uses `text_to_speech` to generate audio for each speaker, stitching them together into a full podcast.
 
-- Once the podcast waveform is ready, the save_waveform_as_file function saves it as an audio file (e.g., MP3 or WAV), making it ready for distribution.
+- Once the podcast waveform is ready, the `save_waveform_as_file` function saves it as an audio file (e.g., MP3 or WAV), making it ready for distribution.
 
 
 ## **Bringing It All Together in `app.py`**

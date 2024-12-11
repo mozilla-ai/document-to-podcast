@@ -78,6 +78,7 @@ Example:
 def load_text_to_speech_model_and_tokenizer():
     return load_parler_tts_model_and_tokenizer(
         "parler-tts/parler-tts-mini-expresso", "cpu")
+```
 
 ## 💡 Other Customization Ideas
 

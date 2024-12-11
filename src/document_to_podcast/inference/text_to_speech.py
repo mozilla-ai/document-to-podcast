@@ -1,5 +1,28 @@
+from typing import Union
+
 import numpy as np
-from transformers import PreTrainedModel, PreTrainedTokenizerBase
+from outetts.version.v1.interface import InterfaceGGUF as InterfaceGGUFClass
+from transformers import PreTrainedTokenizerBase, PreTrainedModel
+
+
+def _speech_generation_oute(
+    input_text: str,
+    model: InterfaceGGUFClass,
+    speaker_profile: str,
+    temperature: float = 0.3,
+) -> np.ndarray:
+    speaker = model.load_default_speaker(name=speaker_profile)
+
+    output = model.generate(
+        text=input_text,
+        temperature=temperature,
+        repetition_penalty=1.1,
+        max_length=4096,
+        speaker=speaker,
+    )
+
+    output_as_np = output.audio.cpu().detach().numpy().squeeze()
+    return output_as_np
 
 
 def _speech_generation_parler(
@@ -20,9 +43,9 @@ def _speech_generation_parler(
 
 def text_to_speech(
     input_text: str,
-    model: PreTrainedModel,
-    tokenizer: PreTrainedTokenizerBase,
-    speaker_profile: str,
+    model: Union[PreTrainedModel, InterfaceGGUFClass],
+    tokenizer: PreTrainedTokenizerBase = None,
+    speaker_profile: str = "",
     device: str = "cpu",
 ) -> np.ndarray:
     """
@@ -40,10 +63,11 @@ def text_to_speech(
     Returns:
         numpy array: The waveform of the speech as a 2D numpy array
     """
-    model_id = model.config.name_or_path
-    if "parler" in model_id:
+    if isinstance(model, InterfaceGGUFClass):
+        return _speech_generation_oute(input_text, model, speaker_profile)
+    elif isinstance(model, PreTrainedModel):
         return _speech_generation_parler(
             input_text, model, tokenizer, speaker_profile, device
         )
     else:
-        raise NotImplementedError(f"Model {model_id} not yet implemented for TTS")
+        raise NotImplementedError("Model not yet implemented for TTS")

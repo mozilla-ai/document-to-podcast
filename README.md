@@ -15,7 +15,7 @@ It is designed to work on most local setups or with [GitHub Codespaces](https://
 ### Built with
 - Python 3.10+
 - [Llama-cpp](https://github.com/abetlen/llama-cpp-python) (text-to-text, i.e script generation)
-- [Parler_tts](https://github.com/huggingface/parler-tts) (text-to-speech, i.e audio generation)
+- [OuteAI](https://github.com/edwko/OuteTTS) / [Parler_tts](https://github.com/huggingface/parler-tts) (text-to-speech, i.e audio generation)
 - [Streamlit](https://streamlit.io/) (UI demo)
 
 
@@ -31,14 +31,7 @@ The fastest way to get started. Click the button below to launch the project dir
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb)
 
-Once the Codespaces environment launches, follow these steps:
-
-1. **Install Dependencies**
-   Inside the Codespaces terminal, run:
-   ```bash
-   bash .github/setup.sh
-2. **Run the Demo**
-   Inside the Codespaces terminal, start the Streamlit demo by running:
+Once the Codespaces environment launches, inside the terminal, start the Streamlit demo by running:
    ```bash
    python -m streamlit run demo/app.py
    ```
@@ -63,6 +56,7 @@ Once the Codespaces environment launches, follow these steps:
    ```
 
 ***NOTE***: The first time you run the demo app it might take a while to generate the script or the audio because it will download the models to the machine which are a few GBs in size.
+
 
 ## How it Works
 
@@ -98,12 +92,37 @@ Once the Codespaces environment launches, follow these steps:
   -	Each speaker is assigned a distinct voice.
 	- The final output is saved as an audio file in formats like MP3 or WAV.
 
+## Models
+
+The architecture of this codebase focuses on modularity and adaptability, meaning it shouldn't be too difficult to swap frameworks to use your own suite of models. We have selected fully open source models that are very memory efficient and can run on a laptop CPU with less than 10GB RAM requirements.
+
+### text-to-text
+
+We are using the [llama.cpp](https://github.com/ggerganov/llama.cpp) library, which supports open source models optimized for local inference and minimal hardware requirements.
+
+For the complete list of models supported out-of-the-box, visit this [link](https://github.com/ggerganov/llama.cpp?tab=readme-ov-file#text-only).
+
+Our default text-to-text model is the fully open source [OLMoE-7B-Instruct](https://huggingface.co/allenai/OLMoE-1B-7B-0924-Instruct) from [AllenAI](https://allenai.org/).
+
+### text-to-speech
+
+We support models from the [OuteAI](https://github.com/edwko/OuteTTS) and [Parler_tts](https://github.com/huggingface/parler-tts) packages.
+
+For a complete list of models visit [Oute HF](https://huggingface.co/collections/OuteAI/outetts-6728aa71a53a076e4ba4817c) (only the GGUF versions) and [Parler HF](https://huggingface.co/collections/parler-tts/parler-tts-fully-open-source-high-quality-tts-66164ad285ba03e8ffde214c).
+
+**Important note:** In order to keep the package dependencies as lightweight as possible, only the Oute interface is installed by default. If you want to use the parler models, please also run:
+
+```bash
+pip install -e '.[parler]'
+```
+
+
 ## Pre-requisites
 
 - **System requirements**:
   - OS: Windows, macOS, or Linux
-  - Python 3.10 or higher
-  - Minimum RAM: 16 GB
+  - Python 3.10>, <3.12
+  - Minimum RAM: 10 GB
   - Disk space: 32 GB minimum
 
 - **Dependencies**:

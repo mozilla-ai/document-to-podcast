@@ -11,9 +11,9 @@ dynamic = ["version"]
 dependencies = [
   "beautifulsoup4",
   "huggingface-hub",
+  "outetts",
   "llama-cpp-python",
   "loguru",
-  "parler_tts @ git+https://github.com/daavoo/parler-tts.git",
   "pydantic",
   "PyPDF2[crypto]",
   "python-docx",
@@ -30,6 +30,10 @@ docs = [
 tests = [
   "pytest>=8,<9",
   "pytest-sugar>=0.9.6",
+]
+
+parler = [
+  "parler_tts @ git+https://github.com/daavoo/parler-tts.git",
 ]
 
 [project.urls]

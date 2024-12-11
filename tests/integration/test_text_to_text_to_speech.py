@@ -25,7 +25,7 @@ def test_text_to_text_to_speech(tmp_path: Path, podcast_config: PodcastConfig):
         input_text=result,
         model=speaker_cfg.model,
         tokenizer=speaker_cfg.tokenizer,
-        speaker_profile=speaker_cfg.speaker_description,
+        speaker_profile=speaker_cfg.speaker_profile,
     )
 
     filename = str(tmp_path / "test_text_to_text_to_speech_parler.wav")
