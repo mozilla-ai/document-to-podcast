@@ -122,7 +122,7 @@ if uploaded_file is not None:
 
     if st.button("Generate Podcast", on_click=gen_button_clicked):
         for n, speaker in enumerate(speakers):
-            speaker["id"] = n
+            speaker["id"] = n + 1
         system_prompt = DEFAULT_PROMPT.replace(
             "{SPEAKERS}",
             "\n".join(str(Speaker.model_validate(speaker)) for speaker in speakers),
