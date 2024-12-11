@@ -30,9 +30,10 @@ def _speech_generation_parler(
     model: PreTrainedModel,
     tokenizer: PreTrainedTokenizerBase,
     speaker_description: str,
+    device: str,
 ) -> np.ndarray:
-    input_ids = tokenizer(speaker_description, return_tensors="pt").input_ids
-    prompt_input_ids = tokenizer(input_text, return_tensors="pt").input_ids
+    input_ids = tokenizer(speaker_description, return_tensors="pt").input_ids.to(device)
+    prompt_input_ids = tokenizer(input_text, return_tensors="pt").input_ids.to(device)
 
     generation = model.generate(input_ids=input_ids, prompt_input_ids=prompt_input_ids)
     waveform = generation.cpu().numpy().squeeze()
@@ -45,6 +46,7 @@ def text_to_speech(
     model: Union[PreTrainedModel, InterfaceGGUFClass],
     tokenizer: PreTrainedTokenizerBase = None,
     speaker_profile: str = "",
+    device: str = "cpu",
 ) -> np.ndarray:
     """
     Generates a speech waveform using the input_text, a model and a speaker profile to define a distinct voice pattern.
@@ -57,12 +59,15 @@ def text_to_speech(
         model (PreTrainedModel): The model used for generating the waveform.
         tokenizer (PreTrainedTokenizerBase): The tokenizer used for tokenizing the text in order to send to the model.
         speaker_profile (str): A description used by the ParlerTTS model to configure the speaker profile.
+        device (str): The device to compute the generation on, such as "cuda:0" or "cpu".
     Returns:
         numpy array: The waveform of the speech as a 2D numpy array
     """
     if isinstance(model, InterfaceGGUFClass):
         return _speech_generation_oute(input_text, model, speaker_profile)
     elif isinstance(model, PreTrainedModel):
-        return _speech_generation_parler(input_text, model, tokenizer, speaker_profile)
+        return _speech_generation_parler(
+            input_text, model, tokenizer, speaker_profile, device
+        )
     else:
         raise NotImplementedError("Model not yet implemented for TTS")

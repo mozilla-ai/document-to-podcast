@@ -2,7 +2,9 @@ import re
 from pathlib import Path
 
 import streamlit as st
+import torch
 from llama_cpp import Llama
+from loguru import logger
 
 from document_to_podcast.podcast_maker.config import SpeakerConfig, PodcastConfig
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
@@ -51,6 +53,7 @@ TTS_MODELS = [
     "parler-tts-mini-v1",
     "parler-tts-mini-expresso",
 ]
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
 
 @st.cache_resource
@@ -68,8 +71,9 @@ def load_text_to_speech_model(model_id: str) -> PodcastConfig:
         speaker_descriptions = SPEAKER_DESCRIPTIONS_OUTE
         sampling_rate = model.audio_codec.sr
     else:
+        logger.info(f"Running {model_id} on {device}")
         model, tokenizer = load_parler_tts_model_and_tokenizer(
-            f"parler-tts/{model_id}", "cpu"
+            f"parler-tts/{model_id}", device
         )
         speaker_descriptions = SPEAKER_DESCRIPTIONS_PARLER
         sampling_rate = model.config.sampling_rate
@@ -189,6 +193,7 @@ if uploaded_file is not None:
                                 speaker_profile=tts_model.speakers[
                                     speaker_id
                                 ].speaker_profile,
+                                device=device,
                             )
                         st.audio(speech, sample_rate=tts_model.sampling_rate)
                         text = ""
