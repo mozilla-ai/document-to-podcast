@@ -1,4 +1,3 @@
-import json
 import re
 from pathlib import Path
 
@@ -11,7 +10,7 @@ from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
     load_parler_tts_model_and_tokenizer,
 )
-from document_to_podcast.config import DEFAULT_PROMPT, DEFAULT_SPEAKERS
+from document_to_podcast.config import DEFAULT_PROMPT, DEFAULT_SPEAKERS, Speaker
 from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.inference.text_to_text import text_to_text_stream
 
@@ -116,12 +115,13 @@ if uploaded_file is not None:
     )
     st.divider()
 
-    speakers = st.text_area("Speaker configuration", value=DEFAULT_SPEAKERS)
+    st.subheader("Speaker configuration")
+    speakers = st.data_editor(DEFAULT_SPEAKERS, num_rows="dynamic")
 
     if st.button("Generate Podcast", on_click=gen_button_clicked):
-        speakers = json.loads(speakers)
         system_prompt = DEFAULT_PROMPT.replace(
-            "{SPEAKERS}", "\n".join(str(speaker) for speaker in speakers)
+            "{SPEAKERS}",
+            "\n".join(str(Speaker.model_validate(speaker)) for speaker in speakers),
         )
         with st.spinner("Generating Podcast..."):
             text = ""
