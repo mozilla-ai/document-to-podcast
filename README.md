@@ -98,17 +98,13 @@ The architecture of this codebase focuses on modularity and adaptability, meanin
 
 ### text-to-text
 
-We are using the [llama.cpp](https://github.com/ggerganov/llama.cpp) library, which supports open source models optimized for local inference and minimal hardware requirements.
+We are using the [llama.cpp](https://github.com/ggerganov/llama.cpp) library, which supports open source models optimized for local inference and minimal hardware requirements. Our default text-to-text model is the open source [OLMoE-7B-Instruct](https://huggingface.co/allenai/OLMoE-1B-7B-0924-Instruct) from [AllenAI](https://allenai.org/).
 
 For the complete list of models supported out-of-the-box, visit this [link](https://github.com/ggerganov/llama.cpp?tab=readme-ov-file#text-only).
 
-Our default text-to-text model is the fully open source [OLMoE-7B-Instruct](https://huggingface.co/allenai/OLMoE-1B-7B-0924-Instruct) from [AllenAI](https://allenai.org/).
-
 ### text-to-speech
 
-We support models from the [OuteAI](https://github.com/edwko/OuteTTS) and [Parler_tts](https://github.com/huggingface/parler-tts) packages.
-
-For a complete list of models visit [Oute HF](https://huggingface.co/collections/OuteAI/outetts-6728aa71a53a076e4ba4817c) (only the GGUF versions) and [Parler HF](https://huggingface.co/collections/parler-tts/parler-tts-fully-open-source-high-quality-tts-66164ad285ba03e8ffde214c).
+We support models from the [OuteAI](https://github.com/edwko/OuteTTS) and [Parler_tts](https://github.com/huggingface/parler-tts) packages. For a complete list of models visit [Oute HF](https://huggingface.co/collections/OuteAI/outetts-6728aa71a53a076e4ba4817c) (only the GGUF versions) and [Parler HF](https://huggingface.co/collections/parler-tts/parler-tts-fully-open-source-high-quality-tts-66164ad285ba03e8ffde214c).
 
 **Important note:** In order to keep the package dependencies as lightweight as possible, only the Oute interface is installed by default. If you want to use the parler models, please also run:
 
