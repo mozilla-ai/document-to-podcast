@@ -149,7 +149,7 @@ if uploaded_file is not None:
                 text += chunk
                 if text.endswith("\n") and "Speaker" in text:
                     st.session_state.script += text
-                    st.write(st.session_state.script)
+                    st.write(text)
 
                     speaker_id = re.search(r"Speaker (\d+)", text).group(1)
                     with st.spinner("Generating Audio..."):
