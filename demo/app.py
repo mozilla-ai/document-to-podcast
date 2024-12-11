@@ -4,6 +4,7 @@ from pathlib import Path
 import streamlit as st
 import torch
 from llama_cpp import Llama
+from loguru import logger
 
 from document_to_podcast.podcast_maker.config import SpeakerConfig, PodcastConfig
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
@@ -70,6 +71,7 @@ def load_text_to_speech_model(model_id: str) -> PodcastConfig:
         speaker_descriptions = SPEAKER_DESCRIPTIONS_OUTE
         sampling_rate = model.audio_codec.sr
     else:
+        logger.info(f"Running {model_id} on {device}")
         model, tokenizer = load_parler_tts_model_and_tokenizer(
             f"parler-tts/{model_id}", device
         )
