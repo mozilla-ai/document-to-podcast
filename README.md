@@ -94,7 +94,7 @@ Once the Codespaces environment launches, inside the terminal, start the Streaml
 
 ## Models
 
-Our architecture focuses on modularity and adaptability, meaning it shouldn't be too difficult to swap frameworks to use your own suite of models.
+The architecture of this codebase focuses on modularity and adaptability, meaning it shouldn't be too difficult to swap frameworks to use your own suite of models. We have selected fully open source models that are very memory efficient and can run on a laptop CPU with less than 10GB RAM requirements.
 
 ### text-to-text
 
