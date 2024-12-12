@@ -88,3 +88,4 @@ class Config(BaseModel):
         "parler-tts/parler-tts-mini-v1.1",
     ]
     speakers: list[Speaker]
+    device: str = "cpu"

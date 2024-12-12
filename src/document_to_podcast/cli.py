@@ -12,6 +12,7 @@ from document_to_podcast.config import Config, Speaker, DEFAULT_PROMPT, DEFAULT_
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
     load_outetts_model,
+    load_parler_tts_model_and_tokenizer,
 )
 from document_to_podcast.inference.text_to_text import text_to_text_stream
 from document_to_podcast.inference.text_to_speech import text_to_speech
@@ -26,6 +27,7 @@ def document_to_podcast(
     text_to_text_prompt: str = DEFAULT_PROMPT,
     text_to_speech_model: str = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
     speakers: list[Speaker] | None = None,
+    device: str = "cpu",
     from_config: str | None = None,
 ):
     """
@@ -64,6 +66,8 @@ def document_to_podcast(
         speakers (list[Speaker] | None, optional): The speakers for the podcast.
             Defaults to DEFAULT_SPEAKERS.
 
+        device (str, optional): The device to load the TTS on. Currently only applicable to Parler. Defaults to `cpu`.
+
         from_config (str, optional): The path to the config file. Defaults to None.
 
             If provided, all other arguments will be ignored.
@@ -79,6 +83,7 @@ def document_to_podcast(
             text_to_text_prompt=text_to_text_prompt,
             text_to_speech_model=text_to_speech_model,
             speakers=[Speaker.model_validate(speaker) for speaker in speakers],
+            device=device,
         )
 
     output_folder = Path(config.output_folder)
@@ -97,8 +102,14 @@ def document_to_podcast(
 
     logger.info(f"Loading {config.text_to_text_model}")
     text_model = load_llama_cpp_model(model_id=config.text_to_text_model)
-    logger.info(f"Loading {config.text_to_speech_model}")
-    speech_model = load_outetts_model(model_id=config.text_to_speech_model)
+    logger.info(f"Loading {config.text_to_speech_model} on {config.device}")
+    if "oute" in config.text_to_speech_model.lower():
+        speech_model = load_outetts_model(model_id=config.text_to_speech_model)
+        speech_tokenizer = None
+    else:
+        speech_model, speech_tokenizer = load_parler_tts_model_and_tokenizer(
+            model_id=config.text_to_speech_model, device=config.device
+        )
 
     # ~4 characters per token is considered a reasonable default.
     max_characters = text_model.n_ctx() * 4
@@ -132,6 +143,7 @@ def document_to_podcast(
                 text.split(f'"Speaker {speaker_id}":')[-1],
                 speech_model,
                 voice_profile,
+                tokenizer=speech_tokenizer,  # Applicable only for parler models
             )
             podcast_audio.append(speech)
             text = ""

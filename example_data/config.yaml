@@ -27,3 +27,4 @@ speakers:
     name: Jon
     description: The co-host. He keeps the conversation on track, asks curious follow-up questions, and reacts with excitement or confusion, often using interjections like hmm or umm.
     voice_profile: male_1
+device: "cpu"
