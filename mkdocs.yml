@@ -28,6 +28,8 @@ theme:
         name: Switch to light mode
   extra_css:
     - assets/custom.css
+  features:
+    - content.code.copy
 
 markdown_extensions:
   - pymdownx.highlight:

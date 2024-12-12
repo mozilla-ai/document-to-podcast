@@ -48,6 +48,33 @@ Cleaner input data ensures that the model works with reliable and consistent inf
 
    - Ensures the document is clean and ready for the next step.
 
+### 🔍 **API Example**
+
+```py
+from document_to_podcast.preprocessing import DATA_CLEANERS, DATA_LOADERS
+
+input_file = "example_data/introducing-mozilla-ai-investing-in-trustworthy-ai.html"
+data_loader = DATA_LOADERS[".html"]
+data_cleaner = DATA_CLEANERS[".html"]
+
+raw_data = data_loader(input_file)
+print(raw_data[:200])
+"""
+<!doctype html>
+<html class="no-js" lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="profile" href="https://gmpg.org/x
+"""
+clean_data = data_cleaner(raw_data)
+print(clean_data[:200])
+"""
+Skip to content Mozilla Internet Culture Deep Dives Mozilla Explains Interviews Videos Privacy Security Products Firefox Pocket Mozilla VPN Mozilla News Internet Policy Leadership Mitchell Baker, CEO
+"""
+```
+
 ## **Step 2: Podcast Script Generation**
 
 In this step, the pre-processed text is transformed into a conversational podcast transcript. Using a Language Model, the system generates a dialogue that’s both informative and engaging.
@@ -69,6 +96,16 @@ In this step, the pre-processed text is transformed into a conversational podcas
    - The `return_json` parameter allows the output to be formatted as a JSON object style, which can make it easier to parse and integrate structured responses into applications.
 
    - Supports both single-pass outputs (`text_to_text`) and real-time streamed responses (`text_to_text_stream`), offering flexibility for different use cases.
+
+
+### 🔍 **API Example**
+
+```py
+from document_to_podcast.inference.model_loaders import load_llama_cpp_model
+from document_to_podcast.inference.text_to_text import text_to_text
+
+...
+```
 
 
 ## **Step 3: Audio Podcast Generation**
