@@ -20,8 +20,6 @@ stopRunningProcess() {
 
 trap stopRunningProcess EXIT TERM
 
-source ${VIRTUAL_ENV}/bin/activate
-
 streamlit run ${HOME}/document-to-podcast/demo/app.py &
 APP_ID=${!}
 
