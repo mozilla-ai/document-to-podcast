@@ -30,6 +30,7 @@ docs = [
 tests = [
   "pytest>=8,<9",
   "pytest-sugar>=0.9.6",
+  "pytest-mock>=3.14.0"
 ]
 
 [project.urls]
@@ -43,3 +44,6 @@ where = ["src"]
 namespaces = false
 
 [tool.setuptools_scm]
+
+[project.scripts]
+document-to-podcast = "document_to_podcast.cli:main"

@@ -7,7 +7,3 @@
 ::: document_to_podcast.inference.text_to_text
 
 ::: document_to_podcast.inference.text_to_speech
-
-::: document_to_podcast.podcast_maker.script_to_audio
-
-::: document_to_podcast.podcast_maker.config

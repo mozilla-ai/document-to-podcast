@@ -30,5 +30,12 @@ jobs:
       - name: Install
         run: pip install -e '.[tests]'
 
-      - name: Run tests
-        run: pytest -v tests
+      - name: Run Unit Tests
+        run: pytest -v tests/unit
+
+      - name: Run Integration Tests
+        run: pytest -v tests/integration
+
+      - name: Run E2E tests
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: pytest -v tests/e2e
