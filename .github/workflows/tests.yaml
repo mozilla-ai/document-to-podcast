@@ -27,11 +27,18 @@ jobs:
           python-version: '3.10'
           cache: "pip"
 
-      - name: Install
+      - name: Install test dependencies
         run: pip install -e '.[tests]'
 
       - name: Install parler dependency
         run: pip install -e '.[parler]'
 
-      - name: Run tests
-        run: pytest -v tests
+      - name: Run Unit Tests
+        run: pytest -v tests/unit
+
+      - name: Run Integration Tests
+        run: pytest -v tests/integration
+
+      - name: Run E2E tests
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: pytest -v tests/e2e

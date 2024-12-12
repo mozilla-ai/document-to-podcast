@@ -1,25 +1,11 @@
-from pathlib import Path
-
 from document_to_podcast.inference.text_to_speech import text_to_speech
 
-from document_to_podcast.podcast_maker.config import PodcastConfig
-from document_to_podcast.podcast_maker.script_to_audio import save_waveform_as_file
 
-
-def test_text_to_speech_oute(
-    tmp_path: Path, tts_prompt: str, podcast_config: PodcastConfig
-):
-    speaker_cfg = list(podcast_config.speakers.values())[0]
-
-    waveform = text_to_speech(
-        tts_prompt,
-        speaker_cfg.model,
-        speaker_cfg.tokenizer,
-        speaker_cfg.speaker_profile,
+def test_text_to_speech(mocker):
+    model = mocker.MagicMock()
+    text_to_speech(
+        "Hello?",
+        model=model,
+        voice_profile="male_1",
     )
-
-    save_waveform_as_file(
-        waveform=waveform,
-        sampling_rate=podcast_config.sampling_rate,
-        filename=str(tmp_path / "test_oute_tts.wav"),
-    )
+    model.generate.assert_called_with(input_ids=mocker.ANY, prompt_input_ids=mocker.ANY)

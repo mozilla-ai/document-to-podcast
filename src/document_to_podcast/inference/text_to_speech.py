@@ -42,27 +42,31 @@ def _speech_generation_parler(
 
 def text_to_speech(
     input_text: str,
-    model: Union[PreTrainedModel, InterfaceGGUFClass],
+    model: Union[InterfaceGGUFClass, PreTrainedModel],
+    voice_profile: str,
     tokenizer: PreTrainedTokenizerBase = None,
-    speaker_profile: str = "",
 ) -> np.ndarray:
     """
-    Generates a speech waveform using the input_text, a model and a speaker profile to define a distinct voice pattern.
+    Generates a speech waveform from a text input using a pre-trained text-to-speech (TTS) model.
 
     Examples:
-        >>> waveform = text_to_speech(input_text="Welcome to our amazing podcast", model=model, tokenizer=tokenizer, speaker_profile="Laura's voice is exciting and fast in delivery with very clear audio and no background noise.")
+        >>> waveform = text_to_speech(input_text="Welcome to our amazing podcast", model=model, voice_profile="male_1")
 
     Args:
         input_text (str): The text to convert to speech.
         model (PreTrainedModel): The model used for generating the waveform.
-        tokenizer (PreTrainedTokenizerBase): The tokenizer used for tokenizing the text in order to send to the model.
-        speaker_profile (str): A description used by the ParlerTTS model to configure the speaker profile.
+        voice_profile (str): Depending on the selected TTS model it should either be
+            - a pre-defined ID for the Oute models (e.g. "female_1")
+            more info here https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers
+            - a natural description of the voice profile using a pre-defined name for the Parler model (e.g. Laura's voice is calm)
+            more info here https://github.com/huggingface/parler-tts?tab=readme-ov-file#-using-a-specific-speaker
+        tokenizer (PreTrainedTokenizerBase): [Only used for the Parler models!] The tokenizer used for tokenizing the text in order to send to the model.
     Returns:
         numpy array: The waveform of the speech as a 2D numpy array
     """
     if isinstance(model, InterfaceGGUFClass):
-        return _speech_generation_oute(input_text, model, speaker_profile)
+        return _speech_generation_oute(input_text, model, voice_profile)
     elif isinstance(model, PreTrainedModel):
-        return _speech_generation_parler(input_text, model, tokenizer, speaker_profile)
+        return _speech_generation_parler(input_text, model, tokenizer, voice_profile)
     else:
         raise NotImplementedError("Model not yet implemented for TTS")

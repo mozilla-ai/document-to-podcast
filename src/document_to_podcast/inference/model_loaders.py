@@ -3,7 +3,6 @@ from typing import Tuple
 from huggingface_hub import hf_hub_download
 from llama_cpp import Llama
 from outetts import GGUFModelConfig_v1, InterfaceGGUF
-from parler_tts import ParlerTTSForConditionalGeneration
 from transformers import AutoTokenizer, PreTrainedModel, PreTrainedTokenizerBase
 
 
@@ -30,6 +29,7 @@ def load_llama_cpp_model(
         filename=filename,
         # 0 means that the model limit will be used, instead of the default (512) or other hardcoded value
         n_ctx=0,
+        verbose=False,
     )
     return model
 
@@ -81,6 +81,8 @@ def load_parler_tts_model_and_tokenizer(
     Returns:
         PreTrainedModel: The loaded model.
     """
+    from parler_tts import ParlerTTSForConditionalGeneration
+
     model = ParlerTTSForConditionalGeneration.from_pretrained(model_id).to(device)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
 
