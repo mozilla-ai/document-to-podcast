@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: document-to-podcast
+          images: mzdotai/document-to-podcast
 
       - name: Build and push Docker image
         id: push
