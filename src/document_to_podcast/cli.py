@@ -106,10 +106,12 @@ def document_to_podcast(
     if "oute" in config.text_to_speech_model.lower():
         speech_model = load_outetts_model(model_id=config.text_to_speech_model)
         speech_tokenizer = None
+        sample_rate = speech_model.audio_codec.sr
     else:
         speech_model, speech_tokenizer = load_parler_tts_model_and_tokenizer(
             model_id=config.text_to_speech_model, device=config.device
         )
+        sample_rate = speech_model.config.sampling_rate
 
     # ~4 characters per token is considered a reasonable default.
     max_characters = text_model.n_ctx() * 4
@@ -152,7 +154,7 @@ def document_to_podcast(
     sf.write(
         str(output_folder / "podcast.wav"),
         np.concatenate(podcast_audio),
-        samplerate=speech_model.audio_codec.sr,
+        samplerate=sample_rate,
     )
     (output_folder / "podcast.txt").write_text(podcast_script)
     logger.success("Done!")
