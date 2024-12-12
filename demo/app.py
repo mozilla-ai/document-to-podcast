@@ -150,7 +150,7 @@ if uploaded_file is not None:
                             speech_tokenizer,
                             tone,
                         )
-                    st.audio(speech, sample_rate=speech_model.config.sampling_rate)
+                    st.audio(speech, sample_rate=44100)
                     st.session_state.audio.append(speech)
                     text = ""
 

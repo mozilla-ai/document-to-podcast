@@ -26,7 +26,6 @@ def document_to_podcast(
     text_to_text_prompt: str = DEFAULT_PROMPT,
     text_to_speech_model: str = "parler-tts/parler-tts-mini-v1",
     speakers: list[Speaker] | None = None,
-    sampling_rate: int = 44100,
     from_config: str | None = None,
 ):
     """
@@ -65,9 +64,6 @@ def document_to_podcast(
         speakers (list[Speaker] | None, optional): The speakers for the podcast.
             Defaults to DEFAULT_SPEAKERS.
 
-        sampling_rate (int, optional): The sampling rate for the output audio.
-            Defaults to 44_100.
-
         from_config (str, optional): The path to the config file. Defaults to None.
 
             If provided, all other arguments will be ignored.
@@ -83,7 +79,6 @@ def document_to_podcast(
             text_to_text_prompt=text_to_text_prompt,
             text_to_speech_model=text_to_speech_model,
             speakers=[Speaker.model_validate(speaker) for speaker in speakers],
-            sampling_rate=sampling_rate,
         )
 
     output_folder = Path(config.output_folder)
@@ -148,7 +143,7 @@ def document_to_podcast(
     sf.write(
         str(output_folder / "podcast.wav"),
         np.concatenate(podcast_audio),
-        samplerate=sampling_rate,
+        samplerate=44100,
     )
     (output_folder / "podcast.txt").write_text(podcast_script)
     logger.success("Done!")
