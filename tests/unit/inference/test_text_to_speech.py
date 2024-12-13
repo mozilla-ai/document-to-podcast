@@ -1,8 +1,10 @@
+from transformers import PreTrainedModel
+
 from document_to_podcast.inference.text_to_speech import text_to_speech
 
 
 def test_text_to_speech_parler(mocker):
-    model = mocker.MagicMock()
+    model = mocker.MagicMock(spec_set=PreTrainedModel)
     tokenizer = mocker.MagicMock()
     text_to_speech(
         "Hello?",
