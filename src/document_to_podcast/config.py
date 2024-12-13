@@ -42,7 +42,7 @@ DEFAULT_SPEAKERS = [
 ]
 
 
-TTS_MODELS = Literal[
+SUPPORTED_TTS_MODELS = Literal[
     "parler-tts/parler-tts-large-v1",
     "parler-tts/parler-tts-mini-v1",
     "parler-tts/parler-tts-mini-v1.1",
@@ -87,5 +87,5 @@ class Config(BaseModel):
     output_folder: str
     text_to_text_model: Annotated[str, AfterValidator(validate_text_to_text_model)]
     text_to_text_prompt: Annotated[str, AfterValidator(validate_text_to_text_prompt)]
-    text_to_speech_model: TTS_MODELS
+    text_to_speech_model: SUPPORTED_TTS_MODELS
     speakers: list[Speaker]

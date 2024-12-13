@@ -13,7 +13,7 @@ from document_to_podcast.config import (
     Speaker,
     DEFAULT_PROMPT,
     DEFAULT_SPEAKERS,
-    TTS_MODELS,
+    SUPPORTED_TTS_MODELS,
 )
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
@@ -30,7 +30,7 @@ def document_to_podcast(
     output_folder: str | None = None,
     text_to_text_model: str = "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf",
     text_to_text_prompt: str = DEFAULT_PROMPT,
-    text_to_speech_model: TTS_MODELS = "parler-tts/parler-tts-mini-v1",
+    text_to_speech_model: SUPPORTED_TTS_MODELS = "parler-tts/parler-tts-mini-v1",
     speakers: list[Speaker] | None = None,
     from_config: str | None = None,
 ):
