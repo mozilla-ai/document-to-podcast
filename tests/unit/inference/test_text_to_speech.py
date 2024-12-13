@@ -8,7 +8,7 @@ def test_text_to_speech_parler(mocker):
         "Hello?",
         model=model,
         tokenizer=tokenizer,
-        tone="default",
+        voice_profile="default",
     )
     tokenizer.assert_has_calls(
         [

@@ -138,8 +138,8 @@ if uploaded_file is not None:
                     st.write(st.session_state.script)
 
                     speaker_id = re.search(r"Speaker (\d+)", text).group(1)
-                    tone = next(
-                        speaker["tone"]
+                    voice_profile = next(
+                        speaker["voice_profile"]
                         for speaker in speakers
                         if speaker["id"] == int(speaker_id)
                     )
@@ -148,7 +148,7 @@ if uploaded_file is not None:
                             text.split(f'"Speaker {speaker_id}":')[-1],
                             speech_model,
                             speech_tokenizer,
-                            tone,
+                            voice_profile,
                         )
                     st.audio(speech, sample_rate=44100)
                     st.session_state.audio.append(speech)

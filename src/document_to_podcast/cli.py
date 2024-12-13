@@ -127,14 +127,16 @@ def document_to_podcast(
         if text.endswith("\n") and "Speaker" in text:
             logger.debug(text)
             speaker_id = re.search(r"Speaker (\d+)", text).group(1)
-            tone = next(
-                speaker for speaker in config.speakers if speaker.id == int(speaker_id)
-            ).tone
+            voice_profile = next(
+                speaker.voice_profile
+                for speaker in config.speakers
+                if speaker.id == int(speaker_id)
+            )
             speech = text_to_speech(
                 text.split(f'"Speaker {speaker_id}":')[-1],
                 speech_model,
                 speech_tokenizer,
-                tone,
+                voice_profile,
             )
             podcast_audio.append(speech)
             text = ""
