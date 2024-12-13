@@ -17,8 +17,7 @@ RUN python3 demo/download_models.py
 
 RUN groupadd --gid 1000 appuser \
     && useradd --uid 1000 --gid 1000 --create-home appuser \
-    && chown -R appuser:appuser /home/appuser \
-    && chmod -R 777 /home/appuser/.cache
+    && chown -R appuser:appuser /home/appuser 
 
 USER appuser
 
