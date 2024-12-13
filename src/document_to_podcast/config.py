@@ -42,6 +42,13 @@ DEFAULT_SPEAKERS = [
 ]
 
 
+TTS_MODELS = Literal[
+    "parler-tts/parler-tts-large-v1",
+    "parler-tts/parler-tts-mini-v1",
+    "parler-tts/parler-tts-mini-v1.1",
+]
+
+
 def validate_input_file(value):
     if Path(value).suffix not in DATA_LOADERS:
         raise ValueError(
@@ -79,10 +86,6 @@ class Config(BaseModel):
     input_file: Annotated[FilePath, AfterValidator(validate_input_file)]
     output_folder: str
     text_to_text_model: Annotated[str, AfterValidator(validate_text_to_text_model)]
-    text_to_text_prompt: str
-    text_to_speech_model: Literal[
-        "parler-tts/parler-tts-large-v1",
-        "parler-tts/parler-tts-mini-v1",
-        "parler-tts/parler-tts-mini-v1.1",
-    ]
+    text_to_text_prompt: Annotated[str, AfterValidator(validate_text_to_text_prompt)]
+    text_to_speech_model: TTS_MODELS
     speakers: list[Speaker]
