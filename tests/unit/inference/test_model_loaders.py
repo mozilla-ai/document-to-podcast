@@ -5,7 +5,7 @@ from document_to_podcast.inference.model_loaders import (
     load_outetts_model,
 )
 from transformers import PreTrainedModel, PreTrainedTokenizerBase
-from outetts.version.v1.interface import InterfaceGGUF as InterfaceGGUFClass
+from outetts.version.v1.interface import InterfaceGGUF
 
 from document_to_podcast.inference.model_loaders import (
     load_parler_tts_model_and_tokenizer,
@@ -23,9 +23,9 @@ def test_load_llama_cpp_model():
 
 def test_load_outetts_model():
     model = load_outetts_model(
-        "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf"
+        "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-Q2_K.gguf"
     )
-    assert isinstance(model, InterfaceGGUFClass)
+    assert isinstance(model, InterfaceGGUF)
 
 
 def test_load_parler_tts_model_and_tokenizer():
