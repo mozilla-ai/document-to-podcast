@@ -11,9 +11,9 @@ dynamic = ["version"]
 dependencies = [
   "beautifulsoup4",
   "huggingface-hub",
-  "outetts",
   "llama-cpp-python",
   "loguru",
+  "outetts",
   "pydantic",
   "PyPDF2[crypto]",
   "python-docx",

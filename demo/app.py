@@ -4,8 +4,7 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 import streamlit as st
-from llama_cpp import Llama
-from outetts import InterfaceGGUF
+
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
@@ -17,14 +16,14 @@ from document_to_podcast.inference.text_to_text import text_to_text_stream
 
 
 @st.cache_resource
-def load_text_to_text_model() -> Llama:
+def load_text_to_text_model():
     return load_llama_cpp_model(
         model_id="allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf"
     )
 
 
 @st.cache_resource
-def load_text_to_speech_model() -> InterfaceGGUF:
+def load_text_to_speech_model():
     return load_outetts_model("OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf")
 
 
@@ -136,7 +135,7 @@ if uploaded_file is not None:
                 text += chunk
                 if text.endswith("\n") and "Speaker" in text:
                     st.session_state.script += text
-                    st.write(st.session_state.script)
+                    st.write(text)
 
                     speaker_id = re.search(r"Speaker (\d+)", text).group(1)
                     voice_profile = next(

@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Literal
 from typing_extensions import Annotated
 
 from pydantic import BaseModel, FilePath
@@ -79,13 +78,6 @@ class Config(BaseModel):
     input_file: Annotated[FilePath, AfterValidator(validate_input_file)]
     output_folder: str
     text_to_text_model: Annotated[str, AfterValidator(validate_text_to_text_model)]
-    text_to_text_prompt: str
-    text_to_speech_model: Literal[
-        "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf",
-        "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
-        "parler-tts/parler-tts-large-v1",
-        "parler-tts/parler-tts-mini-v1",
-        "parler-tts/parler-tts-mini-v1.1",
-    ]
+    text_to_text_prompt: Annotated[str, AfterValidator(validate_text_to_text_prompt)]
+    text_to_speech_model: str
     speakers: list[Speaker]
-    device: str = "cpu"

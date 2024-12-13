@@ -1,17 +1,17 @@
 from typing import Union
 
 import numpy as np
-from outetts.version.v1.interface import InterfaceGGUF as InterfaceGGUFClass
+from outetts.version.v1.interface import InterfaceGGUF
 from transformers import PreTrainedTokenizerBase, PreTrainedModel
 
 
 def _speech_generation_oute(
     input_text: str,
-    model: InterfaceGGUFClass,
-    speaker_profile: str,
+    model: InterfaceGGUF,
+    voice_profile: str,
     temperature: float = 0.3,
 ) -> np.ndarray:
-    speaker = model.load_default_speaker(name=speaker_profile)
+    speaker = model.load_default_speaker(name=voice_profile)
 
     output = model.generate(
         text=input_text,
@@ -29,9 +29,9 @@ def _speech_generation_parler(
     input_text: str,
     model: PreTrainedModel,
     tokenizer: PreTrainedTokenizerBase,
-    speaker_description: str,
+    voice_profile: str,
 ) -> np.ndarray:
-    input_ids = tokenizer(speaker_description, return_tensors="pt").input_ids
+    input_ids = tokenizer(voice_profile, return_tensors="pt").input_ids
     prompt_input_ids = tokenizer(input_text, return_tensors="pt").input_ids
 
     generation = model.generate(input_ids=input_ids, prompt_input_ids=prompt_input_ids)
@@ -42,7 +42,7 @@ def _speech_generation_parler(
 
 def text_to_speech(
     input_text: str,
-    model: Union[InterfaceGGUFClass, PreTrainedModel],
+    model: Union[InterfaceGGUF, PreTrainedModel],
     voice_profile: str,
     tokenizer: PreTrainedTokenizerBase = None,
 ) -> np.ndarray:
@@ -64,7 +64,7 @@ def text_to_speech(
     Returns:
         numpy array: The waveform of the speech as a 2D numpy array
     """
-    if isinstance(model, InterfaceGGUFClass):
+    if isinstance(model, InterfaceGGUF):
         return _speech_generation_oute(input_text, model, voice_profile)
     elif isinstance(model, PreTrainedModel):
         return _speech_generation_parler(input_text, model, tokenizer, voice_profile)

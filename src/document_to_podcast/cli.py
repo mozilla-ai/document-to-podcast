@@ -7,7 +7,6 @@ import yaml
 from fire import Fire
 from loguru import logger
 
-
 from document_to_podcast.config import Config, Speaker, DEFAULT_PROMPT, DEFAULT_SPEAKERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
@@ -27,7 +26,6 @@ def document_to_podcast(
     text_to_text_prompt: str = DEFAULT_PROMPT,
     text_to_speech_model: str = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
     speakers: list[Speaker] | None = None,
-    device: str = "cpu",
     from_config: str | None = None,
 ):
     """
@@ -66,8 +64,6 @@ def document_to_podcast(
         speakers (list[Speaker] | None, optional): The speakers for the podcast.
             Defaults to DEFAULT_SPEAKERS.
 
-        device (str, optional): The device to load the TTS on. Currently only applicable to Parler. Defaults to `cpu`.
-
         from_config (str, optional): The path to the config file. Defaults to None.
 
             If provided, all other arguments will be ignored.
@@ -83,7 +79,6 @@ def document_to_podcast(
             text_to_text_prompt=text_to_text_prompt,
             text_to_speech_model=text_to_speech_model,
             speakers=[Speaker.model_validate(speaker) for speaker in speakers],
-            device=device,
         )
 
     output_folder = Path(config.output_folder)
@@ -102,6 +97,7 @@ def document_to_podcast(
 
     logger.info(f"Loading {config.text_to_text_model}")
     text_model = load_llama_cpp_model(model_id=config.text_to_text_model)
+
     logger.info(f"Loading {config.text_to_speech_model} on {config.device}")
     if "oute" in config.text_to_speech_model.lower():
         speech_model = load_outetts_model(model_id=config.text_to_speech_model)
@@ -109,7 +105,7 @@ def document_to_podcast(
         sample_rate = speech_model.audio_codec.sr
     else:
         speech_model, speech_tokenizer = load_parler_tts_model_and_tokenizer(
-            model_id=config.text_to_speech_model, device=config.device
+            model_id=config.text_to_speech_model
         )
         sample_rate = speech_model.config.sampling_rate
 
