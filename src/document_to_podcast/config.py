@@ -64,6 +64,24 @@ def validate_text_to_text_prompt(value):
     return value
 
 
+def validate_text_to_speech_model(value):
+    parts = value.split("/")
+    if "oute" in value:
+        if len(parts) != 3:
+            raise ValueError(
+                "text_to_speech_model must be formatted as `owner/repo/file`"
+            )
+        if not value.endswith(".gguf"):
+            raise ValueError("text_to_speech_model must be a gguf file")
+    elif "parler-tts" in value:
+        assert value in (
+            "parler-tts/parler-tts-mini-v1",
+            "parler-tts/parler-tts-mini-v1.1",
+            "parler-tts/parler-tts-large-v1",
+        )
+    return value
+
+
 class Speaker(BaseModel):
     id: int
     name: str
@@ -79,5 +97,5 @@ class Config(BaseModel):
     output_folder: str
     text_to_text_model: Annotated[str, AfterValidator(validate_text_to_text_model)]
     text_to_text_prompt: Annotated[str, AfterValidator(validate_text_to_text_prompt)]
-    text_to_speech_model: str
+    text_to_speech_model: Annotated[str, AfterValidator(validate_text_to_speech_model)]
     speakers: list[Speaker]
