@@ -11,6 +11,7 @@ COPY . /home/appuser/document-to-podcast
 WORKDIR /home/appuser/document-to-podcast
 
 RUN pip3 install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN pip3 install git+https://github.com/huggingface/parler-tts.git
 RUN pip3 install /home/appuser/document-to-podcast
 RUN python3 demo/download_models.py
 
