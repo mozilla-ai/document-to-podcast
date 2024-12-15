@@ -33,6 +33,7 @@ def document_to_podcast(
     text_to_speech_model: SUPPORTED_TTS_MODELS = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
     speakers: list[Speaker] | None = None,
     from_config: str | None = None,
+    device: str = "cpu",
 ):
     """
     Generate a podcast from a document.
@@ -72,6 +73,8 @@ def document_to_podcast(
 
         from_config (str, optional): The path to the config file. Defaults to None.
 
+        device (str, optional): The device to load the model. Currently ONLY the TTS! Defaults to "cpu".
+
             If provided, all other arguments will be ignored.
     """
     if from_config:
@@ -85,6 +88,7 @@ def document_to_podcast(
             text_to_text_prompt=text_to_text_prompt,
             text_to_speech_model=text_to_speech_model,
             speakers=[Speaker.model_validate(speaker) for speaker in speakers],
+            device=device,
         )
 
     output_folder = Path(config.output_folder)
@@ -106,7 +110,9 @@ def document_to_podcast(
 
     logger.info(f"Loading {config.text_to_speech_model} on {config.device}")
     if "oute" in config.text_to_speech_model.lower():
-        speech_model = load_outetts_model(model_id=config.text_to_speech_model)
+        speech_model = load_outetts_model(
+            model_id=config.text_to_speech_model, device=device
+        )
         speech_tokenizer = None
         sample_rate = speech_model.audio_codec.sr
     else:
