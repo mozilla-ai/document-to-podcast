@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Literal
 from typing_extensions import Annotated
 
 from pydantic import BaseModel, FilePath
@@ -40,6 +41,14 @@ DEFAULT_SPEAKERS = [
     },
 ]
 
+SUPPORTED_TTS_MODELS = Literal[
+    "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
+    "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf",
+    "parler-tts/parler-tts-large-v1",
+    "parler-tts/parler-tts-mini-v1",
+    "parler-tts/parler-tts-mini-v1.1",
+]
+
 
 def validate_input_file(value):
     if Path(value).suffix not in DATA_LOADERS:
@@ -64,24 +73,6 @@ def validate_text_to_text_prompt(value):
     return value
 
 
-def validate_text_to_speech_model(value):
-    parts = value.split("/")
-    if "oute" in value:
-        if len(parts) != 3:
-            raise ValueError(
-                "text_to_speech_model must be formatted as `owner/repo/file`"
-            )
-        if not value.endswith(".gguf"):
-            raise ValueError("text_to_speech_model must be a gguf file")
-    elif "parler-tts" in value:
-        assert value in (
-            "parler-tts/parler-tts-mini-v1",
-            "parler-tts/parler-tts-mini-v1.1",
-            "parler-tts/parler-tts-large-v1",
-        )
-    return value
-
-
 class Speaker(BaseModel):
     id: int
     name: str
@@ -97,5 +88,5 @@ class Config(BaseModel):
     output_folder: str
     text_to_text_model: Annotated[str, AfterValidator(validate_text_to_text_model)]
     text_to_text_prompt: Annotated[str, AfterValidator(validate_text_to_text_prompt)]
-    text_to_speech_model: Annotated[str, AfterValidator(validate_text_to_speech_model)]
+    text_to_speech_model: SUPPORTED_TTS_MODELS
     speakers: list[Speaker]
