@@ -7,7 +7,13 @@ import yaml
 from fire import Fire
 from loguru import logger
 
-from document_to_podcast.config import Config, Speaker, DEFAULT_PROMPT, DEFAULT_SPEAKERS
+from document_to_podcast.config import (
+    Config,
+    Speaker,
+    DEFAULT_PROMPT,
+    DEFAULT_SPEAKERS,
+    SUPPORTED_TTS_MODELS,
+)
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
     load_outetts_model,
@@ -24,7 +30,7 @@ def document_to_podcast(
     output_folder: str | None = None,
     text_to_text_model: str = "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf",
     text_to_text_prompt: str = DEFAULT_PROMPT,
-    text_to_speech_model: str = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
+    text_to_speech_model: SUPPORTED_TTS_MODELS = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
     speakers: list[Speaker] | None = None,
     from_config: str | None = None,
 ):
