@@ -141,8 +141,10 @@ def document_to_podcast(
             logger.debug(text)
             speaker_id = re.search(r"Speaker (\d+)", text).group(1)
             voice_profile = next(
-                speaker for speaker in config.speakers if speaker.id == int(speaker_id)
-            ).voice_profile
+                speaker.voice_profile
+                for speaker in config.speakers
+                if speaker.id == int(speaker_id)
+            )
             speech = text_to_speech(
                 text.split(f'"Speaker {speaker_id}":')[-1],
                 speech_model,
