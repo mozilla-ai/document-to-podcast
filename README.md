@@ -112,6 +112,10 @@ If you are on Firefox and have Enhanced Tracking Protection `On`, try turning it
 
 You are probably missing the `GNU Make` package. A quick way to solve it is run on your terminal `sudo apt install build-essential`
 
+> I get the following error: `Python.h: No such file or directory ... error: command '/usr/bin/x86_64-linux-gnu-gcc' failed with exit code 1`
+
+You might be missing the header files of python dev. You can fix this by running `sudo apt install python3.XX-dev` where `XX` your python version (e.g `3.12`)
+
 ## License
 
 This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
