@@ -6,14 +6,14 @@ build-backend = "setuptools.build_meta"
 name = "document-to-podcast"
 readme = "README.md"
 license = {text = "Apache-2.0"}
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.13"
 dynamic = ["version"]
 dependencies = [
   "beautifulsoup4",
   "huggingface-hub",
-  "outetts",
   "llama-cpp-python",
   "loguru",
+  "outetts",
   "pydantic",
   "PyPDF2[crypto]",
   "python-docx",
@@ -30,10 +30,11 @@ docs = [
 tests = [
   "pytest>=8,<9",
   "pytest-sugar>=0.9.6",
+  "pytest-mock>=3.14.0"
 ]
 
 parler = [
-  "parler_tts @ git+https://github.com/daavoo/parler-tts.git",
+  "parler_tts @ git+https://github.com/huggingface/parler-tts.git",
 ]
 
 [project.urls]
@@ -47,3 +48,6 @@ where = ["src"]
 namespaces = false
 
 [tool.setuptools_scm]
+
+[project.scripts]
+document-to-podcast = "document_to_podcast.cli:main"

@@ -54,8 +54,7 @@ Customizing the app:
 Example:
 
 ```python
-PODCAST_PROMPT = """
-SPEAKER_DESCRIPTIONS = {
+SPEAKER_DESCRIPTIONS_OUTE = {
     "1": "A cheerful and animated voice with a fast-paced delivery.",
     "2": "A calm and deep voice, speaking with authority and warmth."
 }
