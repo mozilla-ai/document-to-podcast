@@ -117,7 +117,7 @@ def document_to_podcast(
         sample_rate = speech_model.audio_codec.sr
     else:
         speech_model, speech_tokenizer = load_parler_tts_model_and_tokenizer(
-            model_id=config.text_to_speech_model
+            model_id=config.text_to_speech_model, device=device
         )
         sample_rate = speech_model.config.sampling_rate
 
@@ -156,6 +156,7 @@ def document_to_podcast(
                 speech_model,
                 voice_profile,
                 tokenizer=speech_tokenizer,  # Applicable only for parler models
+                device=device,
             )
             podcast_audio.append(speech)
             text = ""

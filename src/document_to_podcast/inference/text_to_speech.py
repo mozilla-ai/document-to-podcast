@@ -30,9 +30,10 @@ def _speech_generation_parler(
     model: PreTrainedModel,
     tokenizer: PreTrainedTokenizerBase,
     voice_profile: str,
+    device: str,
 ) -> np.ndarray:
-    input_ids = tokenizer(voice_profile, return_tensors="pt").input_ids
-    prompt_input_ids = tokenizer(input_text, return_tensors="pt").input_ids
+    input_ids = tokenizer(voice_profile, return_tensors="pt").input_ids.to(device)
+    prompt_input_ids = tokenizer(input_text, return_tensors="pt").input_ids.to(device)
 
     generation = model.generate(input_ids=input_ids, prompt_input_ids=prompt_input_ids)
     waveform = generation.cpu().numpy().squeeze()
@@ -45,6 +46,7 @@ def text_to_speech(
     model: Union[InterfaceGGUF, PreTrainedModel],
     voice_profile: str,
     tokenizer: PreTrainedTokenizerBase = None,
+    device: str = "cpu",
 ) -> np.ndarray:
     """
     Generates a speech waveform from a text input using a pre-trained text-to-speech (TTS) model.
@@ -61,12 +63,15 @@ def text_to_speech(
             - a natural description of the voice profile using a pre-defined name for the Parler model (e.g. Laura's voice is calm)
             more info here https://github.com/huggingface/parler-tts?tab=readme-ov-file#-using-a-specific-speaker
         tokenizer (PreTrainedTokenizerBase): [Only used for the Parler models!] The tokenizer used for tokenizing the text in order to send to the model.
+        device (str): The device to compute the generation on, such as "cuda:0" or "cpu".
     Returns:
         numpy array: The waveform of the speech as a 2D numpy array
     """
     if isinstance(model, InterfaceGGUF):
         return _speech_generation_oute(input_text, model, voice_profile)
     elif isinstance(model, PreTrainedModel):
-        return _speech_generation_parler(input_text, model, tokenizer, voice_profile)
+        return _speech_generation_parler(
+            input_text, model, tokenizer, voice_profile, device
+        )
     else:
         raise NotImplementedError("Model not yet implemented for TTS")
