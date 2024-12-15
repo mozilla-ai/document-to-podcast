@@ -55,7 +55,7 @@ Once the Codespaces environment launches, inside the terminal, start the Streaml
    python -m streamlit run demo/app.py
    ```
 
-***NOTE***: The first time you run the demo app it might take a while to generate the script or the audio because it will download the models to the machine which are a few GBs in size.
+***NOTE***: The first time you run the app it might take a while to get it going, because it needs to download the LLM & TTS models locally, which are a few GBs in size.
 
 ## How it Works
 
