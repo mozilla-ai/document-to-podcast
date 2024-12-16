@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
@@ -764,13 +764,10 @@
 <p><strong>1 - Model Loading</strong></p>
 <ul>
 <li>
-<p>The <a href="../api/#document_to_podcast.inference.model_loaders"><code>model_loader.py</code></a> script is responsible for loading GGUF-type models using the <code>llama_cpp</code> library.</p>
+<p>The <a href="../api/#document_to_podcast.inference.model_loaders"><code>model_loader.py</code></a> module is responsible for loading the <code>text-to-text</code> models using the <code>llama_cpp</code> library.</p>
 </li>
 <li>
-<p>The function <code>load_llama_cpp_model</code> takes a model ID in the format <code>{org}/{repo}/{filename}</code> and loads the specified model.</p>
-</li>
-<li>
-<p>This approach of using the <code>llama_cpp</code> library supports efficient CPU-based inference, making language models accessible even on machines without GPUs.</p>
+<p>The function <code>load_llama_cpp_model</code> takes a model ID in the format <code>{org}/{repo}/{filename}</code> and loads the specified model. This approach of using the <code>llama_cpp</code> library supports efficient CPU-based inference, making language models accessible even on machines without GPUs.</p>
 </li>
 </ul>
 <p><strong>2 - Text-to-Text Generation</strong></p>
@@ -791,28 +788,28 @@
 <h2 id="step-3-audio-podcast-generation"><strong>Step 3: Audio Podcast Generation</strong></h2>
 <p>In this final step, the generated podcast transcript is brought to life as an audio file. Using a Text-to-Speech (TTS) model, each speaker in the script is assigned a unique voice, creating an engaging and professional-sounding podcast.</p>
 <h3 id="key-components-in-this-step_2">⚙️ <strong>Key Components in this Step</strong></h3>
-<p><strong>1 - Text-to-Speech Audio Generation</strong></p>
+<p><strong>1 - Model Loading</strong></p>
 <ul>
 <li>
-<p>The <a href="../api/#document_to_podcast.inference.text_to_speech"><code>text_to_speech.py</code></a> script converts text into audio using a specified TTS model and tokenizer.</p>
+<p>The <a href="../api/#document_to_podcast.inference.model_loaders"><code>model_loader.py</code></a> module is responsible for loading the <code>text-to-speech</code> models using the <code>outetts</code> and <code>parler_tts</code> libraries.</p>
 </li>
 <li>
-<p>A <strong>speaker profile</strong> defines the voice characteristics (e.g., tone, speed, clarity) for each speaker.</p>
+<p>The function <code>load_outetts_model</code> takes a model ID in the format <code>{org}/{repo}/{filename}</code> and loads the specified model, either on CPU or GPU, based on the <code>device</code> parameter. The parameter <code>language</code> also enables to swap between the languages the Oute package supports (as of Dec 2024: <code>en, zh, ja, ko</code>)</p>
 </li>
 <li>
-<p>The function <code>text_to_speech</code> takes the input text (e.g podcast script) and speaker profile, generating a waveform (audio data) that represents the spoken version of the text.</p>
+<p>The function <code>load_parler_tts_model_and_tokenizer</code> takes a model ID in the format <code>{repo}/{filename}</code> and loads the specified model and tokenizer, either on CPU or GPU, based on the <code>device</code> parameter.</p>
 </li>
 </ul>
-<p><strong>2 - Parsing and Combining Voices</strong></p>
+<p><strong>2 - Text-to-Speech Audio Generation</strong></p>
 <ul>
 <li>
-<p>The <a href="../api/#document_to_podcast.podcast_maker.script_to_audio"><code>script_to_audio.py</code></a> script ensures each speaker’s dialogue is spoken in their unique voice.</p>
+<p>The <a href="../api/#document_to_podcast.inference.text_to_speech"><code>text_to_speech.py</code></a> script converts text into audio using a specified TTS model.</p>
 </li>
 <li>
-<p>The function <code>parse_script_to_waveform</code> splits the dialogue script by speakers and uses <code>text_to_speech</code> to generate audio for each speaker, stitching them together into a full podcast.</p>
+<p>A <strong>speaker profile</strong> defines the voice characteristics (e.g., tone, speed, clarity) for each speaker. This is specific to each TTS package. Oute models require one of the IDs specified <a href="https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers">here</a>. Parler requires natural language description of the speaker's voice and you have to use a pre-defined name (see <a href="https://github.com/huggingface/parler-tts/blob/main/INFERENCE.md#speaker-consistency">here</a>)</p>
 </li>
 <li>
-<p>Once the podcast waveform is ready, the save_waveform_as_file function saves it as an audio file (e.g., MP3 or WAV), making it ready for distribution.</p>
+<p>The function <code>text_to_speech</code> takes the input text (e.g. podcast script) and speaker profile, generating a waveform (audio data in a numpy array) that represents the spoken version of the text.</p>
 </li>
 </ul>
 <h2 id="bringing-it-all-together-in-apppy"><strong>Bringing It All Together in <code>app.py</code></strong></h2>
@@ -842,7 +839,7 @@
 <p>The script uses <code>load_llama_cpp_model</code> from <code>model_loader.py</code> to load the LLM for generating the podcast script.</p>
 </li>
 <li>
-<p>Similarly, <code>load_parler_tts_model_and_tokenizer</code> is used to prepare the TTS model and tokenizer for audio generation.</p>
+<p>Similarly, <code>load_outetts_model</code> is used to prepare the TTS model and tokenizer for audio generation.</p>
 </li>
 <li>
 <p>These models are cached using <code>@st.cache_resource</code> to ensure fast and efficient reuse during app interactions.</p>
@@ -925,7 +922,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
     
   </body>

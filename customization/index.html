@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
@@ -619,12 +619,11 @@
 <li>Update the descriptions to define new voice characteristics for each speaker
 Example:</li>
 </ol>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">PODCAST_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">SPEAKER_DESCRIPTIONS = {</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="s2">    &quot;1&quot;: &quot;A cheerful and animated voice with a fast-paced delivery.&quot;,</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="s2">    &quot;2&quot;: &quot;A calm and deep voice, speaking with authority and warmth.&quot;</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="s2">}</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="s2">&quot;&quot;&quot;</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">SPEAKER_DESCRIPTIONS_OUTE</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="s2">&quot;A cheerful and animated voice with a fast-paced delivery.&quot;</span><span class="p">,</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="s2">&quot;A calm and deep voice, speaking with authority and warmth.&quot;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="s2">&quot;&quot;&quot;</span>
 </span></code></pre></div>
 <h2 id="changing-the-text-to-speech-model">🧠 <strong>Changing the Text-to-Speech Model</strong></h2>
 <p>You can use a different TTS model to achieve specific voice styles or improve performance.</p>
@@ -635,11 +634,11 @@ Example:</li>
 <li>Replace the model_id with your preferred TTS model.</li>
 </ol>
 <p>Example:
-```python
-@st.cache_resource
-def load_text_to_speech_model_and_tokenizer():
-    return load_parler_tts_model_and_tokenizer(
-        "parler-tts/parler-tts-mini-expresso", "cpu")</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nd">@st</span><span class="o">.</span><span class="n">cache_resource</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span> <span class="nf">load_text_to_speech_model_and_tokenizer</span><span class="p">():</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="k">return</span> <span class="n">load_parler_tts_model_and_tokenizer</span><span class="p">(</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        <span class="s2">&quot;parler-tts/parler-tts-mini-expresso&quot;</span><span class="p">,</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+</span></code></pre></div></p>
 <h2 id="other-customization-ideas">💡 Other Customization Ideas</h2>
 <ul>
 <li>Add Multiple Speakers: Modify <code>script_to_audio.py</code> to include additional speakers in your podcast.</li>
@@ -695,7 +694,7 @@ def load_text_to_speech_model_and_tokenizer():
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
     
   </body>

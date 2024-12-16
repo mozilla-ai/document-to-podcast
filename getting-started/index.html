@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
@@ -332,6 +332,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#optional-use-parler-models-for-text-to-speech" class="md-nav__link">
+    <span class="md-ellipsis">
+      [Optional]: Use Parler models for text-to-speech
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -482,6 +491,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#optional-use-parler-models-for-text-to-speech" class="md-nav__link">
+    <span class="md-ellipsis">
+      [Optional]: Use Parler models for text-to-speech
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -511,25 +529,23 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>streamlit<span class="w"> </span>run<span class="w"> </span>demo/app.py
 </span></code></pre></div></p>
 <h3 id="option-2-local-installation">💻  <strong>Option 2: Local Installation</strong></h3>
-<ol>
-<li><strong>Clone the Repository</strong></li>
-</ol>
-<p>Inside your terminal, run:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mozilla-ai/document-to-podcast.git
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>document-to-podcast
+<p>1.<strong>Clone the Repository</strong></p>
+<p>Inside your terminal, run:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="w">   </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mozilla-ai/document-to-podcast.git
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">   </span><span class="nb">cd</span><span class="w"> </span>document-to-podcast
 </span></code></pre></div>
-<ol>
-<li><strong>Install Dependencies</strong></li>
-</ol>
+2. <strong>Install Dependencies</strong></p>
 <p>Inside your terminal, run:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </span></code></pre></div>
-<ol>
-<li><strong>Run the Demo</strong></li>
-</ol>
+3. <strong>Run the Demo</strong></p>
 <p>Inside your terminal, start the Streamlit demo by running:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>-m<span class="w"> </span>streamlit<span class="w"> </span>run<span class="w"> </span>demo/app.py
 </span></code></pre></div>
+<h3 id="optional-use-parler-models-for-text-to-speech">[Optional]: Use Parler models for text-to-speech</h3>
+<p>If you want to use the <a href="https://github.com/huggingface/parler-tts">parler tts</a> models, you will need to <strong>additionally</strong> install an optional dependency by running:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;.[parler]&#39;</span>
+</span></code></pre></div></p>
 
 
 
@@ -579,7 +595,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
     
   </body>
