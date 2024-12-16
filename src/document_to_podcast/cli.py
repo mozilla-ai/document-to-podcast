@@ -107,9 +107,7 @@ def document_to_podcast(
 
     logger.info(f"Loading {config.text_to_speech_model} on {config.device}")
     if "oute" in config.text_to_speech_model.lower():
-        speech_model = load_outetts_model(
-            model_id=config.text_to_speech_model, device=device
-        )
+        speech_model = load_outetts_model(model_id=config.text_to_speech_model)
         speech_tokenizer = None
         sample_rate = speech_model.audio_codec.sr
     else:
