@@ -24,7 +24,7 @@ def load_text_to_text_model():
 
 @st.cache_resource
 def load_text_to_speech_model():
-    return load_outetts_model("OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf")
+    return load_outetts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
 
 
 script = "script"

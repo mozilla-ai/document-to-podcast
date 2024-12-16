@@ -90,4 +90,3 @@ class Config(BaseModel):
     text_to_text_prompt: Annotated[str, AfterValidator(validate_text_to_text_prompt)]
     text_to_speech_model: SUPPORTED_TTS_MODELS
     speakers: list[Speaker]
-    device: str

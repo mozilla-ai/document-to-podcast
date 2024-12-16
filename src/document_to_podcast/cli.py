@@ -33,7 +33,6 @@ def document_to_podcast(
     text_to_speech_model: SUPPORTED_TTS_MODELS = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
     speakers: list[Speaker] | None = None,
     from_config: str | None = None,
-    device: str = "cpu",
 ):
     """
     Generate a podcast from a document.
@@ -88,7 +87,6 @@ def document_to_podcast(
             text_to_text_prompt=text_to_text_prompt,
             text_to_speech_model=text_to_speech_model,
             speakers=[Speaker.model_validate(speaker) for speaker in speakers],
-            device=device,
         )
 
     output_folder = Path(config.output_folder)

@@ -5,7 +5,7 @@ from outetts.version.v1.interface import InterfaceGGUF
 from transformers import PreTrainedTokenizerBase, PreTrainedModel
 
 
-def _speech_generation_oute(
+def _text_to_speech_oute(
     input_text: str,
     model: InterfaceGGUF,
     voice_profile: str,
@@ -25,7 +25,7 @@ def _speech_generation_oute(
     return output_as_np
 
 
-def _speech_generation_parler(
+def _text_to_speech_parler(
     input_text: str,
     model: PreTrainedModel,
     tokenizer: PreTrainedTokenizerBase,
@@ -65,8 +65,8 @@ def text_to_speech(
         numpy array: The waveform of the speech as a 2D numpy array
     """
     if isinstance(model, InterfaceGGUF):
-        return _speech_generation_oute(input_text, model, voice_profile)
+        return _text_to_speech_oute(input_text, model, voice_profile)
     elif isinstance(model, PreTrainedModel):
-        return _speech_generation_parler(input_text, model, tokenizer, voice_profile)
+        return _text_to_speech_parler(input_text, model, tokenizer, voice_profile)
     else:
         raise NotImplementedError("Model not yet implemented for TTS")

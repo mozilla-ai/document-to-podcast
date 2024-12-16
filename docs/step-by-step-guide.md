@@ -99,7 +99,7 @@ In this final step, the generated podcast transcript is brought to life as an au
 
 - The function `parse_script_to_waveform` splits the dialogue script by speakers and uses `text_to_speech` to generate audio for each speaker, stitching them together into a full podcast.
 
-- Once the podcast waveform is ready, the `save_waveform_as_file` function saves it as an audio file (e.g., MP3 or WAV), making it ready for distribution.
+- Once the podcast waveform is ready, the `soundfile.write` function saves it as an audio file (e.g., MP3 or WAV), making it ready for distribution.
 
 
 ## **Bringing It All Together in `app.py`**
