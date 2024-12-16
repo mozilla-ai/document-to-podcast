@@ -123,10 +123,14 @@ if uploaded_file is not None:
     if st.button("Generate Podcast", on_click=gen_button_clicked):
         for n, speaker in enumerate(speakers):
             speaker["id"] = n + 1
-        system_prompt = DEFAULT_PROMPT.replace(
-            "{SPEAKERS}",
-            "\n".join(str(Speaker.model_validate(speaker)) for speaker in speakers),
+        speakers_str = "\n".join(
+            str(Speaker.model_validate(speaker))
+            for speaker in speakers
+            if all(
+                speaker.get(x, None) for x in ["name", "description", "voice_profile"]
+            )
         )
+        system_prompt = DEFAULT_PROMPT.replace("{SPEAKERS}", speakers_str)
         with st.spinner("Generating Podcast..."):
             text = ""
             for chunk in text_to_text_stream(
