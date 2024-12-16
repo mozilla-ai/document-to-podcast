@@ -105,7 +105,7 @@ def document_to_podcast(
     logger.info(f"Loading {config.text_to_text_model}")
     text_model = load_llama_cpp_model(model_id=config.text_to_text_model)
 
-    logger.info(f"Loading {config.text_to_speech_model} on {config.device}")
+    logger.info(f"Loading {config.text_to_speech_model}
     if "oute" in config.text_to_speech_model.lower():
         speech_model = load_outetts_model(model_id=config.text_to_speech_model)
         speech_tokenizer = None
