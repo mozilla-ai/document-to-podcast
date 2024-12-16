@@ -72,7 +72,6 @@ def document_to_podcast(
 
         from_config (str, optional): The path to the config file. Defaults to None.
 
-        device (str, optional): The device to load the model. Currently ONLY the TTS! Defaults to "cpu".
 
             If provided, all other arguments will be ignored.
     """
