@@ -1,10 +1,8 @@
 name: "\U0001F680 Feature Request"
 description: Suggest an idea for this project
-title: "[FEATURE]: "
 projects:
   - "Document-to-podcast"
-labels:
-  - enhancement
+type: "feature"
 body:
   - type: markdown
     attributes:
