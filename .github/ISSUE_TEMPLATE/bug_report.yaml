@@ -1,10 +1,8 @@
 name: "\U0001F41B Bug Report"
 description: Submit a bug report to help us improve
-title: "[BUG]: "
+type: "bug"
 projects:
   - "document-to-podcast"
-labels:
-  - bug
 body:
   - type: markdown
     attributes:
