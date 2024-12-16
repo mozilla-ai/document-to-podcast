@@ -93,15 +93,6 @@ In this final step, the generated podcast transcript is brought to life as an au
 
    - The function `text_to_speech` takes the input text (e.g. podcast script) and speaker profile, generating a waveform (audio data in a numpy array) that represents the spoken version of the text.
 
-**2 - Parsing and Combining Voices**
-
-- The [`script_to_audio.py`](api.md/#document_to_podcast.podcast_maker.script_to_audio) script ensures each speaker’s dialogue is spoken in their unique voice.
-
-- The function `parse_script_to_waveform` splits the dialogue script by speakers and uses `text_to_speech` to generate audio for each speaker, stitching them together into a full podcast.
-
-- Once the podcast waveform is ready, the `soundfile.write` function saves it as an audio file (e.g., MP3 or WAV), making it ready for distribution.
-
-
 ## **Bringing It All Together in `app.py`**
 
 The `app.py` demo app is shows you how all the components of the Document-to-Podcast Blueprint can come together. It demonstrates how you can take the individual steps—Document Pre-Processing, Podcast Script Generation, and Audio Podcast Generation—and integrate them into a functional application. This is the heart of the Blueprint in action, showing how you can build an app using the provided tools and components.
