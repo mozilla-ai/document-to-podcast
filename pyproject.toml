@@ -17,6 +17,7 @@ dependencies = [
   "pydantic",
   "PyPDF2[crypto]",
   "python-docx",
+  "transformers>4.31.0",
   "streamlit",
 ]
 
