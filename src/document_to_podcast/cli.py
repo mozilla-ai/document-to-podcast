@@ -16,11 +16,9 @@ from document_to_podcast.config import (
 )
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
-    load_outetts_model,
-    load_parler_tts_model_and_tokenizer,
+    load_tts_model,
 )
 from document_to_podcast.inference.text_to_text import text_to_text_stream
-from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.preprocessing import DATA_CLEANERS, DATA_LOADERS
 
 
@@ -32,6 +30,7 @@ def document_to_podcast(
     text_to_text_prompt: str = DEFAULT_PROMPT,
     text_to_speech_model: SUPPORTED_TTS_MODELS = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
     speakers: list[Speaker] | None = None,
+    outetts_language: str = "en",  # Only applicable to OuteTTS models
     from_config: str | None = None,
 ):
     """
@@ -70,8 +69,10 @@ def document_to_podcast(
         speakers (list[Speaker] | None, optional): The speakers for the podcast.
             Defaults to DEFAULT_SPEAKERS.
 
-        from_config (str, optional): The path to the config file. Defaults to None.
+        outetts_language (str): For OuteTTS models we need to specify which language to use.
+            Supported languages in 0.2-500M: en, zh, ja, ko. More info: https://github.com/edwko/OuteTTS
 
+        from_config (str, optional): The path to the config file. Defaults to None.
 
             If provided, all other arguments will be ignored.
     """
@@ -86,6 +87,7 @@ def document_to_podcast(
             text_to_text_prompt=text_to_text_prompt,
             text_to_speech_model=text_to_speech_model,
             speakers=[Speaker.model_validate(speaker) for speaker in speakers],
+            outetts_language=outetts_language,
         )
 
     output_folder = Path(config.output_folder)
@@ -106,15 +108,9 @@ def document_to_podcast(
     text_model = load_llama_cpp_model(model_id=config.text_to_text_model)
 
     logger.info(f"Loading {config.text_to_speech_model}")
-    if "oute" in config.text_to_speech_model.lower():
-        speech_model = load_outetts_model(model_id=config.text_to_speech_model)
-        speech_tokenizer = None
-        sample_rate = speech_model.audio_codec.sr
-    else:
-        speech_model, speech_tokenizer = load_parler_tts_model_and_tokenizer(
-            model_id=config.text_to_speech_model
-        )
-        sample_rate = speech_model.config.sampling_rate
+    speech_model = load_tts_model(
+        model_id=config.text_to_speech_model, outetts_language=outetts_language
+    )
 
     # ~4 characters per token is considered a reasonable default.
     max_characters = text_model.n_ctx() * 4
@@ -146,11 +142,9 @@ def document_to_podcast(
                 for speaker in config.speakers
                 if speaker.id == int(speaker_id)
             )
-            speech = text_to_speech(
+            speech = speech_model.text_to_speech(
                 text.split(f'"Speaker {speaker_id}":')[-1],
-                speech_model,
                 voice_profile,
-                tokenizer=speech_tokenizer,  # Applicable only for parler models
             )
             podcast_audio.append(speech)
             text = ""
@@ -159,7 +153,7 @@ def document_to_podcast(
     sf.write(
         str(output_folder / "podcast.wav"),
         np.concatenate(podcast_audio),
-        samplerate=sample_rate,
+        samplerate=speech_model.sample_rate,
     )
     (output_folder / "podcast.txt").write_text(podcast_script)
     logger.success("Done!")
