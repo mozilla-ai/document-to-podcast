@@ -29,8 +29,8 @@ jobs:
           flavor: |
             latest=auto
 
-      - name: Set BuildKit
-        run: echo "DOCKER_BUILDKIT=1" >> $GITHUB_ENV
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
         id: push
