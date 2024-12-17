@@ -5,6 +5,7 @@ from typing_extensions import Annotated
 from pydantic import BaseModel, FilePath
 from pydantic.functional_validators import AfterValidator
 
+from document_to_podcast.inference.model_loaders import SUPPORTED_TTS_MODELS
 from document_to_podcast.preprocessing import DATA_LOADERS
 
 
@@ -39,14 +40,6 @@ DEFAULT_SPEAKERS = [
         "description": "The co-host. He keeps the conversation on track, asks curious follow-up questions, and reacts with excitement or confusion, often using interjections like hmm or umm.",
         "voice_profile": "male_1",
     },
-]
-
-SUPPORTED_TTS_MODELS = Literal[
-    "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
-    "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf",
-    "parler-tts/parler-tts-large-v1",
-    "parler-tts/parler-tts-mini-v1",
-    "parler-tts/parler-tts-mini-v1.1",
 ]
 
 
@@ -88,5 +81,6 @@ class Config(BaseModel):
     output_folder: str
     text_to_text_model: Annotated[str, AfterValidator(validate_text_to_text_model)]
     text_to_text_prompt: Annotated[str, AfterValidator(validate_text_to_text_prompt)]
-    text_to_speech_model: SUPPORTED_TTS_MODELS
+    text_to_speech_model: Literal[tuple(list(SUPPORTED_TTS_MODELS.keys()))]
     speakers: list[Speaker]
+    outetts_language: str = "en"
