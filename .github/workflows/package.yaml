@@ -29,6 +29,9 @@ jobs:
           flavor: |
             latest=auto
 
+      - name: Set BuildKit
+        run: echo "DOCKER_BUILDKIT=1" >> $GITHUB_ENV
+
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v6
