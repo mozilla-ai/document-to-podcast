@@ -8,10 +8,9 @@ import streamlit as st
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
-    load_outetts_model,
+    load_tts_model,
 )
 from document_to_podcast.config import DEFAULT_PROMPT, DEFAULT_SPEAKERS, Speaker
-from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.inference.text_to_text import text_to_text_stream
 
 
@@ -24,7 +23,7 @@ def load_text_to_text_model():
 
 @st.cache_resource
 def load_text_to_speech_model():
-    return load_outetts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
+    return load_tts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
 
 
 script = "script"
@@ -148,12 +147,11 @@ if uploaded_file is not None:
                         if speaker["id"] == int(speaker_id)
                     )
                     with st.spinner("Generating Audio..."):
-                        speech = text_to_speech(
+                        speech = speech_model.text_to_speech(
                             text.split(f'"Speaker {speaker_id}":')[-1],
-                            speech_model,
                             voice_profile,
                         )
-                    st.audio(speech, sample_rate=speech_model.audio_codec.sr)
+                    st.audio(speech, sample_rate=speech_model.sample_rate)
 
                     st.session_state.audio.append(speech)
                     text = ""
@@ -164,7 +162,7 @@ if uploaded_file is not None:
             sf.write(
                 "podcast.wav",
                 st.session_state.audio,
-                samplerate=speech_model.audio_codec.sr,
+                samplerate=speech_model.sample_rate,
             )
             st.markdown("Podcast saved to disk!")
 
