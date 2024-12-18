@@ -44,7 +44,7 @@ def load_llama_cpp_model(model_id: str) -> Llama:
     return model
 
 
-class TTSModelWrapper:
+class TTSInterface:
     """
     The purpose of this class is to provide a unified interface for all the TTS models supported.
     Specifically, different TTS model families have different peculiarities, for example, the bark model needs a
@@ -89,7 +89,7 @@ class TTSModelWrapper:
         )
 
 
-def load_tts_model(model_id: str, **kwargs) -> TTSModelWrapper:
+def load_tts_model(model_id: str, **kwargs) -> TTSInterface:
     """
 
     Args:
@@ -102,7 +102,7 @@ def load_tts_model(model_id: str, **kwargs) -> TTSModelWrapper:
     return SUPPORTED_TTS_MODELS[model_id][0](model_id, **kwargs)
 
 
-def _load_oute_tts(model_id: str, language: str = "en") -> TTSModelWrapper:
+def _load_oute_tts(model_id: str, language: str = "en") -> TTSInterface:
     """
     Loads the given model_id using the OuteTTS interface. For more info: https://github.com/edwko/OuteTTS
 
@@ -111,7 +111,7 @@ def _load_oute_tts(model_id: str, language: str = "en") -> TTSModelWrapper:
             Format is expected to be `{org}/{repo}/{filename}`.
         language (str): Supported languages in 0.2-500M: en, zh, ja, ko.
     Returns:
-        TTSModelWrapper: The loaded model using the TTSModelWrapper.
+        TTSInterface: The loaded model using the TTSModelWrapper.
     """
     model_version = model_id.split("-")[1]
 
@@ -120,12 +120,12 @@ def _load_oute_tts(model_id: str, language: str = "en") -> TTSModelWrapper:
     model_config = GGUFModelConfig_v1(model_path=local_path, language=language)
     model = InterfaceGGUF(model_version=model_version, cfg=model_config)
 
-    return TTSModelWrapper(
+    return TTSInterface(
         model=model, model_id=model_id, sample_rate=model.audio_codec.sr
     )
 
 
-def _load_bark_tts(model_id: str, **kwargs) -> TTSModelWrapper:
+def _load_bark_tts(model_id: str, **kwargs) -> TTSInterface:
     """
     Loads the given model_id and its required processor. For more info: https://github.com/suno-ai/bark
 
@@ -134,18 +134,18 @@ def _load_bark_tts(model_id: str, **kwargs) -> TTSModelWrapper:
             Format is expected to be `{repo}/{filename}`.
 
     Returns:
-        TTSModelWrapper: The loaded model with its required processor using the TTSModelWrapper.
+        TTSInterface: The loaded model with its required processor using the TTSModelWrapper.
     """
 
     processor = AutoProcessor.from_pretrained(model_id)
     model = BarkModel.from_pretrained(model_id)
 
-    return TTSModelWrapper(
+    return TTSInterface(
         model=model, model_id=model_id, sample_rate=24_000, bark_processor=processor
     )
 
 
-def _load_parler_tts(model_id: str, **kwargs) -> TTSModelWrapper:
+def _load_parler_tts(model_id: str, **kwargs) -> TTSInterface:
     """
     Loads the given model_id using parler_tts.from_pretrained. For more info: https://github.com/huggingface/parler-tts
 
@@ -154,7 +154,7 @@ def _load_parler_tts(model_id: str, **kwargs) -> TTSModelWrapper:
             Format is expected to be `{repo}/{filename}`.
 
     Returns:
-        TTSModelWrapper: The loaded model with its required tokenizer for the input. For the multilingual models we also
+        TTSInterface: The loaded model with its required tokenizer for the input. For the multilingual models we also
         load another tokenizer for the description
     """
     from parler_tts import ParlerTTSForConditionalGeneration
@@ -169,7 +169,7 @@ def _load_parler_tts(model_id: str, **kwargs) -> TTSModelWrapper:
         else None
     )
 
-    return TTSModelWrapper(
+    return TTSInterface(
         model=model,
         model_id=model_id,
         sample_rate=model.config.sampling_rate,
