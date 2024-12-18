@@ -151,3 +151,21 @@ def _text_to_speech_parler_indic(
     waveform = generation.cpu().numpy().squeeze()
 
     return waveform
+
+
+TTS_INFERENCE = {
+    "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf": _text_to_speech_oute,
+    "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf": _text_to_speech_oute,
+    "suno/bark": _text_to_speech_bark,
+    "parler-tts/parler-tts-large-v1": _text_to_speech_parler,
+    "parler-tts/parler-tts-mini-v1": _text_to_speech_parler,
+    "parler-tts/parler-tts-mini-v1.1": _text_to_speech_parler,
+    "parler-tts/parler-tts-mini-multilingual-v1.1": _text_to_speech_parler_multi,
+    "ai4bharat/indic-parler-tts": _text_to_speech_parler_indic,
+}
+
+
+def text_to_speech(input_text, model, voice_profile):
+    return TTS_INFERENCE[model.model_id](
+        input_text, model.model, voice_profile, **model.custom_args
+    )

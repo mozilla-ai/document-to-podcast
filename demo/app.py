@@ -12,6 +12,7 @@ from document_to_podcast.inference.model_loaders import (
 )
 from document_to_podcast.config import DEFAULT_PROMPT, DEFAULT_SPEAKERS, Speaker
 from document_to_podcast.inference.text_to_text import text_to_text_stream
+from document_to_podcast.inference.text_to_speech import text_to_speech
 
 
 @st.cache_resource
@@ -147,9 +148,10 @@ if uploaded_file is not None:
                         if speaker["id"] == int(speaker_id)
                     )
                     with st.spinner("Generating Audio..."):
-                        speech = speech_model.text_to_speech(
+                        speech = text_to_speech(
                             text.split(f'"Speaker {speaker_id}":')[-1],
-                            voice_profile,
+                            model=speech_model,
+                            voice_profile=voice_profile,
                         )
                     st.audio(speech, sample_rate=speech_model.sample_rate)
 
