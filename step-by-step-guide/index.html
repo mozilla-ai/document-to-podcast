@@ -366,6 +366,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#api-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 API Example
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -390,6 +399,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#api-example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 API Example
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -409,6 +427,15 @@
   <a href="#key-components-in-this-step_2" class="md-nav__link">
     <span class="md-ellipsis">
       ⚙️ Key Components in this Step
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-example_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 API Example
     </span>
   </a>
   
@@ -603,6 +630,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#api-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 API Example
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -627,6 +663,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#api-example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 API Example
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -646,6 +691,15 @@
   <a href="#key-components-in-this-step_2" class="md-nav__link">
     <span class="md-ellipsis">
       ⚙️ Key Components in this Step
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-example_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 API Example
     </span>
   </a>
   
@@ -758,6 +812,30 @@
 <p>Ensures the document is clean and ready for the next step.</p>
 </li>
 </ul>
+<h3 id="api-example">🔍 <strong>API Example</strong></h3>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">document_to_podcast.preprocessing</span> <span class="kn">import</span> <span class="n">DATA_CLEANERS</span><span class="p">,</span> <span class="n">DATA_LOADERS</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;example_data/introducing-mozilla-ai-investing-in-trustworthy-ai.html&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">data_loader</span> <span class="o">=</span> <span class="n">DATA_LOADERS</span><span class="p">[</span><span class="s2">&quot;.html&quot;</span><span class="p">]</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">data_cleaner</span> <span class="o">=</span> <span class="n">DATA_CLEANERS</span><span class="p">[</span><span class="s2">&quot;.html&quot;</span><span class="p">]</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">raw_data</span> <span class="o">=</span> <span class="n">data_loader</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">raw_data</span><span class="p">[:</span><span class="mi">200</span><span class="p">])</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="sd">&lt;!doctype html&gt;</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="sd">&lt;html class=&quot;no-js&quot; lang=&quot;en-US&quot;&gt;</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="sd">&lt;head&gt;</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="sd">  &lt;meta charset=&quot;UTF-8&quot;&gt;</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="sd">  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="sd">  &lt;link rel=&quot;profile&quot; href=&quot;https://gmpg.org/x</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">clean_data</span> <span class="o">=</span> <span class="n">data_cleaner</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nb">print</span><span class="p">(</span><span class="n">clean_data</span><span class="p">[:</span><span class="mi">200</span><span class="p">])</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="sd">Skip to content Mozilla Internet Culture Deep Dives Mozilla Explains Interviews Videos Privacy Security Products Firefox Pocket Mozilla VPN Mozilla News Internet Policy Leadership Mitchell Baker, CEO</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="sd">&quot;&quot;&quot;</span>
+</span></code></pre></div>
 <h2 id="step-2-podcast-script-generation"><strong>Step 2: Podcast Script Generation</strong></h2>
 <p>In this step, the pre-processed text is transformed into a conversational podcast transcript. Using a Language Model, the system generates a dialogue that’s both informative and engaging.</p>
 <h3 id="key-components-in-this-step_1">⚙️ <strong>Key Components in this Step</strong></h3>
@@ -785,6 +863,55 @@
 <p>Supports both single-pass outputs (<code>text_to_text</code>) and real-time streamed responses (<code>text_to_text_stream</code>), offering flexibility for different use cases.</p>
 </li>
 </ul>
+<h3 id="api-example_1">🔍 <strong>API Example</strong></h3>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">document_to_podcast.inference.model_loaders</span> <span class="kn">import</span> <span class="n">load_llama_cpp_model</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span> <span class="nn">document_to_podcast.inference.text_to_text</span> <span class="kn">import</span> <span class="n">text_to_text</span><span class="p">,</span> <span class="n">text_to_text_stream</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Load the model</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">model</span> <span class="o">=</span> <span class="n">load_llama_cpp_model</span><span class="p">(</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="s2">&quot;allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf&quot;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">)</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># Define your input and system prompt</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">input_text</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="s2">&quot;Electric vehicles (EVs) have seen a significant rise in adoption over the past &quot;</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="s2">&quot;decade, driven by advancements in battery technology, government incentives, &quot;</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="s2">&quot;and growing consumer awareness of environmental issues.&quot;</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="p">)</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">system_prompt</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="sd">    You are a podcast scriptwriter generating engaging and natural-sounding conversations in JSON format.</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="sd">    - Write dynamic, easy-to-follow dialogue.</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="sd">    - Include natural interruptions and interjections.</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="sd">    - Avoid repetitive phrasing between speakers.</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="sd">    - Format output as a JSON conversation.</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="sd">    Example:</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="sd">    {</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="sd">      &quot;Speaker 1&quot;: &quot;Welcome to our podcast! Today, we&#39;re exploring...&quot;,</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="sd">      &quot;Speaker 2&quot;: &quot;Hi! I&#39;m excited to hear about this. Can you explain...&quot;,</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="sd">    }</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="p">)</span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="c1"># Generate a podcast script from the input text</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="n">podcast_script</span> <span class="o">=</span> <span class="n">text_to_text</span><span class="p">(</span><span class="n">input_text</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">system_prompt</span><span class="p">)</span>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="nb">print</span><span class="p">(</span><span class="n">podcast_script</span><span class="p">)</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="sd">{</span>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="sd">  &quot;Speaker 1&quot;: &quot;Welcome to our podcast! Today, we&#39;re exploring the rise of electric vehicles (EVs) and what&#39;s driving this significant increase in adoption over the past decade.&quot;,</span>
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="sd">  &quot;Speaker 2&quot;: &quot;Absolutely, it&#39;s fascinating to see how the market has evolved and how consumers are becoming more environmentally conscious.&quot;,</span>
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="sd">  &quot;Speaker 1&quot;: &quot;Absolutely! Let&#39;s dive into the key factors driving this growth.&quot;,</span>
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="sd">  &quot;Speaker 2&quot;: &quot;Sure, here are a few key drivers: advancements in battery technology, government incentives, and growing consumer awareness of environmental issues.&quot;,</span>
+</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="sd">  ...</span>
+</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="sd">}</span>
+</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>
+</span><span id="__span-1-45"><a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="c1"># Example of real-time script generation with streaming</span>
+</span><span id="__span-1-46"><a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">text_to_text_stream</span><span class="p">(</span><span class="n">input_text</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">system_prompt</span><span class="p">):</span>
+</span><span id="__span-1-47"><a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span></code></pre></div>
 <h2 id="step-3-audio-podcast-generation"><strong>Step 3: Audio Podcast Generation</strong></h2>
 <p>In this final step, the generated podcast transcript is brought to life as an audio file. Using a Text-to-Speech (TTS) model, each speaker in the script is assigned a unique voice, creating an engaging and professional-sounding podcast.</p>
 <h3 id="key-components-in-this-step_2">⚙️ <strong>Key Components in this Step</strong></h3>
@@ -812,6 +939,30 @@
 <p>The function <code>text_to_speech</code> takes the input text (e.g. podcast script) and speaker profile, generating a waveform (audio data in a numpy array) that represents the spoken version of the text.</p>
 </li>
 </ul>
+<h3 id="api-example_2">🔍 <strong>API Example</strong></h3>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">soundfile</span> <span class="k">as</span> <span class="nn">sf</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">document_to_podcast.inference.model_loaders</span> <span class="kn">import</span> <span class="n">load_outetts_model</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span> <span class="nn">document_to_podcast.inference.text_to_speech</span> <span class="kn">import</span> <span class="n">text_to_speech</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># Load the TTS model</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">model</span> <span class="o">=</span> <span class="n">load_outetts_model</span><span class="p">(</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="s2">&quot;OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf&quot;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">)</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Generate the waveform</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">waveform</span> <span class="o">=</span> <span class="n">text_to_speech</span><span class="p">(</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="n">input_text</span><span class="o">=</span><span class="s2">&quot;Welcome to our amazing podcast&quot;</span><span class="p">,</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="n">voice_profile</span><span class="o">=</span><span class="s2">&quot;male_1&quot;</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">)</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="c1"># Save the audio file</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="n">sf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    <span class="s2">&quot;podcast.wav&quot;</span><span class="p">,</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    <span class="n">waveform</span><span class="p">,</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    <span class="n">samplerate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">audio_codec</span><span class="o">.</span><span class="n">sr</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="p">)</span>
+</span></code></pre></div>
 <h2 id="bringing-it-all-together-in-apppy"><strong>Bringing It All Together in <code>app.py</code></strong></h2>
 <p>The <code>app.py</code> demo app is shows you how all the components of the Document-to-Podcast Blueprint can come together. It demonstrates how you can take the individual steps—Document Pre-Processing, Podcast Script Generation, and Audio Podcast Generation—and integrate them into a functional application. This is the heart of the Blueprint in action, showing how you can build an app using the provided tools and components.</p>
 <p>This demo uses <a href="https://streamlit.io/">Streamlit</a>, an open-source Python framework for interactive apps.</p>
@@ -851,7 +1002,7 @@
 <p>The cleaned text and a system-defined podcast prompt are fed into the text_to_text_stream function.</p>
 </li>
 <li>
-<p>The <code>PODCAST_PROMPT</code> can be edited by the end-user to enable them to tailor their script results for their needs.</p>
+<p>The <code>DEFAULT_PROMPT</code> is loaded from <code>config.py</code></p>
 </li>
 <li>
 <p>The script is streamed back to the user in real-time, allowing them to see the generated conversation between speakers</p>
@@ -863,7 +1014,7 @@
 <p>For each speaker in the podcast script, audio is generated using the <code>text_to_speech</code> function with distinct speaker profiles</p>
 </li>
 <li>
-<p>The <code>SPEAKER_DESCRIPTION</code> enables the user to edit the podcast speakers voices to fit their needs.</p>
+<p>The <code>DEFAULT_SPEAKERS</code> is loaded from <code>config.py</code></p>
 </li>
 <li>
 <p>The generated audio is displayed with a player so users can listen directly in the app.</p>
@@ -919,7 +1070,7 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
