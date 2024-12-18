@@ -18,6 +18,8 @@ document-to-podcast \
 --text_to_text_model "Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf"
 ```
 
+Note that you can also exit the podcast generation prematurely (before the whole podcast is created), by pressing Ctrl+C in the terminal. This will make the application stop the generation, but still save the result (script & audio) to disk up until that point.
+
 ---
 
 ::: document_to_podcast.cli.document_to_podcast
