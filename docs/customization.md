@@ -1,88 +1,79 @@
 # 🎨 **Customization Guide**
 
-The Document-to-Podcast Blueprint is designed to be flexible and easily adaptable to your specific needs. This guide will walk you through some key areas you can customize to make the Blueprint your own.
+The Document-to-Podcast Blueprint is designed to be flexible and adaptable to your specific needs.
+This guide outlines the key parameters you can customize and explains how to make these changes depending on whether you’re running the application via app.py or the CLI pipeline.
 
----
+## 🖋️ **Key Parameters for Customization**
 
-## 🧠 **Changing the Text-to-Text Model**
-You can swap the language model used for generating podcast scripts to suit your needs, such as using a smaller model for faster processing or a larger one for higher quality outputs.
+- **`input_file`**: The input file specifies the document to be processed. Supports the following formats: `pdf`, `html`, `txt`, `docx`, `md`.
 
-Customizing the app:
+- **`text_to_text_model`**: The language model used to generate the podcast script. Note: The model parameter must be in GGFUF format, for example: `Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf`.
 
-1. Open the `app.py` file.
-2. Locate the `load_text_to_text_model` function.
-3. Replace the `model_id` with the ID of your desired model from a supported repository (e.g., Hugging Face). Note: The model repository must be in GGFUF format, for example: `Qwen/Qwen2.5-1.5B-Instruct-GGUF`
+- **`text_to_text_prompt`**: Defines the tone, structure, and instructions for generating the podcast script. This prompt is crucial for tailoring the conversation style to your project.
 
-Example:
+- **`text_to_speech_model`**: Specifies the model used for text-to-speech conversion. You can change this to achieve the desired voice style or improve performance. Check `config.py` to choose from supported models.
 
+- **`speakers`**: Defines the podcast participants, including their names, roles, descriptions, and voice profiles. Customize this to create engaging personas and voices for your podcast.
+
+## 🖥️ **Customizing When Running via `app.py`**
+
+If you’re running the application using `app.py`, you can customize these parameters in the **`src/config.py`** file. This centralized configuration file simplifies the customization process.
+
+Running app.py:
 ```python
-@st.cache_resource
-def load_text_to_text_model():
-    return load_llama_cpp_model(
-        model_id="Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf"
+python -m streamlit run demo/app.py
 ```
 
+### Steps to Customize
+1. Open the `config.py` file.
+2. Locate the relevant parameter you want to change (e.g., `text_to_text_model`, `speakers`).
+3. Update the value according to your needs.
 
-## 📝 **Modifying the Text Generation Prompt**
-The system prompt defines the structure and tone of the generated script. Customizing this can allow you to generate conversations that align with your project’s needs.
-
-Customizing the app:
-
-1.	Open the `app.py` file.
-2.	Locate the PODCAST_PROMPT variable.
-3.	Edit the instructions to suit your desired conversation style.
-
-Example:
+#### Example: Updating the Prompt
+In `config.py`, modify the `text_to_text_prompt` parameter:
 
 ```python
-PODCAST_PROMPT = """
-You are a radio show scriptwriter generating lively and humorous dialogues.
-Speaker 1: A comedian who is interested in learning new things.
-Speaker 2: A scientist explaining concepts in a fun way.
+DEFAULT_PROMPT = """
+You are a podcast scriptwriter generating engaging and humorous conversations in JSON format.
+The script features the following speakers:
+{SPEAKERS}
+Instructions:
+- Use a casual and fun tone.
+- Include jokes and lighthearted banter.
+- Format output as a JSON conversation.
+  {
+    "Speaker 1": "Well we a have a hilarious podcast in store for you today...",
+    "Speaker 2": "I can't wait, I had the weirdest week - let me tell you all about it...",
 """
 ```
 
+## ⌨️ **Customizing When Running via the CLI**
 
-## 🎙️ **Customizing Speaker Descriptions**
-Adjusting the speaker profiles allows you to create distinct and engaging voices for your podcast.
+If you’re running the pipeline from the command line, you can customize the parameters by modifying the **`example_data/config.yaml`** file.
 
-Customizing the app:
-
-1. Open the `app.py` file.
-2.	Locate the SPEAKER_DESCRIPTIONS dictionary.
-3.	Update the descriptions to define new voice characteristics for each speaker
-Example:
-
-```python
-SPEAKER_DESCRIPTIONS_OUTE = {
-    "1": "A cheerful and animated voice with a fast-paced delivery.",
-    "2": "A calm and deep voice, speaking with authority and warmth."
-}
-"""
+Running in the CLI:
+```bash
+document-to-podcast --from_config example_data/config.yaml
 ```
 
+### Steps to Customize
+1. Open the `config.yaml` file.
+2. Locate the parameter you want to adjust.
+3. Update the value and save the file.
 
-## 🧠 **Changing the Text-to-Speech Model**
-You can use a different TTS model to achieve specific voice styles or improve performance.
+#### Example: Changing the Text-to-Text Model
+In `config.yaml`, modify the `text_to_text_model` entry:
 
-Customizing the app:
-
-1. Open the `app.py` file.
-2. Locate the `load_text_to_speech_model_and_tokenizer` function.
-3.	Replace the model_id with your preferred TTS model.
-
-Example:
-```python
-@st.cache_resource
-def load_text_to_speech_model_and_tokenizer():
-    return load_parler_tts_model_and_tokenizer(
-        "parler-tts/parler-tts-mini-expresso", "cpu")
+```yaml
+text_to_text_model: "Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf"
 ```
 
-## 💡 Other Customization Ideas
+## ✏️ **Customization Examples**
 
-- Add Multiple Speakers: Modify `script_to_audio.py` to include additional speakers in your podcast.
+Looking for inspiration? Check out these examples of how others have customized the Document-to-Podcast Blueprint for their unique needs:
 
+- **[Radio Drama Generator](https://github.com/stefanfrench/radio-drama-generator)**: A creative adaptation that generates radio dramas by customizing ng the Blueprint parameters.
+- **[Readme-to-Podcast](https://github.com/alexmeckes/readme-to-podcast)**: This project transforms GitHub README files into podcast-style audio, showcasing the Blueprint’s ability to handle diverse text inputs.
 
 ## 🤝 **Contributing to the Blueprint**
 
