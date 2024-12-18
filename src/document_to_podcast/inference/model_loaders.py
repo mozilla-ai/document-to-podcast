@@ -5,10 +5,8 @@ from outetts import GGUFModelConfig_v1, InterfaceGGUF
 from transformers import (
     AutoTokenizer,
     PreTrainedModel,
-    PreTrainedTokenizerBase,
     AutoProcessor,
     BarkModel,
-    BarkProcessor,
 )
 import numpy as np
 
@@ -48,7 +46,7 @@ def load_llama_cpp_model(model_id: str) -> Llama:
 
 class TTSModelWrapper:
     """
-    The purpose of this wrapper is to provide a unified interface for all the TTS models supported.
+    The purpose of this class is to provide a unified interface for all the TTS models supported.
     Specifically, different TTS model families have different peculiarities, for example, the bark model needs a
     BarkProcessor, the parler models need their own tokenizer, etc. This wrapper takes care of this complexity so that
     the user doesn't have to deal with it.
@@ -59,21 +57,15 @@ class TTSModelWrapper:
         model: Union[InterfaceGGUF, BarkModel, PreTrainedModel],
         model_id: str,
         sample_rate: int,
-        bark_processor: BarkProcessor = None,  # Only required for Bark models
-        parler_tokenizer: PreTrainedTokenizerBase = None,  # Only required for Parler models
-        parler_description_tokenizer: PreTrainedTokenizerBase = None,  # Only required for multilingual Parler models
+        **kwargs,
     ):
         self.model = model
         self.model_id = model_id
         self.sample_rate = sample_rate
-        self.bark_processor = bark_processor
-        self.parler_tokenizer = parler_tokenizer
-        self.parler_description_tokenizer = parler_description_tokenizer
+        self.kwargs = kwargs
 
     def text_to_speech(
-        self,
-        input_text: str,
-        voice_profile: str,
+        self, input_text: str, voice_profile: str, **kwargs
     ) -> np.ndarray:
         """
         Generates a speech waveform from a text input using a pre-trained text-to-speech (TTS) model.
@@ -92,40 +84,22 @@ class TTSModelWrapper:
         Returns:
             numpy array: The waveform of the speech as a 2D numpy array
         """
-        # TODO: no.
-        if "oute" in self.model_id:
-            return SUPPORTED_TTS_MODELS[self.model_id][1](
-                input_text, self.model, voice_profile
-            )
-        elif "bark" in self.model_id:
-            return SUPPORTED_TTS_MODELS[self.model_id][1](
-                input_text, self.model, self.bark_processor, voice_profile
-            )
-        elif (
-            "parler" in self.model_id
-            and "multi" in self.model_id
-            or "indic" in self.model_id
-        ):
-            return SUPPORTED_TTS_MODELS[self.model_id][1](
-                input_text,
-                self.model,
-                self.parler_tokenizer,
-                voice_profile,
-                self.parler_description_tokenizer,
-            )
-        elif "parler" in self.model_id:
-            return SUPPORTED_TTS_MODELS[self.model_id][1](
-                input_text, self.model, self.parler_tokenizer, voice_profile
-            )
-        else:
-            raise NotImplementedError
+        return SUPPORTED_TTS_MODELS[self.model_id][1](
+            input_text, self.model, voice_profile, **self.kwargs | kwargs
+        )
 
 
-def load_tts_model(model_id: str, outetts_language: str = "en") -> TTSModelWrapper:
-    if "oute" in model_id:
-        return SUPPORTED_TTS_MODELS[model_id][0](model_id, outetts_language)
-    else:
-        return SUPPORTED_TTS_MODELS[model_id][0](model_id)
+def load_tts_model(model_id: str, **kwargs) -> TTSModelWrapper:
+    """
+
+    Args:
+        model_id:
+        outetts_language:
+
+    Returns:
+
+    """
+    return SUPPORTED_TTS_MODELS[model_id][0](model_id, **kwargs)
 
 
 def _load_oute_tts(model_id: str, language: str = "en") -> TTSModelWrapper:
@@ -151,7 +125,7 @@ def _load_oute_tts(model_id: str, language: str = "en") -> TTSModelWrapper:
     )
 
 
-def _load_bark_tts(model_id: str) -> TTSModelWrapper:
+def _load_bark_tts(model_id: str, **kwargs) -> TTSModelWrapper:
     """
     Loads the given model_id and its required processor. For more info: https://github.com/suno-ai/bark
 
@@ -171,7 +145,7 @@ def _load_bark_tts(model_id: str) -> TTSModelWrapper:
     )
 
 
-def _load_parler_tts(model_id: str) -> TTSModelWrapper:
+def _load_parler_tts(model_id: str, **kwargs) -> TTSModelWrapper:
     """
     Loads the given model_id using parler_tts.from_pretrained. For more info: https://github.com/huggingface/parler-tts
 
