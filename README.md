@@ -133,3 +133,7 @@ You are probably missing the `GNU Make` package. A quick way to solve it is run 
 ## License
 
 This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome! To get started, you can check out the [CONTRIBUTING.md](CONTRIBUTING.md) file.
