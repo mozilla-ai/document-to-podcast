@@ -5,5 +5,5 @@
      "storage": "32gb"
     },
     "name": "Python Development Container",
-    "image": "mzdotai/document-to-podcast:latest"
+    "image": "https://index.docker.io/v1/mzdotai/document-to-podcast:latest"
 }
