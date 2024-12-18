@@ -236,7 +236,7 @@ This demo uses [Streamlit](https://streamlit.io/), an open-source Python framewo
 
  - The cleaned text and a system-defined podcast prompt are fed into the text_to_text_stream function.
 
- - The `PODCAST_PROMPT` can be edited by the end-user to enable them to tailor their script results for their needs.
+ - The `DEFAULT_PROMPT` is loaded from `config.py`
 
  - The script is streamed back to the user in real-time, allowing them to see the generated conversation between speakers
 
@@ -244,7 +244,7 @@ This demo uses [Streamlit](https://streamlit.io/), an open-source Python framewo
 
 - For each speaker in the podcast script, audio is generated using the `text_to_speech` function with distinct speaker profiles
 
-- The `SPEAKER_DESCRIPTION` enables the user to edit the podcast speakers voices to fit their needs.
+- The `DEFAULT_SPEAKERS` is loaded from `config.py`
 
 - The generated audio is displayed with a player so users can listen directly in the app.
 
