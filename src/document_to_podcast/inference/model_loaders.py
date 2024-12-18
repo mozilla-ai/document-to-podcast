@@ -102,7 +102,7 @@ def load_tts_model(model_id: str, **kwargs) -> TTSInterface:
     return SUPPORTED_TTS_MODELS[model_id][0](model_id, **kwargs)
 
 
-def _load_oute_tts(model_id: str, language: str = "en") -> TTSInterface:
+def _load_oute_tts(model_id: str, **kwargs) -> TTSInterface:
     """
     Loads the given model_id using the OuteTTS interface. For more info: https://github.com/edwko/OuteTTS
 
@@ -117,7 +117,9 @@ def _load_oute_tts(model_id: str, language: str = "en") -> TTSInterface:
 
     org, repo, filename = model_id.split("/")
     local_path = hf_hub_download(repo_id=f"{org}/{repo}", filename=filename)
-    model_config = GGUFModelConfig_v1(model_path=local_path, language=language)
+    model_config = GGUFModelConfig_v1(
+        model_path=local_path, language=kwargs.pop("language", "en")
+    )
     model = InterfaceGGUF(model_version=model_version, cfg=model_config)
 
     return TTSInterface(
