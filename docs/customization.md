@@ -68,6 +68,13 @@ In `config.yaml`, modify the `text_to_text_model` entry:
 text_to_text_model: "Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf"
 ```
 
+## ✏️ **Customization Examples**
+
+Looking for inspiration? Check out these examples of how others have customized the Document-to-Podcast Blueprint for their unique needs:
+
+- **[Radio Drama Generator](https://github.com/stefanfrench/radio-drama-generator)**: A creative adaptation that generates radio dramas by customizing ng the Blueprint parameters.
+- **[Readme-to-Podcast](https://github.com/alexmeckes/readme-to-podcast)**: This project transforms GitHub README files into podcast-style audio, showcasing the Blueprint’s ability to handle diverse text inputs.
+
 ## 🤝 **Contributing to the Blueprint**
 
 Want to help improve or extend this Blueprint? Check out the **[Future Features & Contributions Guide](future-features-contributions.md)** to see how you can contribute your ideas, code, or feedback to make this Blueprint even better!
