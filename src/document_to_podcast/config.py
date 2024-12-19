@@ -1,10 +1,11 @@
 from pathlib import Path
-from typing import Literal
 from typing_extensions import Annotated
 
 from pydantic import BaseModel, FilePath
 from pydantic.functional_validators import AfterValidator
 
+from document_to_podcast.inference.model_loaders import TTS_LOADERS
+from document_to_podcast.inference.text_to_speech import TTS_INFERENCE
 from document_to_podcast.preprocessing import DATA_LOADERS
 
 
@@ -41,14 +42,6 @@ DEFAULT_SPEAKERS = [
     },
 ]
 
-SUPPORTED_TTS_MODELS = Literal[
-    "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
-    "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf",
-    "parler-tts/parler-tts-large-v1",
-    "parler-tts/parler-tts-mini-v1",
-    "parler-tts/parler-tts-mini-v1.1",
-]
-
 
 def validate_input_file(value):
     if Path(value).suffix not in DATA_LOADERS:
@@ -73,6 +66,18 @@ def validate_text_to_text_prompt(value):
     return value
 
 
+def validate_text_to_speech_model(value):
+    if value not in TTS_LOADERS:
+        raise ValueError(
+            f"Model {value} is missing a loading function. Please define it under model_loaders.py"
+        )
+    if value not in TTS_INFERENCE:
+        raise ValueError(
+            f"Model {value} is missing an inference function. Please define it under text_to_speech.py"
+        )
+    return value
+
+
 class Speaker(BaseModel):
     id: int
     name: str
@@ -88,5 +93,6 @@ class Config(BaseModel):
     output_folder: str
     text_to_text_model: Annotated[str, AfterValidator(validate_text_to_text_model)]
     text_to_text_prompt: Annotated[str, AfterValidator(validate_text_to_text_prompt)]
-    text_to_speech_model: SUPPORTED_TTS_MODELS
+    text_to_speech_model: Annotated[str, AfterValidator(validate_text_to_speech_model)]
     speakers: list[Speaker]
+    outetts_language: str = "en"
