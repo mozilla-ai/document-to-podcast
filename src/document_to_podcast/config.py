@@ -1,11 +1,11 @@
 from pathlib import Path
-from typing import Literal
 from typing_extensions import Annotated
 
 from pydantic import BaseModel, FilePath
 from pydantic.functional_validators import AfterValidator
 
-from document_to_podcast.inference.model_loaders import SUPPORTED_TTS_MODELS
+from document_to_podcast.inference.model_loaders import TTS_LOADERS
+from document_to_podcast.inference.text_to_speech import TTS_INFERENCE
 from document_to_podcast.preprocessing import DATA_LOADERS
 
 
@@ -66,6 +66,18 @@ def validate_text_to_text_prompt(value):
     return value
 
 
+def validate_text_to_speech_model(value):
+    if value not in TTS_LOADERS:
+        raise ValueError(
+            f"Model {value} is missing a loading function. Please define it under model_loaders.py"
+        )
+    if value not in TTS_INFERENCE:
+        raise ValueError(
+            f"Model {value} is missing an inference function. Please define it under text_to_speech.py"
+        )
+    return value
+
+
 class Speaker(BaseModel):
     id: int
     name: str
@@ -81,6 +93,6 @@ class Config(BaseModel):
     output_folder: str
     text_to_text_model: Annotated[str, AfterValidator(validate_text_to_text_model)]
     text_to_text_prompt: Annotated[str, AfterValidator(validate_text_to_text_prompt)]
-    text_to_speech_model: Literal[tuple(list(SUPPORTED_TTS_MODELS.keys()))]
+    text_to_speech_model: Annotated[str, AfterValidator(validate_text_to_speech_model)]
     speakers: list[Speaker]
     outetts_language: str = "en"
