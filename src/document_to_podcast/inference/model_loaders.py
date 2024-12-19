@@ -78,7 +78,9 @@ def _load_oute_tts(model_id: str, **kwargs) -> TTSModel:
     )
     model = InterfaceGGUF(model_version=model_version, cfg=model_config)
 
-    return TTSModel(model=model, model_id=model_id, sample_rate=model.audio_codec.sr)
+    return TTSModel(
+        model=model, model_id=model_id, sample_rate=model.audio_codec.sr, custom_args={}
+    )
 
 
 def _load_bark_tts(model_id: str, **kwargs) -> TTSModel:
@@ -163,6 +165,7 @@ def _load_parler_tts_multi(model_id: str, **kwargs) -> TTSModel:
 
 TTS_LOADERS = {
     # To add support for your model, add it here in the format {model_id} : _load_function
+    "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-Q2_K.gguf": _load_oute_tts,
     "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf": _load_oute_tts,
     "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf": _load_oute_tts,
     "suno/bark": _load_bark_tts,
