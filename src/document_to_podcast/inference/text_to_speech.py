@@ -130,6 +130,7 @@ def _text_to_speech_parler_multi(
 
 
 TTS_INFERENCE = {
+    # To add support for your model, add it here in the format {model_id} : _inference_function
     "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-Q2_K.gguf": _text_to_speech_oute,
     "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf": _text_to_speech_oute,
     "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf": _text_to_speech_oute,
