@@ -12,12 +12,13 @@ from document_to_podcast.config import (
     Speaker,
     DEFAULT_PROMPT,
     DEFAULT_SPEAKERS,
-    SUPPORTED_TTS_MODELS,
+    TTS_LOADERS,
 )
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
     load_tts_model,
 )
+from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.inference.text_to_text import text_to_text_stream
 from document_to_podcast.preprocessing import DATA_CLEANERS, DATA_LOADERS
 
@@ -28,7 +29,7 @@ def document_to_podcast(
     output_folder: str | None = None,
     text_to_text_model: str = "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf",
     text_to_text_prompt: str = DEFAULT_PROMPT,
-    text_to_speech_model: SUPPORTED_TTS_MODELS = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
+    text_to_speech_model: TTS_LOADERS = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
     speakers: list[Speaker] | None = None,
     outetts_language: str = "en",  # Only applicable to OuteTTS models
     from_config: str | None = None,
@@ -142,8 +143,9 @@ def document_to_podcast(
                 for speaker in config.speakers
                 if speaker.id == int(speaker_id)
             )
-            speech = speech_model.text_to_speech(
+            speech = text_to_speech(
                 text.split(f'"Speaker {speaker_id}":')[-1],
+                speech_model,
                 voice_profile,
             )
             podcast_audio.append(speech)

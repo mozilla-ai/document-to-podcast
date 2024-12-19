@@ -5,6 +5,7 @@ import numpy as np
 import soundfile as sf
 import streamlit as st
 
+from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
@@ -147,8 +148,9 @@ if uploaded_file is not None:
                         if speaker["id"] == int(speaker_id)
                     )
                     with st.spinner("Generating Audio..."):
-                        speech = speech_model.text_to_speech(
+                        speech = text_to_speech(
                             text.split(f'"Speaker {speaker_id}":')[-1],
+                            speech_model,
                             voice_profile,
                         )
                     st.audio(speech, sample_rate=speech_model.sample_rate)
