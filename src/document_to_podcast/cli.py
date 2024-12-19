@@ -130,27 +130,29 @@ def document_to_podcast(
     system_prompt = system_prompt.replace(
         "{SPEAKERS}", "\n".join(str(speaker) for speaker in config.speakers)
     )
-    for chunk in text_to_text_stream(
-        clean_text, text_model, system_prompt=system_prompt
-    ):
-        text += chunk
-        podcast_script += chunk
-        if text.endswith("\n") and "Speaker" in text:
-            logger.debug(text)
-            speaker_id = re.search(r"Speaker (\d+)", text).group(1)
-            voice_profile = next(
-                speaker.voice_profile
-                for speaker in config.speakers
-                if speaker.id == int(speaker_id)
-            )
-            speech = text_to_speech(
-                text.split(f'"Speaker {speaker_id}":')[-1],
-                speech_model,
-                voice_profile,
-            )
-            podcast_audio.append(speech)
-            text = ""
-
+    try:
+        for chunk in text_to_text_stream(
+            clean_text, text_model, system_prompt=system_prompt
+        ):
+            text += chunk
+            podcast_script += chunk
+            if text.endswith("\n") and "Speaker" in text:
+                logger.debug(text)
+                speaker_id = re.search(r"Speaker (\d+)", text).group(1)
+                voice_profile = next(
+                    speaker.voice_profile
+                    for speaker in config.speakers
+                    if speaker.id == int(speaker_id)
+                )
+                speech = text_to_speech(
+                    text.split(f'"Speaker {speaker_id}":')[-1],
+                    speech_model,
+                    voice_profile,
+                )
+                podcast_audio.append(speech)
+                text = ""
+    except KeyboardInterrupt:
+        logger.warning("Podcast generation stopped by user.")
     logger.info("Saving Podcast...")
     sf.write(
         str(output_folder / "podcast.wav"),
