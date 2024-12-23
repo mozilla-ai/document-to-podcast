@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-push-image:
-    runs-on: ubuntu-latest
+    runs-on: blueprints-runner
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
