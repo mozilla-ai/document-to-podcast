@@ -20,6 +20,11 @@ jobs:
           cp demo/app.py hf-space/app.py
           cp demo/requirements.txt hf-space/requirements.txt
 
+      - run: |
+          cd hf-space
+          git add .
+          git commit -m "Sync with https://github.com/mozilla-ai/document-to-podcast"
+
       - name: Push to Hugging Face
         run: |
           cd hf-space
