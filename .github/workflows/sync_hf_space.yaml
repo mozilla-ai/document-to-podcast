@@ -1,0 +1,29 @@
+name: Sync to Hugging Face Space
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  sync-space:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - run: git clone https://huggingface.co/spaces/mozilla-ai/document-to-podcast hf-space
+
+      - run: |
+          cp demo/app.py hf-space/app.py
+          cp demo/requirements.txt hf-space/requirements.txt
+
+      - name: Push to Hugging Face
+        env:
+          HF_USERNAME: ${{ secrets.HF_USERNAME }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          cd hf-space
+          git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/mozilla-ai/document-to-podcast main
