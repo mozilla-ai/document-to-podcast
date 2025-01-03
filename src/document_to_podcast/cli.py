@@ -1,7 +1,6 @@
 import re
 from pathlib import Path
 
-import numpy as np
 import soundfile as sf
 import yaml
 from fire import Fire
@@ -22,6 +21,7 @@ from document_to_podcast.inference.model_loaders import (
 from document_to_podcast.inference.text_to_text import text_to_text_stream
 from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.preprocessing import DATA_CLEANERS, DATA_LOADERS
+from document_to_podcast.utils import stack_audio_segments
 
 
 @logger.catch(reraise=True)
@@ -158,7 +158,7 @@ def document_to_podcast(
     logger.info("Saving Podcast...")
     sf.write(
         str(output_folder / "podcast.wav"),
-        np.concatenate(podcast_audio),
+        stack_audio_segments(podcast_audio),
         samplerate=sample_rate,
     )
     (output_folder / "podcast.txt").write_text(podcast_script)
