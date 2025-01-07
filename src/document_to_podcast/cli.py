@@ -156,9 +156,13 @@ def document_to_podcast(
             text = ""
 
     logger.info("Saving Podcast...")
+    complete_audio = stack_audio_segments(
+        podcast_audio, sample_rate=sample_rate, silence_pad=1.0
+    )
+
     sf.write(
         str(output_folder / "podcast.wav"),
-        stack_audio_segments(podcast_audio),
+        complete_audio,
         samplerate=sample_rate,
     )
     (output_folder / "podcast.txt").write_text(podcast_script)
