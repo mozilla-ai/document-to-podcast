@@ -21,7 +21,7 @@ It is designed to work on most local setups or with [GitHub Codespaces](https://
 
 ## Quick-start
 
-Get started with Document-to-Podcast using one of the two options below: **GitHub Codespaces** for a hassle-free setup or **Local Installation** for running on your own machine.
+Get started with Document-to-Podcast using one of the three options below: **GitHub Codespaces** for a hassle-free setup or **Google Colab** for a faster, GPU-enabled environment or **Local Installation** for running on your own machine with complete control of your data.
 
 ---
 
@@ -36,7 +36,14 @@ Once the Codespaces environment launches, inside the terminal, start the Streaml
    python -m streamlit run demo/app.py
    ```
 
-### **Option 2: Local Installation**
+### **Option 2: Google Colab**
+
+This option lacks a UI, but uses an environment with a GPU/TPU, enabling the code to run much faster. Click the button below and follow the instructions:
+
+<p align="center"><a href="https://colab.research.google.com/github/mozilla-ai/document-to-podcast/blob/main/demo/notebook.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+
+
+### **Option 3: Local Installation**
 
 1. **Clone the Repository**
    Inside the Codespaces terminal, run:
@@ -49,10 +56,17 @@ Once the Codespaces environment launches, inside the terminal, start the Streaml
    Inside the terminal, run:
    ```bash
    pip install -e .
+
 3. **Run the Demo**
    Inside the terminal, start the Streamlit demo by running:
    ```bash
    python -m streamlit run demo/app.py
+   ```
+
+4. **Use the CLI**
+   Configure your `config.yaml` file or set the arguments directly from the command line and run the CLI version:
+   ```bash
+   document-to-podcast --from_config example_data/config.yaml
    ```
 
 ***NOTE***: The first time you run the demo app it might take a while to generate the script or the audio because it will download the models to the machine which are a few GBs in size.
