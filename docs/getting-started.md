@@ -37,10 +37,3 @@ pip install -e .
 python -m streamlit run demo/app.py
 ```
 
-
-### [Optional]: Use Parler models for text-to-speech
-
-If you want to use the [parler tts](https://github.com/huggingface/parler-tts) models, you will need to **additionally** install an optional dependency by running:
-```bash
-pip install -e '.[parler]'
-```

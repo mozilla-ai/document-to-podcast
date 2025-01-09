@@ -15,7 +15,7 @@ It is designed to work on most local setups or with [GitHub Codespaces](https://
 ### Built with
 - Python 3.10+ (use Python 3.12 for Apple M1/2/3 chips)
 - [Llama-cpp](https://github.com/abetlen/llama-cpp-python) (text-to-text, i.e script generation)
-- [OuteAI](https://github.com/edwko/OuteTTS) / [Bark](https://github.com/suno-ai/bark) (text-to-speech, i.e audio generation)
+- [OuteAI](https://github.com/edwko/OuteTTS) (text-to-speech, i.e audio generation)
 - [Streamlit](https://streamlit.io/) (UI demo)
 
 
@@ -105,7 +105,7 @@ For the complete list of models supported out-of-the-box, visit this [link](http
 ### text-to-speech
 
 We support models from the [OuteAI](https://github.com/edwko/OuteTTS) package. The default text-to-speech model in this repo is [OuteTTS-0.2-500M](https://huggingface.co/OuteAI/OuteTTS-0.2-500M). Note that the `0.1-350M` version has a `CC-By-4.0` (permissive) license, whereas the newer / better `0.2-500M` version has a `CC-By-NC-4.0` (non-commercial) license.
-For a complete list of models visit [Oute HF](https://huggingface.co/collections/OuteAI) (only the GGUF versions) and [Parler HF](https://huggingface.co/collections/parler-tts).
+For a complete list of models visit [Oute HF](https://huggingface.co/collections/OuteAI) (only the GGUF versions).
 
 In this [repo](https://github.com/Kostis-S-Z/document-to-podcast) you can see examples of using different TTS models with minimal code changes.
 
