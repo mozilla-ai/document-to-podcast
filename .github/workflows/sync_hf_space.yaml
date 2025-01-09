@@ -21,6 +21,7 @@ jobs:
       - run: |
           cp demo/app.py hf-space/app.py
           cp demo/requirements.txt hf-space/requirements.txt
+          cp demo/Dockerfile hf-space/Dockerfile
 
       - run: |
           cd hf-space
