@@ -6,9 +6,6 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 import streamlit as st
-import requests
-from bs4 import BeautifulSoup
-from requests.exceptions import RequestException
 
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
@@ -58,7 +55,7 @@ uploaded_file = st.file_uploader(
 st.header("Or Enter a Website URL")
 url = st.text_input("URL", placeholder="https://blog.mozilla.ai/...")
 
-if uploaded_file is not None or url is not None:
+if uploaded_file is not None or url:
     st.divider()
     st.header("Loading and Cleaning Data")
     st.markdown(
@@ -70,6 +67,7 @@ if uploaded_file is not None or url is not None:
         extension = Path(uploaded_file.name).suffix
         raw_text = DATA_LOADERS[extension](uploaded_file)
     else:
+        extension = ".html"
         raw_text = DATA_LOADERS["url"](url)
 
     col1, col2 = st.columns(2)
@@ -92,53 +90,6 @@ if uploaded_file is not None or url is not None:
 
 st.divider()
 
-st.header("Or Enter a Website URL")
-url = st.text_input("URL", placeholder="https://blog.mozilla.ai/...")
-process_url = st.button("Clean URL Content")
-
-
-def process_url_content(url: str) -> tuple[str, str]:
-    """Fetch and clean content from a URL.
-
-    Args:
-        url: The URL to fetch content from
-
-    Returns:
-        tuple containing raw and cleaned text
-    """
-    response = requests.get(url)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, "html.parser")
-    raw_text = soup.get_text()
-    return raw_text, DATA_CLEANERS[".html"](raw_text)
-
-
-if url and process_url:
-    try:
-        with st.spinner("Fetching and cleaning content..."):
-            raw_text, clean_text = process_url_content(url)
-            st.session_state["clean_text"] = clean_text
-
-            # Display results
-            col1, col2 = st.columns(2)
-            with col1:
-                st.subheader("Raw Text")
-                st.text_area(
-                    "Number of characters before cleaning: " f"{len(raw_text)}",
-                    f"{raw_text[:500]}...",
-                )
-            with col2:
-                st.subheader("Cleaned Text")
-                st.text_area(
-                    "Number of characters after cleaning: " f"{len(clean_text)}",
-                    f"{clean_text[:500]}...",
-                )
-    except RequestException as e:
-        st.error(f"Error fetching URL: {str(e)}")
-    except Exception as e:
-        st.error(f"Error processing content: {str(e)}")
-
-# Second part - Podcast generation
 if "clean_text" in st.session_state:
     clean_text = st.session_state["clean_text"]
 
@@ -149,7 +100,6 @@ if "clean_text" in st.session_state:
     )
     st.divider()
 
-    # Load models
     text_model = load_text_to_text_model()
     speech_model = load_text_to_speech_model()
 
