@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-linter:
+  run-tests:
     timeout-minutes: 30
     runs-on: ubuntu-latest
 

@@ -1,4 +1,5 @@
 from huggingface_hub import hf_hub_download
+import torch
 from llama_cpp import Llama
 from outetts import GGUFModelConfig_v1, InterfaceGGUF
 from dataclasses import dataclass, field
@@ -25,6 +26,7 @@ def load_llama_cpp_model(model_id: str) -> Llama:
         # 0 means that the model limit will be used, instead of the default (512) or other hardcoded value
         n_ctx=0,
         verbose=False,
+        n_gpu_layers=-1 if torch.cuda.is_available() else 0,
     )
     return model
 
@@ -59,6 +61,7 @@ def _load_oute_tts(model_id: str, **kwargs) -> TTSModel:
         model_id (str): The model id to load.
             Format is expected to be `{org}/{repo}/{filename}`.
         language (str): Supported languages in 0.2-500M: en, zh, ja, ko.
+
     Returns:
         TTSModel: The loaded model using the TTSModel wrapper.
     """
@@ -67,7 +70,11 @@ def _load_oute_tts(model_id: str, **kwargs) -> TTSModel:
     org, repo, filename = model_id.split("/")
     local_path = hf_hub_download(repo_id=f"{org}/{repo}", filename=filename)
     model_config = GGUFModelConfig_v1(
-        model_path=local_path, language=kwargs.pop("language", "en")
+        model_path=local_path,
+        language=kwargs.pop("language", "en"),
+        n_gpu_layers=-1 if torch.cuda.is_available else 0,
+        additional_model_config={"verbose": False},
+
     )
     model = InterfaceGGUF(model_version=model_version, cfg=model_config)
 

@@ -63,13 +63,15 @@ Once the Codespaces environment launches, inside the terminal, start the Streaml
 <img src="./images/document-to-podcast-diagram.png" width="1200" />
 
 
-1. **Document Upload**
-   Start by uploading a document in a supported format (e.g., PDF, .txt, or .docx).
+1. **Document Input**
+   Start by either:
+   - Uploading a document in a supported format (e.g., PDF, .txt, or .docx)
+   - Entering a website URL to fetch content directly
 
 2. **Document Pre-Processing**
-   The uploaded document is processed to extract and clean the text. This involves:
-   - Extracting readable text from the document.
-   - Removing noise such as URLs, email addresses, and special characters to ensure the text is clean and structured.
+   The input is processed to extract and clean the text. This involves:
+   - Extracting readable text from the document or webpage
+   - Removing noise such as URLs, email addresses, and special characters to ensure the text is clean and structured
 
 3. **Script Generation**
    The cleaned text is passed to a language model to generate a podcast transcript in the form of a conversation between two speakers.
