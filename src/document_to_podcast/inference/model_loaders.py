@@ -45,14 +45,14 @@ class TTSModel:
     the user doesn't have to deal with it.
 
     Args:
-        model (Union[InterfaceGGUF, BarkModel, PreTrainedModel]): A TTS model that has a .generate() method or similar
+        model (InterfaceGGUF): A TTS model that has a .generate() method or similar
             that takes text as input, and returns an audio in the form of a numpy array.
         model_id (str): The model's identifier string.
         sample_rate (int): The sample rate of the audio, required for properly saving the audio to a file.
         custom_args (dict): Any model-specific arguments that a TTS model might require, e.g. tokenizer.
     """
 
-    model: Union[InterfaceGGUF, BarkModel, PreTrainedModel]
+    model: InterfaceGGUF
     model_id: str
     sample_rate: int
     custom_args: field(default_factory=dict)
@@ -83,98 +83,11 @@ def _load_oute_tts(model_id: str, **kwargs) -> TTSModel:
     )
 
 
-def _load_bark_tts(model_id: str, **kwargs) -> TTSModel:
-    """
-    Loads the given model_id and its required processor. For more info: https://github.com/suno-ai/bark
-
-    Args:
-        model_id (str): The model id to load.
-            Format is expected to be `{repo}/{filename}`.
-    Returns:
-        TTSModel: The loaded model with its required processor using the TTSModel.
-    """
-
-    processor = AutoProcessor.from_pretrained(model_id)
-    model = BarkModel.from_pretrained(model_id)
-
-    return TTSModel(
-        model=model,
-        model_id=model_id,
-        sample_rate=24_000,
-        custom_args={"processor": processor},
-    )
-
-
-def _load_parler_tts(model_id: str, **kwargs) -> TTSModel:
-    """
-    Loads the given model_id using parler_tts.from_pretrained. For more info: https://github.com/huggingface/parler-tts
-
-    Args:
-        model_id (str): The model id to load.
-            Format is expected to be `{repo}/{filename}`.
-
-    Returns:
-        TTSModel: The loaded model with its required tokenizer for the input.
-    """
-    from parler_tts import ParlerTTSForConditionalGeneration
-
-    model = ParlerTTSForConditionalGeneration.from_pretrained(model_id)
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-
-    return TTSModel(
-        model=model,
-        model_id=model_id,
-        sample_rate=model.config.sampling_rate,
-        custom_args={
-            "tokenizer": tokenizer,
-        },
-    )
-
-
-def _load_parler_tts_multi(model_id: str, **kwargs) -> TTSModel:
-    """
-    Loads the given model_id using parler_tts.from_pretrained. For more info: https://github.com/huggingface/parler-tts
-
-    Args:
-        model_id (str): The model id to load.
-            Format is expected to be `{repo}/{filename}`.
-
-    Returns:
-        TTSModel: The loaded model with its required tokenizer for the input text and
-            another tokenizer for the description.
-    """
-
-    from parler_tts import ParlerTTSForConditionalGeneration
-
-    model = ParlerTTSForConditionalGeneration.from_pretrained(model_id)
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-    description_tokenizer = AutoTokenizer.from_pretrained(
-        model.config.text_encoder._name_or_path
-    )
-
-    return TTSModel(
-        model=model,
-        model_id=model_id,
-        sample_rate=model.config.sampling_rate,
-        custom_args={
-            "tokenizer": tokenizer,
-            "description_tokenizer": description_tokenizer,
-        },
-    )
-
 
 TTS_LOADERS = {
     # To add support for your model, add it here in the format {model_id} : _load_function
-    "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-Q2_K.gguf": _load_oute_tts,
     "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf": _load_oute_tts,
     "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf": _load_oute_tts,
-    "suno/bark": _load_bark_tts,
-    "suno/bark-small": _load_bark_tts,
-    "parler-tts/parler-tts-large-v1": _load_parler_tts,
-    "parler-tts/parler-tts-mini-v1": _load_parler_tts,
-    "parler-tts/parler-tts-mini-v1.1": _load_parler_tts,
-    "parler-tts/parler-tts-mini-multilingual-v1.1": _load_parler_tts_multi,
-    "ai4bharat/indic-parler-tts": _load_parler_tts_multi,
 }
 
 
