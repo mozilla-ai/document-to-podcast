@@ -23,8 +23,7 @@ def load_llama_cpp_model(model_id: str) -> Llama:
     model = Llama.from_pretrained(
         repo_id=f"{org}/{repo}",
         filename=filename,
-        # 0 means that the model limit will be used, instead of the default (512) or other hardcoded value
-        n_ctx=0,
+        n_ctx=0,  # 0 means that the model limit will be used, instead of the default (512) or other hardcoded value
         verbose=False,
         n_gpu_layers=-1 if torch.cuda.is_available() else 0,
     )
@@ -74,14 +73,12 @@ def _load_oute_tts(model_id: str, **kwargs) -> TTSModel:
         language=kwargs.pop("language", "en"),
         n_gpu_layers=-1 if torch.cuda.is_available else 0,
         additional_model_config={"verbose": False},
-
     )
     model = InterfaceGGUF(model_version=model_version, cfg=model_config)
 
     return TTSModel(
         model=model, model_id=model_id, sample_rate=model.audio_codec.sr, custom_args={}
     )
-
 
 
 TTS_LOADERS = {

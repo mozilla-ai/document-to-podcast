@@ -151,6 +151,7 @@ def document_to_podcast(
                 )
                 podcast_audio.append(speech)
                 text = ""
+
     except KeyboardInterrupt:
         logger.warning("Podcast generation stopped by user.")
     logger.info("Saving Podcast...")

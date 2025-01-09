@@ -67,15 +67,15 @@ if uploaded_file is not None:
 
     col1, col2 = st.columns(2)
 
-    raw_text = DATA_LOADERS[extension](uploaded_file)
+    original_text = DATA_LOADERS[extension](uploaded_file)
     with col1:
         st.subheader("Raw Text")
         st.text_area(
-            f"Number of characters before cleaning: {len(raw_text)}",
-            f"{raw_text[:500]} . . .",
+            f"Number of characters before cleaning: {len(original_text)}",
+            f"{original_text[:500]} . . .",
         )
 
-    clean_text = DATA_CLEANERS[extension](raw_text)
+    clean_text = DATA_CLEANERS[extension](original_text)
     with col2:
         st.subheader("Cleaned Text")
         st.text_area(
@@ -91,16 +91,16 @@ url = st.text_input("URL", placeholder="https://blog.mozilla.ai/...")
 process_url = st.button("Clean URL Content")
 
 
-def process_url_content(url: str) -> tuple[str, str]:
+def process_url_content(url_to_process: str) -> tuple[str, str]:
     """Fetch and clean content from a URL.
 
     Args:
-        url: The URL to fetch content from
+        url_to_process: The URL to fetch content from
 
     Returns:
         tuple containing raw and cleaned text
     """
-    response = requests.get(url)
+    response = requests.get(url_to_process)
     response.raise_for_status()
     soup = BeautifulSoup(response.text, "html.parser")
     raw_text = soup.get_text()
@@ -110,7 +110,7 @@ def process_url_content(url: str) -> tuple[str, str]:
 if url and process_url:
     try:
         with st.spinner("Fetching and cleaning content..."):
-            raw_text, clean_text = process_url_content(url)
+            original_text, clean_text = process_url_content(url)
             st.session_state["clean_text"] = clean_text
 
             # Display results
@@ -118,8 +118,8 @@ if url and process_url:
             with col1:
                 st.subheader("Raw Text")
                 st.text_area(
-                    "Number of characters before cleaning: " f"{len(raw_text)}",
-                    f"{raw_text[:500]}...",
+                    "Number of characters before cleaning: " f"{len(original_text)}",
+                    f"{original_text[:500]}...",
                 )
             with col2:
                 st.subheader("Cleaned Text")

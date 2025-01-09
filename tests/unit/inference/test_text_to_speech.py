@@ -1,5 +1,4 @@
 from outetts.version.v1.interface import InterfaceGGUF
-from transformers import PreTrainedModel
 
 from document_to_podcast.inference.model_loaders import TTSModel
 from document_to_podcast.inference.text_to_speech import text_to_speech
@@ -27,4 +26,3 @@ def test_text_to_speech_oute(mocker):
         max_length=mocker.ANY,
         speaker=mocker.ANY,
     )
-
