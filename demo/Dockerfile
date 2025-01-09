@@ -23,4 +23,4 @@ RUN pip3 install document-to-podcast
 COPY --chown=user . $HOME/app
 
 EXPOSE 8501
-ENTRYPOINT ["python3", "app.py"]
+ENTRYPOINT ["streamlit", "run", "app.py"]
