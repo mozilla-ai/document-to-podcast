@@ -1,9 +1,14 @@
+"""Streamlit app for converting documents to podcasts."""
+
 import re
 from pathlib import Path
 
 import numpy as np
 import soundfile as sf
 import streamlit as st
+import requests
+from bs4 import BeautifulSoup
+from requests.exceptions import RequestException
 
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
@@ -44,12 +49,11 @@ def gen_button_clicked():
 
 st.title("Document To Podcast")
 
-st.header("Uploading Data")
+st.header("Upload a File")
 
 uploaded_file = st.file_uploader(
     "Choose a file", type=["pdf", "html", "txt", "docx", "md"]
 )
-
 
 if uploaded_file is not None:
     st.divider()
@@ -78,6 +82,59 @@ if uploaded_file is not None:
             f"Number of characters after cleaning: {len(clean_text)}",
             f"{clean_text[:500]} . . .",
         )
+    st.session_state["clean_text"] = clean_text
+
+st.divider()
+
+st.header("Or Enter a Website URL")
+url = st.text_input("URL", placeholder="https://blog.mozilla.ai/...")
+process_url = st.button("Clean URL Content")
+
+
+def process_url_content(url: str) -> tuple[str, str]:
+    """Fetch and clean content from a URL.
+
+    Args:
+        url: The URL to fetch content from
+
+    Returns:
+        tuple containing raw and cleaned text
+    """
+    response = requests.get(url)
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "html.parser")
+    raw_text = soup.get_text()
+    return raw_text, DATA_CLEANERS[".html"](raw_text)
+
+
+if url and process_url:
+    try:
+        with st.spinner("Fetching and cleaning content..."):
+            raw_text, clean_text = process_url_content(url)
+            st.session_state["clean_text"] = clean_text
+
+            # Display results
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader("Raw Text")
+                st.text_area(
+                    "Number of characters before cleaning: " f"{len(raw_text)}",
+                    f"{raw_text[:500]}...",
+                )
+            with col2:
+                st.subheader("Cleaned Text")
+                st.text_area(
+                    "Number of characters after cleaning: " f"{len(clean_text)}",
+                    f"{clean_text[:500]}...",
+                )
+    except RequestException as e:
+        st.error(f"Error fetching URL: {str(e)}")
+    except Exception as e:
+        st.error(f"Error processing content: {str(e)}")
+
+# Second part - Podcast generation
+if "clean_text" in st.session_state:
+    clean_text = st.session_state["clean_text"]
 
     st.divider()
     st.header("Downloading and Loading models")
@@ -86,18 +143,19 @@ if uploaded_file is not None:
     )
     st.divider()
 
+    # Load models
+    text_model = load_text_to_text_model()
+    speech_model = load_text_to_speech_model()
+
     st.markdown(
         "For this demo, we are using the following models: \n"
         "- [OLMoE-1B-7B-0924-Instruct](https://huggingface.co/allenai/OLMoE-1B-7B-0924-Instruct-GGUF)\n"
-        "- [OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
+        "- [OuteAI/OuteTTS-0.2-500M](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
     )
     st.markdown(
         "You can check the [Customization Guide](https://mozilla-ai.github.io/document-to-podcast/customization/)"
         " for more information on how to use different models."
     )
-
-    text_model = load_text_to_text_model()
-    speech_model = load_text_to_speech_model()
 
     # ~4 characters per token is considered a reasonable default.
     max_characters = text_model.n_ctx() * 4
@@ -154,7 +212,6 @@ if uploaded_file is not None:
                             voice_profile,
                         )
                     st.audio(speech, sample_rate=speech_model.audio_codec.sr)
-
                     st.session_state.audio.append(speech)
                     text = ""
 
@@ -172,5 +229,4 @@ if uploaded_file is not None:
             with open("script.txt", "w") as f:
                 st.session_state.script += "}"
                 f.write(st.session_state.script)
-
             st.markdown("Script saved to disk!")
