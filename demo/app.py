@@ -118,13 +118,13 @@ if url and process_url:
             with col1:
                 st.subheader("Raw Text")
                 st.text_area(
-                    "Number of characters before cleaning: " f"{len(original_text)}",
+                    f"Number of characters before cleaning: {len(original_text)}",
                     f"{original_text[:500]}...",
                 )
             with col2:
                 st.subheader("Cleaned Text")
                 st.text_area(
-                    "Number of characters after cleaning: " f"{len(clean_text)}",
+                    f"Number of characters after cleaning: {len(clean_text)}",
                     f"{clean_text[:500]}...",
                 )
     except RequestException as e:

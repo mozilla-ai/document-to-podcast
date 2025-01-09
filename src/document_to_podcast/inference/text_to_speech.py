@@ -40,13 +40,11 @@ def _text_to_speech_oute(
     return output_as_np
 
 
-
 TTS_INFERENCE = {
     # To add support for your model, add it here in the format {model_id} : _inference_function
     "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf": _text_to_speech_oute,
     "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf": _text_to_speech_oute,
 }
-
 
 
 def text_to_speech(input_text: str, model: TTSModel, voice_profile: str) -> np.ndarray:
