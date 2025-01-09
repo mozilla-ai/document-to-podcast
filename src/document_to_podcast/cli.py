@@ -29,7 +29,7 @@ def document_to_podcast(
     output_folder: str | None = None,
     text_to_text_model: str = "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf",
     text_to_text_prompt: str = DEFAULT_PROMPT,
-    text_to_speech_model: TTS_LOADERS = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
+    text_to_speech_model: TTS_LOADERS = "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf",
     speakers: list[Speaker] | None = None,
     outetts_language: str = "en",  # Only applicable to OuteTTS models
     from_config: str | None = None,
