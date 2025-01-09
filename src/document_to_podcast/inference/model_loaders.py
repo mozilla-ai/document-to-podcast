@@ -1,14 +1,7 @@
-from typing import Union
 from huggingface_hub import hf_hub_download
 from llama_cpp import Llama
 from outetts import GGUFModelConfig_v1, InterfaceGGUF
 from dataclasses import dataclass, field
-from transformers import (
-    AutoTokenizer,
-    PreTrainedModel,
-    AutoProcessor,
-    BarkModel,
-)
 
 
 def load_llama_cpp_model(model_id: str) -> Llama:

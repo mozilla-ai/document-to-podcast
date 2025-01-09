@@ -1,6 +1,5 @@
 import numpy as np
 from outetts.version.v1.interface import InterfaceGGUF
-from transformers import PreTrainedModel, BarkModel
 
 from document_to_podcast.inference.model_loaders import TTSModel
 

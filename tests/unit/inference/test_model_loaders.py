@@ -1,4 +1,4 @@
-from typing import Dict, Any, Union
+from typing import Dict, Any
 
 import pytest
 from llama_cpp import Llama
@@ -6,12 +6,6 @@ from llama_cpp import Llama
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
     load_tts_model,
-)
-from transformers import (
-    PreTrainedModel,
-    PreTrainedTokenizerBase,
-    BarkModel,
-    BarkProcessor,
 )
 from outetts.version.v1.interface import InterfaceGGUF
 
@@ -28,21 +22,12 @@ def test_load_llama_cpp_model():
 @pytest.mark.parametrize(
     "model_id, expected_model_type, expected_custom_args",
     [
-        ["OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-Q2_K.gguf", InterfaceGGUF, {}],
-        ["suno/bark-small", BarkModel, {"processor": BarkProcessor}],
-        [
-            "parler-tts/parler-tts-mini-v1.1",
-            PreTrainedModel,
-            {
-                "tokenizer": PreTrainedTokenizerBase,
-                "description_tokenizer": PreTrainedTokenizerBase,
-            },
-        ],
+        ["OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf", InterfaceGGUF, {}],
     ],
 )
 def test_load_tts_model(
     model_id: str,
-    expected_model_type: Union[InterfaceGGUF, BarkModel, PreTrainedModel],
+    expected_model_type: InterfaceGGUF,
     expected_custom_args: Dict[str, Any],
 ) -> None:
     model = load_tts_model(model_id)
