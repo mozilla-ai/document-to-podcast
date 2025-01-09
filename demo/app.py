@@ -55,7 +55,10 @@ uploaded_file = st.file_uploader(
     "Choose a file", type=["pdf", "html", "txt", "docx", "md"]
 )
 
-if uploaded_file is not None:
+st.header("Or Enter a Website URL")
+url = st.text_input("URL", placeholder="https://blog.mozilla.ai/...")
+
+if uploaded_file is not None or url is not None:
     st.divider()
     st.header("Loading and Cleaning Data")
     st.markdown(
@@ -63,11 +66,14 @@ if uploaded_file is not None:
     )
     st.divider()
 
-    extension = Path(uploaded_file.name).suffix
+    if uploaded_file:
+        extension = Path(uploaded_file.name).suffix
+        raw_text = DATA_LOADERS[extension](uploaded_file)
+    else:
+        raw_text = DATA_LOADERS["url"](url)
 
     col1, col2 = st.columns(2)
 
-    raw_text = DATA_LOADERS[extension](uploaded_file)
     with col1:
         st.subheader("Raw Text")
         st.text_area(

@@ -1,4 +1,5 @@
 import PyPDF2
+import requests
 
 from docx import Document
 from loguru import logger
@@ -30,6 +31,16 @@ def load_docx(docx_file: str | UploadedFile) -> str | None:
     try:
         docx_reader = Document(docx_file)
         return "\n".join(paragraph.text for paragraph in docx_reader.paragraphs)
+    except Exception as e:
+        logger.exception(e)
+        return None
+
+
+def load_url(url: str) -> str | None:
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.text
     except Exception as e:
         logger.exception(e)
         return None

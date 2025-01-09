@@ -1,4 +1,4 @@
-from .data_loaders import load_pdf, load_txt, load_docx
+from .data_loaders import load_pdf, load_txt, load_docx, load_url
 from .data_cleaners import clean_with_regex, clean_html, clean_markdown
 
 
@@ -8,6 +8,7 @@ DATA_LOADERS = {
     ".md": load_txt,
     ".pdf": load_pdf,
     ".txt": load_txt,
+    "url": load_url,
 }
 
 DATA_CLEANERS = {
