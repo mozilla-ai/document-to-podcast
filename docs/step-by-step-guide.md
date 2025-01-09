@@ -169,7 +169,7 @@ In this final step, the generated podcast transcript is brought to life as an au
 
    - The [`text_to_speech.py`](api.md/#document_to_podcast.inference.text_to_speech) script converts text into audio using a specified TTS model.
 
-   - A **speaker profile** defines the voice characteristics (e.g., tone, speed, clarity) for each speaker. This is specific to each TTS package. Oute models require one of the IDs specified [here](https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers). Parler requires natural language description of the speaker's voice and you have to use a pre-defined name (see [here](https://github.com/huggingface/parler-tts/blob/main/INFERENCE.md#speaker-consistency))
+   - A **speaker profile** defines the voice characteristics (e.g., tone, speed, clarity) for each speaker. This is specific to each TTS package. Oute models require one of the IDs specified [here](https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers).
 
    - The function `text_to_speech` takes the input text (e.g. podcast script) and speaker profile, generating a waveform (audio data in a numpy array) that represents the spoken version of the text.
 
