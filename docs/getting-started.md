@@ -36,4 +36,3 @@ pip install -e .
 ```bash
 python -m streamlit run demo/app.py
 ```
-
