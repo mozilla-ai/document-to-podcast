@@ -30,9 +30,6 @@ jobs:
       - name: Install test dependencies
         run: pip install -e '.[tests]'
 
-      - name: Install parler dependency
-        run: pip install git+https://github.com/huggingface/parler-tts.git
-
       - name: Run Unit Tests
         run: pytest -v tests/unit
 
