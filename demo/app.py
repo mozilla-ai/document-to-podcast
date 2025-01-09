@@ -150,7 +150,7 @@ if "clean_text" in st.session_state:
     st.markdown(
         "For this demo, we are using the following models: \n"
         "- [OLMoE-1B-7B-0924-Instruct](https://huggingface.co/allenai/OLMoE-1B-7B-0924-Instruct-GGUF)\n"
-        "- [OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
+        "- [OuteAI/OuteTTS-0.2-500M](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
     )
     st.markdown(
         "You can check the [Customization Guide](https://mozilla-ai.github.io/document-to-podcast/customization/)"
