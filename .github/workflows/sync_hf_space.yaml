@@ -3,6 +3,8 @@ name: Sync to Hugging Face Space
 on:
   push:
     branches: [main]
+    paths:
+      - 'demo/**'
 
   workflow_dispatch:
 
