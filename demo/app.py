@@ -3,7 +3,6 @@
 import re
 from pathlib import Path
 
-import numpy as np
 import soundfile as sf
 import streamlit as st
 
@@ -15,6 +14,7 @@ from document_to_podcast.inference.model_loaders import (
 )
 from document_to_podcast.config import DEFAULT_PROMPT, DEFAULT_SPEAKERS, Speaker
 from document_to_podcast.inference.text_to_text import text_to_text_stream
+from document_to_podcast.utils import stack_audio_segments
 
 
 @st.cache_resource
@@ -174,7 +174,9 @@ if "clean_text" in st.session_state:
 
     if st.session_state[gen_button]:
         if st.button("Save Podcast to audio file"):
-            st.session_state.audio = np.concatenate(st.session_state.audio)
+            st.session_state.audio = stack_audio_segments(
+                st.session_state.audio, speech_model.audio_codec.sr
+            )
             sf.write(
                 "podcast.wav",
                 st.session_state.audio,
