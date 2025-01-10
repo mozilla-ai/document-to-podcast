@@ -3,7 +3,6 @@
 import re
 from pathlib import Path
 
-import soundfile as sf
 import streamlit as st
 
 from document_to_podcast.inference.text_to_speech import text_to_speech
@@ -171,21 +170,19 @@ if "clean_text" in st.session_state:
 
                     st.session_state.audio.append(speech)
                     text = ""
+        st.session_state.script += "}"
 
     if st.session_state[gen_button]:
-        if st.button("Save Podcast to audio file"):
-            st.session_state.audio = stack_audio_segments(
-                st.session_state.audio, speech_model.audio_codec.sr
-            )
-            sf.write(
-                "podcast.wav",
-                st.session_state.audio,
-                samplerate=speech_model.sample_rate,
-            )
+        if st.download_button(
+            label="Save Podcast to audio file",
+            data=stack_audio_segments(st.session_state.audio, speech_model.sample_rate),
+            file_name="podcast.wav",
+        ):
             st.markdown("Podcast saved to disk!")
 
-        if st.button("Save Podcast script to text file"):
-            with open("script.txt", "w") as f:
-                st.session_state.script += "}"
-                f.write(st.session_state.script)
+        if st.download_button(
+            label="Save Podcast script to text file",
+            data=st.session_state.script,
+            file_name="script.txt",
+        ):
             st.markdown("Script saved to disk!")
