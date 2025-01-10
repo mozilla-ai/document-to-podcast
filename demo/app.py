@@ -175,7 +175,7 @@ if "clean_text" in st.session_state:
     if st.session_state[gen_button]:
         if st.button("Save Podcast to audio file"):
             st.session_state.audio = stack_audio_segments(
-                st.session_state.audio, speech_model.audio_codec.sr
+                st.session_state.audio, speech_model.sample_rate
             )
             sf.write(
                 "podcast.wav",

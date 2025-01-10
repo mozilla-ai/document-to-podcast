@@ -196,7 +196,7 @@ waveform = text_to_speech(
 sf.write(
     "podcast.wav",
     waveform,
-    samplerate=model.audio_codec.sr
+    samplerate=model.sample_rate
 )
 ```
 
