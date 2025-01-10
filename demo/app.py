@@ -2,7 +2,10 @@
 
 import re
 from pathlib import Path
+import io
 
+import numpy as np
+import soundfile as sf
 import streamlit as st
 
 from document_to_podcast.inference.text_to_speech import text_to_speech
@@ -26,6 +29,16 @@ def load_text_to_text_model():
 @st.cache_resource
 def load_text_to_speech_model():
     return load_tts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
+
+
+def numpy_to_wav(audio_array: np.ndarray, sample_rate: int) -> io.BytesIO:
+    """
+    Convert a numpy array to audio bytes in .wav format, ready to save into a file.
+    """
+    wav_io = io.BytesIO()
+    sf.write(wav_io, audio_array, sample_rate, format="WAV")
+    wav_io.seek(0)
+    return wav_io
 
 
 script = "script"
@@ -173,9 +186,13 @@ if "clean_text" in st.session_state:
         st.session_state.script += "}"
 
     if st.session_state[gen_button]:
+        audio_np = stack_audio_segments(
+            st.session_state.audio, speech_model.sample_rate
+        )
+        audio_wav = numpy_to_wav(audio_np, speech_model.sample_rate)
         if st.download_button(
             label="Save Podcast to audio file",
-            data=stack_audio_segments(st.session_state.audio, speech_model.sample_rate),
+            data=audio_wav,
             file_name="podcast.wav",
         ):
             st.markdown("Podcast saved to disk!")
