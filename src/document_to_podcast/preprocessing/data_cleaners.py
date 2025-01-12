@@ -1,6 +1,6 @@
 import re
 from bs4 import BeautifulSoup
-
+from markdown import markdown
 
 def clean_with_regex(text: str) -> str:
     """
@@ -82,3 +82,29 @@ def clean_markdown(text: str) -> str:
     text = re.sub(r'!\[.*?\]\(.*?(".*?")?\)', "", text)
 
     return clean_with_regex(text)
+
+
+def markdown_to_text(markdown_string):
+    """
+        Converts markdown string to plaintext
+        
+        Source: https://gist.github.com/lorey/eb15a7f3338f959a78cc3661fbc255fe
+    """
+
+    # md -> html -> text since BeautifulSoup can extract text cleanly
+    html = markdown(markdown_string)
+
+    # remove code snippets    
+    html = re.sub(r'<pre>(.*?)</pre>', ' ', html)
+    html = re.sub(r'<code>(.*?)</code >', ' ', html)    
+    
+
+    # extract text
+    soup = BeautifulSoup(html, "html.parser")
+
+    # remove line breaks and whitespace
+    text = ''.join(soup.findAll(string=True))
+    text = text.strip()
+    text = re.sub(r'\n+', ' ', text)    
+
+    return text
