@@ -4,6 +4,7 @@ import requests
 from docx import Document
 from loguru import logger
 from streamlit.runtime.uploaded_file_manager import UploadedFile
+from markitdown import MarkItDown
 
 
 def load_pdf(pdf_file: str | UploadedFile) -> str | None:
@@ -41,6 +42,20 @@ def load_url(url: str) -> str | None:
         response = requests.get(url)
         response.raise_for_status()
         return response.text
+    except Exception as e:
+        logger.exception(e)
+        return None
+
+
+def load_file(file: str | UploadedFile) -> str | None:
+    """
+        Uses MarkItDown to convert the file to markdown.        
+    """
+    try:
+        md = MarkItDown()
+        md_content = md.convert(str(file))
+        md_text = md_content.text_content
+        return md_text
     except Exception as e:
         logger.exception(e)
         return None
