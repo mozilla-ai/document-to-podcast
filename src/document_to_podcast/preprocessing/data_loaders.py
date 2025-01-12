@@ -3,6 +3,7 @@ import PyPDF2
 from docx import Document
 from loguru import logger
 from streamlit.runtime.uploaded_file_manager import UploadedFile
+from markitdown import MarkItDown
 
 
 def load_pdf(pdf_file: str | UploadedFile) -> str | None:
@@ -30,6 +31,20 @@ def load_docx(docx_file: str | UploadedFile) -> str | None:
     try:
         docx_reader = Document(docx_file)
         return "\n".join(paragraph.text for paragraph in docx_reader.paragraphs)
+    except Exception as e:
+        logger.exception(e)
+        return None
+
+
+def load_file(file: str | UploadedFile) -> str | None:
+    """
+        Uses MarkItDown to convert the file to markdown.        
+    """
+    try:
+        md = MarkItDown()
+        md_content = md.convert(str(file))
+        md_text = md_content.text_content
+        return md_text
     except Exception as e:
         logger.exception(e)
         return None
