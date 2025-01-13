@@ -1,4 +1,9 @@
-from document_to_podcast.preprocessing.data_loaders import load_pdf, load_txt, load_docx
+from document_to_podcast.preprocessing.data_loaders import (
+    load_pdf,
+    load_txt,
+    load_docx,
+    load_url,
+)
 
 
 def test_load_pdf(example_data):
@@ -49,4 +54,16 @@ def test_load_markdown(example_data):
 
 def test_load_invalid_markdown():
     result = load_txt("invalid.md")
+    assert result is None
+
+
+def test_load_url():
+    result = load_url(
+        "https://blog.mozilla.ai/introducing-mozilla-ai-investing-in-trustworthy-ai/"
+    )
+    assert "Introducing Mozilla.ai: Investing in trustworthy AI" in result
+
+
+def test_load_invalid_url():
+    result = load_url("invalid")
     assert result is None

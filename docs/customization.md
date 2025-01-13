@@ -74,6 +74,7 @@ Looking for inspiration? Check out these examples of how others have customized 
 
 - **[Radio Drama Generator](https://github.com/stefanfrench/radio-drama-generator)**: A creative adaptation that generates radio dramas by customizing ng the Blueprint parameters.
 - **[Readme-to-Podcast](https://github.com/alexmeckes/readme-to-podcast)**: This project transforms GitHub README files into podcast-style audio, showcasing the Blueprint’s ability to handle diverse text inputs.
+- **[Multilingual Podcast](https://github.com/Kostis-S-Z/document-to-podcast/)**: A repo that showcases how to use this package in other languages, like Hindi, Polish, Korean and many more.
 
 ## 🤝 **Contributing to the Blueprint**
 
