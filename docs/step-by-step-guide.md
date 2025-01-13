@@ -38,7 +38,10 @@ Cleaner input data ensures that the model works with reliable and consistent inf
 
    - Supports `.html`, `.pdf`, `.txt`, and `.docx` formats.
 
-   - Extracts readable text from uploaded files using specialized loaders.
+   - Utilizes [MarkitDown](https://github.com/microsoft/markitdown) to extract text from `.pdf` and `html`.
+      
+   - Extracts readable text from uploaded files using specialized loaders. 
+   
 
  **2 - Text Cleaning**
 
