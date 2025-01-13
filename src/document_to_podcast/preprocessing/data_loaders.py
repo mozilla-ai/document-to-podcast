@@ -56,7 +56,7 @@ def load_file(file: str | UploadedFile) -> str | None:
         file (str | UploadedFile): The path to the file, a URL.
 
     Returns:
-        str | None: The markdown text content, or None if an error occurs.
+        str | None: The Markdown text content, or None if an error occurs.
     """
     try:
         markdown_converter = MarkItDown()
@@ -71,7 +71,7 @@ def load_file(file: str | UploadedFile) -> str | None:
             logger.error(f"Unsupported file type: {type(file)}")
             return None
         markdown_text = markdown_content.text_content
-        return markdown_text    
+        return markdown_text
     except Exception as e:
         logger.exception(f"An error occurred while loading the file: {e}")
         return None

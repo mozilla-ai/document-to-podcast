@@ -2,6 +2,7 @@ import re
 from bs4 import BeautifulSoup
 from markdown import markdown
 
+
 def clean_with_regex(text: str) -> str:
     """
     Clean text using regular expressions.
@@ -45,7 +46,7 @@ def clean_html(text: str) -> str:
     In addition, it calls [clean_with_regex][document_to_podcast.preprocessing.data_cleaners.clean_with_regex].
 
     Examples:
-        >>> clean_html("<html><body><p>Hello,  world!  </p></body></html>"")
+        >>> clean_html("<html><body><p>Hello,  world!  </p></body></html>")
         "Hello, world!"
 
     Args:
@@ -97,10 +98,6 @@ def markdown_to_text(markdown_string: str) -> str:
 
     Returns:
         str: The plain text representation of the Markdown string.
-
-    Examples:
-        >>> markdown_to_text("# Heading\\nSome text with `code` and <pre>preformatted</pre>")
-        'Heading Some text with code and preformatted'
     """
     # Convert Markdown to HTML
     html_string = markdown(markdown_string)
