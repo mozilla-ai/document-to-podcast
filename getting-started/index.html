@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#option-1-github-codespaces" class="md-skip">
+        <a href="#get-started-with-document-to-podcast-using-one-of-the-options-below" class="md-skip">
           Skip to content
         </a>
       
@@ -315,18 +315,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#option-1-github-codespaces" class="md-nav__link">
+  <a href="#get-started-with-document-to-podcast-using-one-of-the-options-below" class="md-nav__link">
     <span class="md-ellipsis">
-      ☁️ Option 1: GitHub Codespaces
+      Get started with Document-to-Podcast using one of the options below:
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#option-2-local-installation" class="md-nav__link">
+  <a href="#setup-options" class="md-nav__link">
     <span class="md-ellipsis">
-      💻 Option 2: Local Installation
+      Setup options
     </span>
   </a>
   
@@ -465,18 +465,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#option-1-github-codespaces" class="md-nav__link">
+  <a href="#get-started-with-document-to-podcast-using-one-of-the-options-below" class="md-nav__link">
     <span class="md-ellipsis">
-      ☁️ Option 1: GitHub Codespaces
+      Get started with Document-to-Podcast using one of the options below:
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#option-2-local-installation" class="md-nav__link">
+  <a href="#setup-options" class="md-nav__link">
     <span class="md-ellipsis">
-      💻 Option 2: Local Installation
+      Setup options
     </span>
   </a>
   
@@ -502,28 +502,50 @@
 
   <h1>Getting Started</h1>
 
-<p>Get started with Document-to-Podcast using one of the two options below: <strong>GitHub Codespaces</strong> for a hassle-free setup or <strong>Local Installation</strong> for running on your own machine.</p>
-<hr />
-<h3 id="option-1-github-codespaces">☁️ <strong>Option 1: GitHub Codespaces</strong></h3>
-<p>The fastest way to get started. Click the button below to launch the project directly in GitHub Codespaces:</p>
-<p><a href="https://github.com/codespaces/new?hide_repo_select=true&amp;ref=main&amp;repo=888426876&amp;skip_quickstart=true&amp;machine=standardLinux32gb"><img alt="Open in GitHub Codespaces" src="https://github.com/codespaces/badge.svg" /></a></p>
-<p>Once the Codespaces environment launches, inside the terminal, start the Streamlit demo by running:
+<h2 id="get-started-with-document-to-podcast-using-one-of-the-options-below">Get started with Document-to-Podcast using one of the options below:</h2>
+<h2 id="setup-options">Setup options</h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">☁️ Google Colab (GPU)</label><label for="__tabbed_1_2">☁️ GitHub Codespaces</label><label for="__tabbed_1_3">💻 pip Installation</label><label for="__tabbed_1_4">💻 Editable Installation</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>The easiest way to play with the code on a GPU, for free.</p>
+<p>Click the button below to launch the project directly in Google Colab:</p>
+<p><p align="center"><a href="https://colab.research.google.com/github/mozilla-ai/document-to-podcast/blob/main/demo/notebook.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></p>
+</div>
+<div class="tabbed-block">
+<p>Click the button below to launch the project directly in GitHub Codespaces:</p>
+<p><p align="center"><a href="https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb"><img src="https://github.com/codespaces/badge.svg" /></a></p></p>
+<p>Once the Codespaces environment launches, inside the terminal, start the Streamlit demo by running:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>streamlit<span class="w"> </span>run<span class="w"> </span>demo/app.py
-</span></code></pre></div></p>
-<h3 id="option-2-local-installation">💻  <strong>Option 2: Local Installation</strong></h3>
-<p>1.<strong>Clone the Repository</strong></p>
-<p>Inside your terminal, run:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="w">   </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mozilla-ai/document-to-podcast.git
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">   </span><span class="nb">cd</span><span class="w"> </span>document-to-podcast
 </span></code></pre></div>
-2. <strong>Install Dependencies</strong></p>
-<p>Inside your terminal, run:</p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</div>
+<div class="tabbed-block">
+<p>You can install the project from Pypi:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>document-to-podcast
 </span></code></pre></div>
-3. <strong>Run the Demo</strong></p>
-<p>Inside your terminal, start the Streamlit demo by running:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>-m<span class="w"> </span>streamlit<span class="w"> </span>run<span class="w"> </span>demo/app.py
+<p>Check the <a href="../cli/">Command Line Interface</a> guide.</p>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>
+<p><strong>Clone the Repository</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mozilla-ai/document-to-podcast.git
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>document-to-podcast
 </span></code></pre></div>
+</li>
+<li>
+<p><strong>Install the project and its Dependencies</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</span></code></pre></div>
+</li>
+<li>
+<p><strong>Run the Demo</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>-m<span class="w"> </span>streamlit<span class="w"> </span>run<span class="w"> </span>demo/app.py
+</span></code></pre></div>
+</li>
+</ol>
+</div>
+</div>
+</div>
 
 
 
@@ -541,6 +563,8 @@
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -570,7 +594,7 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
