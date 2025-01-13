@@ -102,9 +102,12 @@ def markdown_to_text(markdown_string: str) -> str:
         >>> markdown_to_text("# Heading\\nSome text with `code` and <pre>preformatted</pre>")
         'Heading Some text with code and preformatted'
     """
+    # Convert Markdown to HTML
+    html_string = markdown(markdown_string)
 
-    # md -> html -> text since BeautifulSoup can extract text cleanly
-    html = markdown(markdown_string)
+    # Remove code snippets (both <pre> and <code> tags)
+    html_string = re.sub(r"<pre>(.*?)</pre>", " ", html_string)
+    html_string = re.sub(r"<code>(.*?)</code>", " ", html_string)
 
     # Parse the HTML with BeautifulSoup
     soup = BeautifulSoup(html_string, "html.parser")
