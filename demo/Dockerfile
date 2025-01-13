@@ -23,4 +23,4 @@ RUN pip3 install document-to-podcast
 COPY --chown=user . $HOME/app
 
 EXPOSE 8501
-ENTRYPOINT ["streamlit", "run", "app.py"]
+ENTRYPOINT ["streamlit", "run", "app.py", "--server.enableXsrfProtection", "false"]
