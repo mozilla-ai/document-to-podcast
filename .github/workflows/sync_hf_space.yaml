@@ -30,3 +30,10 @@ jobs:
         run: |
           cd hf-space
           git push https://${{ secrets.HF_USERNAME }}:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/mozilla-ai/document-to-podcast main
+
+      - name: Force rebuild
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          pip install huggingface_hub
+          python demo/reboot_space.py
