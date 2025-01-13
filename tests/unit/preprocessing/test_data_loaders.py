@@ -1,20 +1,15 @@
-from document_to_podcast.preprocessing.data_loaders import (
-    load_pdf,
-    load_txt,
-    load_docx,
-    load_url,
-)
+from document_to_podcast.preprocessing.data_loaders import load_pdf, load_txt, load_docx, load_file
 
 
 def test_load_pdf(example_data):
-    result = load_pdf(example_data / "Mozilla-Trustworthy_AI.pdf")
+    result = load_file(str(example_data / "Mozilla-Trustworthy_AI.pdf"))
     assert (
         "a Mozilla white paper on challenges and opportunities in the AI era" in result
     )
 
 
 def test_load_invalid_pdf():
-    result = load_pdf("invalid.pdf")
+    result = load_pdf(str("invalid.pdf"))
     assert result is None
 
 
@@ -34,14 +29,14 @@ def test_load_invalid_html():
 
 
 def test_load_docx(example_data):
-    result = load_docx(example_data / "Mozilla-Trustworthy_AI.docx")
+    result = load_file(str(example_data / "Mozilla-Trustworthy_AI.docx"))
     assert (
         "a Mozilla white paper on challenges and opportunities in the AI era" in result
     )
 
 
 def test_load_invalid_docx():
-    result = load_docx("invalid.docx")
+    result = load_file(str("invalid.docx"))
     assert result is None
 
 
