@@ -49,13 +49,22 @@ def load_url(url: str) -> str | None:
 
 def load_file(file: str | UploadedFile) -> str | None:
     """
-        Uses MarkItDown to convert the file to markdown.        
+    Loads the content of a file or URL and converts it to markdown.
+
+    Args:
+        file (str | UploadedFile): The path to the file, a URL.
+
+    Returns:
+        str | None: The markdown text content, or None if an error occurs.
     """
     try:
-        md = MarkItDown()
-        md_content = md.convert(str(file))
-        md_text = md_content.text_content
-        return md_text
+        markdown_converter = MarkItDown()
+        if isinstance(file, str):  # for URL and filepath
+            markdown_content = markdown_converter.convert(file)
+        else:
+            markdown_content = markdown_converter.convert(str(file))
+        markdown_text = markdown_content.text_content
+        return markdown_text
     except Exception as e:
         logger.exception(e)
         return None

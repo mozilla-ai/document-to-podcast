@@ -84,27 +84,36 @@ def clean_markdown(text: str) -> str:
     return clean_with_regex(text)
 
 
-def markdown_to_text(markdown_string):
-    """
-        Converts markdown string to plaintext
-        
-        Source: https://gist.github.com/lorey/eb15a7f3338f959a78cc3661fbc255fe
+def markdown_to_text(markdown_string: str) -> str:
+    """Converts a Markdown string to plain text.
+
+    This function converts a Markdown string to HTML, removes code snippets,
+    then extracts the text content, removes extra line breaks and whitespace.
+
+    Source: https://gist.github.com/lorey/eb15a7f3338f959a78cc3661fbc255fe
+
+    Args:
+        markdown_string (str): The Markdown string to convert.
+
+    Returns:
+        str: The plain text representation of the Markdown string.
+
+    Examples:
+        >>> markdown_to_text("# Heading\\nSome text with `code` and <pre>preformatted</pre>")
+        'Heading Some text with code and preformatted'
     """
 
     # md -> html -> text since BeautifulSoup can extract text cleanly
     html = markdown(markdown_string)
 
-    # remove code snippets    
-    html = re.sub(r'<pre>(.*?)</pre>', ' ', html)
-    html = re.sub(r'<code>(.*?)</code >', ' ', html)    
-    
+    # Parse the HTML with BeautifulSoup
+    soup = BeautifulSoup(html_string, "html.parser")
 
-    # extract text
-    soup = BeautifulSoup(html, "html.parser")
+    # Extract all text content
+    text_content = "".join(soup.findAll(string=True))
 
-    # remove line breaks and whitespace
-    text = ''.join(soup.findAll(string=True))
-    text = text.strip()
-    text = re.sub(r'\n+', ' ', text)    
+    # Remove leading/trailing whitespace and replace multiple newlines with a single space
+    text_content = text_content.strip()
+    text_content = re.sub(r"\n+", " ", text_content)
 
-    return text
+    return text_content
