@@ -1,3 +1,4 @@
+import os
 import PyPDF2
 
 from docx import Document
@@ -49,11 +50,17 @@ def load_file(file: str | UploadedFile) -> str | None:
     try:
         markdown_converter = MarkItDown()
         if isinstance(file, str):  # for URL and filepath
+            if not os.path.exists(file):
+                logger.error(f"File not found: {file}")
+                return None
             markdown_content = markdown_converter.convert(file)
-        else:
+        elif isinstance(file, UploadedFile):
             markdown_content = markdown_converter.convert(str(file))
+        else:
+            logger.error(f"Unsupported file type: {type(file)}")
+            return None
         markdown_text = markdown_content.text_content
-        return markdown_text
+        return markdown_text    
     except Exception as e:
-        logger.exception(e)
+        logger.exception(f"An error occurred while loading the file: {e}")
         return None

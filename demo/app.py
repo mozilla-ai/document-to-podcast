@@ -1,5 +1,7 @@
 import re
 from pathlib import Path
+import os
+from tempfile import NamedTemporaryFile
 
 import numpy as np
 import soundfile as sf
@@ -63,7 +65,12 @@ if uploaded_file is not None:
 
     col1, col2 = st.columns(2)
 
-    raw_text = DATA_LOADERS[extension](uploaded_file)
+    with NamedTemporaryFile(delete=False, suffix=extension) as tmp_file:
+        tmp_file.write(uploaded_file.getvalue())
+        tmp_file_path = tmp_file.name
+
+    raw_text = DATA_LOADERS[extension](tmp_file_path)
+    os.unlink(tmp_file_path)
     with col1:
         st.subheader("Raw Text")
         st.text_area(
