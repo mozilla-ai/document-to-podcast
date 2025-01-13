@@ -1,7 +1,6 @@
 import re
 from pathlib import Path
 
-import numpy as np
 import soundfile as sf
 import yaml
 from fire import Fire
@@ -12,16 +11,16 @@ from document_to_podcast.config import (
     Speaker,
     DEFAULT_PROMPT,
     DEFAULT_SPEAKERS,
-    SUPPORTED_TTS_MODELS,
+    TTS_LOADERS,
 )
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
-    load_outetts_model,
-    load_parler_tts_model_and_tokenizer,
+    load_tts_model,
 )
-from document_to_podcast.inference.text_to_text import text_to_text_stream
 from document_to_podcast.inference.text_to_speech import text_to_speech
+from document_to_podcast.inference.text_to_text import text_to_text_stream
 from document_to_podcast.preprocessing import DATA_CLEANERS, DATA_LOADERS
+from document_to_podcast.utils import stack_audio_segments
 
 
 @logger.catch(reraise=True)
@@ -30,8 +29,9 @@ def document_to_podcast(
     output_folder: str | None = None,
     text_to_text_model: str = "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf",
     text_to_text_prompt: str = DEFAULT_PROMPT,
-    text_to_speech_model: SUPPORTED_TTS_MODELS = "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf",
+    text_to_speech_model: TTS_LOADERS = "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf",
     speakers: list[Speaker] | None = None,
+    outetts_language: str = "en",  # Only applicable to OuteTTS models
     from_config: str | None = None,
 ):
     """
@@ -70,8 +70,10 @@ def document_to_podcast(
         speakers (list[Speaker] | None, optional): The speakers for the podcast.
             Defaults to DEFAULT_SPEAKERS.
 
-        from_config (str, optional): The path to the config file. Defaults to None.
+        outetts_language (str): For OuteTTS models we need to specify which language to use.
+            Supported languages in 0.2-500M: en, zh, ja, ko. More info: https://github.com/edwko/OuteTTS
 
+        from_config (str, optional): The path to the config file. Defaults to None.
 
             If provided, all other arguments will be ignored.
     """
@@ -86,6 +88,7 @@ def document_to_podcast(
             text_to_text_prompt=text_to_text_prompt,
             text_to_speech_model=text_to_speech_model,
             speakers=[Speaker.model_validate(speaker) for speaker in speakers],
+            outetts_language=outetts_language,
         )
 
     output_folder = Path(config.output_folder)
@@ -106,15 +109,9 @@ def document_to_podcast(
     text_model = load_llama_cpp_model(model_id=config.text_to_text_model)
 
     logger.info(f"Loading {config.text_to_speech_model}")
-    if "oute" in config.text_to_speech_model.lower():
-        speech_model = load_outetts_model(model_id=config.text_to_speech_model)
-        speech_tokenizer = None
-        sample_rate = speech_model.audio_codec.sr
-    else:
-        speech_model, speech_tokenizer = load_parler_tts_model_and_tokenizer(
-            model_id=config.text_to_speech_model
-        )
-        sample_rate = speech_model.config.sampling_rate
+    speech_model = load_tts_model(
+        model_id=config.text_to_speech_model, outetts_language=outetts_language
+    )
 
     # ~4 characters per token is considered a reasonable default.
     max_characters = text_model.n_ctx() * 4
@@ -133,33 +130,39 @@ def document_to_podcast(
     system_prompt = system_prompt.replace(
         "{SPEAKERS}", "\n".join(str(speaker) for speaker in config.speakers)
     )
-    for chunk in text_to_text_stream(
-        clean_text, text_model, system_prompt=system_prompt
-    ):
-        text += chunk
-        podcast_script += chunk
-        if text.endswith("\n") and "Speaker" in text:
-            logger.debug(text)
-            speaker_id = re.search(r"Speaker (\d+)", text).group(1)
-            voice_profile = next(
-                speaker.voice_profile
-                for speaker in config.speakers
-                if speaker.id == int(speaker_id)
-            )
-            speech = text_to_speech(
-                text.split(f'"Speaker {speaker_id}":')[-1],
-                speech_model,
-                voice_profile,
-                tokenizer=speech_tokenizer,  # Applicable only for parler models
-            )
-            podcast_audio.append(speech)
-            text = ""
+    try:
+        for chunk in text_to_text_stream(
+            clean_text, text_model, system_prompt=system_prompt
+        ):
+            text += chunk
+            podcast_script += chunk
+            if text.endswith("\n") and "Speaker" in text:
+                logger.debug(text)
+                speaker_id = re.search(r"Speaker (\d+)", text).group(1)
+                voice_profile = next(
+                    speaker.voice_profile
+                    for speaker in config.speakers
+                    if speaker.id == int(speaker_id)
+                )
+                speech = text_to_speech(
+                    text.split(f'"Speaker {speaker_id}":')[-1],
+                    speech_model,
+                    voice_profile,
+                )
+                podcast_audio.append(speech)
+                text = ""
 
+    except KeyboardInterrupt:
+        logger.warning("Podcast generation stopped by user.")
     logger.info("Saving Podcast...")
+    complete_audio = stack_audio_segments(
+        podcast_audio, sample_rate=speech_model.sample_rate, silence_pad=1.0
+    )
+
     sf.write(
         str(output_folder / "podcast.wav"),
-        np.concatenate(podcast_audio),
-        samplerate=sample_rate,
+        complete_audio,
+        samplerate=speech_model.sample_rate,
     )
     (output_folder / "podcast.txt").write_text(podcast_script)
     logger.success("Done!")

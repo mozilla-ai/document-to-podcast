@@ -1,20 +1,25 @@
+"""Streamlit app for converting documents to podcasts."""
+
 import re
 from pathlib import Path
+import io
 import os
+
 from tempfile import NamedTemporaryFile
 
 import numpy as np
 import soundfile as sf
 import streamlit as st
 
+from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
-    load_outetts_model,
+    load_tts_model,
 )
 from document_to_podcast.config import DEFAULT_PROMPT, DEFAULT_SPEAKERS, Speaker
-from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.inference.text_to_text import text_to_text_stream
+from document_to_podcast.utils import stack_audio_segments
 
 
 @st.cache_resource
@@ -26,7 +31,17 @@ def load_text_to_text_model():
 
 @st.cache_resource
 def load_text_to_speech_model():
-    return load_outetts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
+    return load_tts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
+
+
+def numpy_to_wav(audio_array: np.ndarray, sample_rate: int) -> io.BytesIO:
+    """
+    Convert a numpy array to audio bytes in .wav format, ready to save into a file.
+    """
+    wav_io = io.BytesIO()
+    sf.write(wav_io, audio_array, sample_rate, format="WAV")
+    wav_io.seek(0)
+    return wav_io
 
 
 script = "script"
@@ -46,14 +61,16 @@ def gen_button_clicked():
 
 st.title("Document To Podcast")
 
-st.header("Uploading Data")
+st.header("Upload a File")
 
 uploaded_file = st.file_uploader(
     "Choose a file", type=["pdf", "html", "txt", "docx", "md"]
 )
 
+st.header("Or Enter a Website URL")
+url = st.text_input("URL", placeholder="https://blog.mozilla.ai/...")
 
-if uploaded_file is not None:
+if uploaded_file is not None or url:
     st.divider()
     st.header("Loading and Cleaning Data")
     st.markdown(
@@ -61,7 +78,12 @@ if uploaded_file is not None:
     )
     st.divider()
 
-    extension = Path(uploaded_file.name).suffix
+    if uploaded_file:
+        extension = Path(uploaded_file.name).suffix
+        raw_text = DATA_LOADERS[extension](uploaded_file)
+    else:
+        extension = ".html"
+        raw_text = DATA_LOADERS["url"](url)
 
     col1, col2 = st.columns(2)
 
@@ -71,6 +93,7 @@ if uploaded_file is not None:
 
     raw_text = DATA_LOADERS[extension](tmp_file_path)
     os.unlink(tmp_file_path)
+
     with col1:
         st.subheader("Raw Text")
         st.text_area(
@@ -85,6 +108,12 @@ if uploaded_file is not None:
             f"Number of characters after cleaning: {len(clean_text)}",
             f"{clean_text[:500]} . . .",
         )
+    st.session_state["clean_text"] = clean_text
+
+st.divider()
+
+if "clean_text" in st.session_state:
+    clean_text = st.session_state["clean_text"]
 
     st.divider()
     st.header("Downloading and Loading models")
@@ -93,18 +122,18 @@ if uploaded_file is not None:
     )
     st.divider()
 
+    text_model = load_text_to_text_model()
+    speech_model = load_text_to_speech_model()
+
     st.markdown(
         "For this demo, we are using the following models: \n"
         "- [OLMoE-1B-7B-0924-Instruct](https://huggingface.co/allenai/OLMoE-1B-7B-0924-Instruct-GGUF)\n"
-        "- [OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
+        "- [OuteAI/OuteTTS-0.2-500M](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
     )
     st.markdown(
         "You can check the [Customization Guide](https://mozilla-ai.github.io/document-to-podcast/customization/)"
         " for more information on how to use different models."
     )
-
-    text_model = load_text_to_text_model()
-    speech_model = load_text_to_speech_model()
 
     # ~4 characters per token is considered a reasonable default.
     max_characters = text_model.n_ctx() * 4
@@ -160,24 +189,27 @@ if uploaded_file is not None:
                             speech_model,
                             voice_profile,
                         )
-                    st.audio(speech, sample_rate=speech_model.audio_codec.sr)
+                    st.audio(speech, sample_rate=speech_model.sample_rate)
 
                     st.session_state.audio.append(speech)
                     text = ""
+        st.session_state.script += "}"
 
     if st.session_state[gen_button]:
-        if st.button("Save Podcast to audio file"):
-            st.session_state.audio = np.concatenate(st.session_state.audio)
-            sf.write(
-                "podcast.wav",
-                st.session_state.audio,
-                samplerate=speech_model.audio_codec.sr,
-            )
+        audio_np = stack_audio_segments(
+            st.session_state.audio, speech_model.sample_rate
+        )
+        audio_wav = numpy_to_wav(audio_np, speech_model.sample_rate)
+        if st.download_button(
+            label="Save Podcast to audio file",
+            data=audio_wav,
+            file_name="podcast.wav",
+        ):
             st.markdown("Podcast saved to disk!")
 
-        if st.button("Save Podcast script to text file"):
-            with open("script.txt", "w") as f:
-                st.session_state.script += "}"
-                f.write(st.session_state.script)
-
+        if st.download_button(
+            label="Save Podcast script to text file",
+            data=st.session_state.script,
+            file_name="script.txt",
+        ):
             st.markdown("Script saved to disk!")

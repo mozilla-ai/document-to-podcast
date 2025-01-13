@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - 'main'
+    paths:
+      - demo/Dockerfile
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
   workflow_dispatch:
@@ -33,7 +35,7 @@ jobs:
         id: push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: "{{defaultContext}}:demo"
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
