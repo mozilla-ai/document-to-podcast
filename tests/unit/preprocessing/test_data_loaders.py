@@ -1,11 +1,9 @@
 from document_to_podcast.preprocessing.data_loaders import (
     load_pdf,
     load_txt,
-    load_docx,
     load_url,
     load_file,
 )
-
 
 
 def test_load_pdf(example_data):

@@ -1,5 +1,10 @@
 from .data_loaders import load_pdf, load_txt, load_docx, load_url, load_file
-from .data_cleaners import clean_with_regex, clean_html, clean_markdown, markdown_to_text
+from .data_cleaners import (
+    clean_with_regex,
+    clean_html,
+    clean_markdown,
+    markdown_to_text,
+)
 
 
 DATA_LOADERS = {

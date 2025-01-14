@@ -65,7 +65,7 @@ def load_file(file: str | UploadedFile) -> str | None:
     except Exception as e:
         logger.exception(f"An error occurred while loading the file: {e}")
 
-        
+
 def load_url(url: str) -> str | None:
     try:
         response = requests.get(url)
