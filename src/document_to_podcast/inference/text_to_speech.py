@@ -1,23 +1,38 @@
-from typing import Union
-
 import numpy as np
 from outetts.version.v1.interface import InterfaceGGUF
-from transformers import PreTrainedTokenizerBase, PreTrainedModel
+
+from document_to_podcast.inference.model_loaders import TTSModel
 
 
 def _text_to_speech_oute(
     input_text: str,
     model: InterfaceGGUF,
     voice_profile: str,
-    temperature: float = 0.3,
+    **kwargs,
 ) -> np.ndarray:
+    """
+    TTS generation function for the Oute TTS model family.
+    Args:
+        input_text (str): The text to convert to speech.
+        model: A model from the Oute TTS family.
+        voice_profile: a pre-defined ID for the Oute models (e.g. "female_1")
+            more info here https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers
+        temperature (float, default = 0.3): Controls the randomness of predictions by scaling the logits.
+            Lower values make the output more focused and deterministic, higher values produce more diverse results.
+        repetition_penalty (float, default = 1.1): Applies a penalty to tokens that have already been generated,
+            reducing the likelihood of repetition and enhancing text variety.
+        max_length (int, default = 4096): Defines the maximum number of tokens for the generated text sequence.
+
+    Returns:
+        numpy array: The waveform of the speech as a 2D numpy array
+    """
     speaker = model.load_default_speaker(name=voice_profile)
 
     output = model.generate(
         text=input_text,
-        temperature=temperature,
-        repetition_penalty=1.1,
-        max_length=4096,
+        temperature=kwargs.pop("temperature", 0.3),
+        repetition_penalty=kwargs.pop("repetition_penalty", 1.1),
+        max_length=kwargs.pop("max_length", 4096),
         speaker=speaker,
     )
 
@@ -25,48 +40,29 @@ def _text_to_speech_oute(
     return output_as_np
 
 
-def _text_to_speech_parler(
-    input_text: str,
-    model: PreTrainedModel,
-    tokenizer: PreTrainedTokenizerBase,
-    voice_profile: str,
-) -> np.ndarray:
-    input_ids = tokenizer(voice_profile, return_tensors="pt").input_ids
-    prompt_input_ids = tokenizer(input_text, return_tensors="pt").input_ids
-
-    generation = model.generate(input_ids=input_ids, prompt_input_ids=prompt_input_ids)
-    waveform = generation.cpu().numpy().squeeze()
-
-    return waveform
+TTS_INFERENCE = {
+    # To add support for your model, add it here in the format {model_id} : _inference_function
+    "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf": _text_to_speech_oute,
+    "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf": _text_to_speech_oute,
+}
 
 
-def text_to_speech(
-    input_text: str,
-    model: Union[InterfaceGGUF, PreTrainedModel],
-    voice_profile: str,
-    tokenizer: PreTrainedTokenizerBase = None,
-) -> np.ndarray:
+def text_to_speech(input_text: str, model: TTSModel, voice_profile: str) -> np.ndarray:
     """
-    Generates a speech waveform from a text input using a pre-trained text-to-speech (TTS) model.
-
-    Examples:
-        >>> waveform = text_to_speech(input_text="Welcome to our amazing podcast", model=model, voice_profile="male_1")
+    Generate speech from text using a TTS model.
 
     Args:
         input_text (str): The text to convert to speech.
-        model (PreTrainedModel): The model used for generating the waveform.
-        voice_profile (str): Depending on the selected TTS model it should either be
-            - a pre-defined ID for the Oute models (e.g. "female_1")
-            more info here https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers
-            - a natural description of the voice profile using a pre-defined name for the Parler model (e.g. Laura's voice is calm)
-            more info here https://github.com/huggingface/parler-tts?tab=readme-ov-file#-using-a-specific-speaker
-        tokenizer (PreTrainedTokenizerBase): [Only used for the Parler models!] The tokenizer used for tokenizing the text in order to send to the model.
+        model (TTSModel): The TTS model to use.
+        voice_profile (str): The voice profile to use for the speech.
+            The format depends on the TTSModel used.
+
+            For OuteTTS (the default), it should be a pre-defined ID like `female_1`.
+            You can find all the IDs [at this link](https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers)
+
     Returns:
-        numpy array: The waveform of the speech as a 2D numpy array
+        np.ndarray: The waveform of the speech as a 2D numpy array
     """
-    if isinstance(model, InterfaceGGUF):
-        return _text_to_speech_oute(input_text, model, voice_profile)
-    elif isinstance(model, PreTrainedModel):
-        return _text_to_speech_parler(input_text, model, tokenizer, voice_profile)
-    else:
-        raise NotImplementedError("Model not yet implemented for TTS")
+    return TTS_INFERENCE[model.model_id](
+        input_text, model.model, voice_profile, **model.custom_args
+    )

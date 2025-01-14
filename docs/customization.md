@@ -15,6 +15,28 @@ This guide outlines the key parameters you can customize and explains how to mak
 
 - **`speakers`**: Defines the podcast participants, including their names, roles, descriptions, and voice profiles. Customize this to create engaging personas and voices for your podcast.
 
+
+## ⌨️ **Customizing When Running via the CLI**
+
+If you’re running the pipeline from the command line, you can customize the parameters by modifying the **`example_data/config.yaml`** file.
+
+Running in the CLI:
+```bash
+document-to-podcast --from_config example_data/config.yaml
+```
+
+### Steps to Customize
+1. Open the `config.yaml` file.
+2. Locate the parameter you want to adjust.
+3. Update the value and save the file.
+
+#### Example: Changing the Text-to-Text Model
+In `config.yaml`, modify the `text_to_text_model` entry:
+
+```yaml
+text_to_text_model: "Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf"
+```
+
 ## 🖥️ **Customizing When Running via `app.py`**
 
 If you’re running the application using `app.py`, you can customize these parameters in the **`src/config.py`** file. This centralized configuration file simplifies the customization process.
@@ -47,33 +69,13 @@ Instructions:
 """
 ```
 
-## ⌨️ **Customizing When Running via the CLI**
-
-If you’re running the pipeline from the command line, you can customize the parameters by modifying the **`example_data/config.yaml`** file.
-
-Running in the CLI:
-```bash
-document-to-podcast --from_config example_data/config.yaml
-```
-
-### Steps to Customize
-1. Open the `config.yaml` file.
-2. Locate the parameter you want to adjust.
-3. Update the value and save the file.
-
-#### Example: Changing the Text-to-Text Model
-In `config.yaml`, modify the `text_to_text_model` entry:
-
-```yaml
-text_to_text_model: "Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf"
-```
-
 ## ✏️ **Customization Examples**
 
 Looking for inspiration? Check out these examples of how others have customized the Document-to-Podcast Blueprint for their unique needs:
 
 - **[Radio Drama Generator](https://github.com/stefanfrench/radio-drama-generator)**: A creative adaptation that generates radio dramas by customizing ng the Blueprint parameters.
 - **[Readme-to-Podcast](https://github.com/alexmeckes/readme-to-podcast)**: This project transforms GitHub README files into podcast-style audio, showcasing the Blueprint’s ability to handle diverse text inputs.
+- **[Multilingual Podcast](https://github.com/Kostis-S-Z/document-to-podcast/)**: A repo that showcases how to use this package in other languages, like Hindi, Polish, Korean and many more.
 
 ## 🤝 **Contributing to the Blueprint**
 

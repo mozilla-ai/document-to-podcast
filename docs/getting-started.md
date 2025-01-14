@@ -1,46 +1,57 @@
-Get started with Document-to-Podcast using one of the two options below: **GitHub Codespaces** for a hassle-free setup or **Local Installation** for running on your own machine.
-
+Get started with Document-to-Podcast using one of the options below:
 ---
 
-### ☁️ **Option 1: GitHub Codespaces**
+## Setup options
 
-The fastest way to get started. Click the button below to launch the project directly in GitHub Codespaces:
+=== "☁️ Google Colab (GPU)"
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb)
+      The easiest way to play with the code on a GPU, for free.
 
-Once the Codespaces environment launches, inside the terminal, start the Streamlit demo by running:
-```bash
-python -m streamlit run demo/app.py
-```
+      Click the button below to launch the project directly in Google Colab:
 
+      <p align="center"><a href="https://colab.research.google.com/github/mozilla-ai/document-to-podcast/blob/main/demo/notebook.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 
-### 💻  **Option 2: Local Installation**
-1.**Clone the Repository**
+=== "☁️ GitHub Codespaces"
 
-Inside your terminal, run:
-```bash
-   git clone https://github.com/mozilla-ai/document-to-podcast.git
-   cd document-to-podcast
-```
-2. **Install Dependencies**
+      Click the button below to launch the project directly in GitHub Codespaces:
 
-   Inside your terminal, run:
+      <p align="center"><a href="https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb"><img src="https://github.com/codespaces/badge.svg" /></a></p>
 
-```bash
-pip install -e .
-```
-3. **Run the Demo**
+      Once the Codespaces environment launches, inside the terminal, start the Streamlit demo by running:
 
-   Inside your terminal, start the Streamlit demo by running:
+      ```bash
+      python -m streamlit run demo/app.py
+      ```
 
-```bash
-python -m streamlit run demo/app.py
-```
+=== "💻 Local Installation"
 
+      You can install the project from Pypi:
 
-### [Optional]: Use Parler models for text-to-speech
+      ```bash
+      pip install document-to-podcast
+      ```
 
-If you want to use the [parler tts](https://github.com/huggingface/parler-tts) models, you will need to **additionally** install an optional dependency by running:
-```bash
-pip install -e '.[parler]'
-```
+      Check the [Command Line Interface](./cli.md) guide.
+
+      ---
+
+      Alternatively, you can clone and install it in editable mode:
+
+      1. **Clone the Repository**
+
+         ```bash
+         git clone https://github.com/mozilla-ai/document-to-podcast.git
+         cd document-to-podcast
+         ```
+
+      2. **Install the project and its Dependencies**
+
+         ```bash
+         pip install -e .
+         ```
+
+      3. **Run the Demo**
+
+         ```bash
+         python -m streamlit run demo/app.py
+         ```

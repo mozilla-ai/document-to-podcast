@@ -2,22 +2,21 @@
 
 import re
 from pathlib import Path
+import io
 
 import numpy as np
 import soundfile as sf
 import streamlit as st
-import requests
-from bs4 import BeautifulSoup
-from requests.exceptions import RequestException
 
+from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
-    load_outetts_model,
+    load_tts_model,
 )
 from document_to_podcast.config import DEFAULT_PROMPT, DEFAULT_SPEAKERS, Speaker
-from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.inference.text_to_text import text_to_text_stream
+from document_to_podcast.utils import stack_audio_segments
 
 
 @st.cache_resource
@@ -29,7 +28,17 @@ def load_text_to_text_model():
 
 @st.cache_resource
 def load_text_to_speech_model():
-    return load_outetts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
+    return load_tts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
+
+
+def numpy_to_wav(audio_array: np.ndarray, sample_rate: int) -> io.BytesIO:
+    """
+    Convert a numpy array to audio bytes in .wav format, ready to save into a file.
+    """
+    wav_io = io.BytesIO()
+    sf.write(wav_io, audio_array, sample_rate, format="WAV")
+    wav_io.seek(0)
+    return wav_io
 
 
 script = "script"
@@ -55,7 +64,10 @@ uploaded_file = st.file_uploader(
     "Choose a file", type=["pdf", "html", "txt", "docx", "md"]
 )
 
-if uploaded_file is not None:
+st.header("Or Enter a Website URL")
+url = st.text_input("URL", placeholder="https://blog.mozilla.ai/...")
+
+if uploaded_file is not None or url:
     st.divider()
     st.header("Loading and Cleaning Data")
     st.markdown(
@@ -63,11 +75,15 @@ if uploaded_file is not None:
     )
     st.divider()
 
-    extension = Path(uploaded_file.name).suffix
+    if uploaded_file:
+        extension = Path(uploaded_file.name).suffix
+        raw_text = DATA_LOADERS[extension](uploaded_file)
+    else:
+        extension = ".html"
+        raw_text = DATA_LOADERS["url"](url)
 
     col1, col2 = st.columns(2)
 
-    raw_text = DATA_LOADERS[extension](uploaded_file)
     with col1:
         st.subheader("Raw Text")
         st.text_area(
@@ -86,53 +102,6 @@ if uploaded_file is not None:
 
 st.divider()
 
-st.header("Or Enter a Website URL")
-url = st.text_input("URL", placeholder="https://blog.mozilla.ai/...")
-process_url = st.button("Clean URL Content")
-
-
-def process_url_content(url: str) -> tuple[str, str]:
-    """Fetch and clean content from a URL.
-
-    Args:
-        url: The URL to fetch content from
-
-    Returns:
-        tuple containing raw and cleaned text
-    """
-    response = requests.get(url)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, "html.parser")
-    raw_text = soup.get_text()
-    return raw_text, DATA_CLEANERS[".html"](raw_text)
-
-
-if url and process_url:
-    try:
-        with st.spinner("Fetching and cleaning content..."):
-            raw_text, clean_text = process_url_content(url)
-            st.session_state["clean_text"] = clean_text
-
-            # Display results
-            col1, col2 = st.columns(2)
-            with col1:
-                st.subheader("Raw Text")
-                st.text_area(
-                    "Number of characters before cleaning: " f"{len(raw_text)}",
-                    f"{raw_text[:500]}...",
-                )
-            with col2:
-                st.subheader("Cleaned Text")
-                st.text_area(
-                    "Number of characters after cleaning: " f"{len(clean_text)}",
-                    f"{clean_text[:500]}...",
-                )
-    except RequestException as e:
-        st.error(f"Error fetching URL: {str(e)}")
-    except Exception as e:
-        st.error(f"Error processing content: {str(e)}")
-
-# Second part - Podcast generation
 if "clean_text" in st.session_state:
     clean_text = st.session_state["clean_text"]
 
@@ -143,7 +112,6 @@ if "clean_text" in st.session_state:
     )
     st.divider()
 
-    # Load models
     text_model = load_text_to_text_model()
     speech_model = load_text_to_speech_model()
 
@@ -211,22 +179,27 @@ if "clean_text" in st.session_state:
                             speech_model,
                             voice_profile,
                         )
-                    st.audio(speech, sample_rate=speech_model.audio_codec.sr)
+                    st.audio(speech, sample_rate=speech_model.sample_rate)
+
                     st.session_state.audio.append(speech)
                     text = ""
+        st.session_state.script += "}"
 
     if st.session_state[gen_button]:
-        if st.button("Save Podcast to audio file"):
-            st.session_state.audio = np.concatenate(st.session_state.audio)
-            sf.write(
-                "podcast.wav",
-                st.session_state.audio,
-                samplerate=speech_model.audio_codec.sr,
-            )
+        audio_np = stack_audio_segments(
+            st.session_state.audio, speech_model.sample_rate
+        )
+        audio_wav = numpy_to_wav(audio_np, speech_model.sample_rate)
+        if st.download_button(
+            label="Save Podcast to audio file",
+            data=audio_wav,
+            file_name="podcast.wav",
+        ):
             st.markdown("Podcast saved to disk!")
 
-        if st.button("Save Podcast script to text file"):
-            with open("script.txt", "w") as f:
-                st.session_state.script += "}"
-                f.write(st.session_state.script)
+        if st.download_button(
+            label="Save Podcast script to text file",
+            data=st.session_state.script,
+            file_name="script.txt",
+        ):
             st.markdown("Script saved to disk!")
