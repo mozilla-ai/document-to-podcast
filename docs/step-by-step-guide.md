@@ -48,9 +48,9 @@ Cleaner input data ensures that the model works with reliable and consistent inf
      - `.zip`, `.7z`, `.rar`, `.tar`, and `.gz`
 
    - Utilizes [MarkitDown](https://github.com/microsoft/markitdown) to extract text from `.pdf` and `html`.
-      
-   - Extracts readable text from uploaded files using specialized loaders. 
-   
+
+   - Extracts readable text from uploaded files using specialized loaders.
+
 
  **2 - Text Cleaning**
 

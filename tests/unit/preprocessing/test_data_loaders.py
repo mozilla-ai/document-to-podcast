@@ -2,6 +2,7 @@ from unittest.mock import Mock
 
 from document_to_podcast.preprocessing.data_loaders import (
     load_txt,
+    load_url,
     load_file,
     load_url,
 )

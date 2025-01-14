@@ -38,16 +38,6 @@ def load_docx(docx_file: str | UploadedFile) -> str | None:
         return None
 
 
-def load_url(url: str) -> str | None:
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.text
-    except Exception as e:
-        logger.exception(e)
-        return None
-
-
 def load_file(file: str | UploadedFile) -> str | None:
     """
     Loads the content of a file or URL and converts it to markdown.
@@ -74,4 +64,13 @@ def load_file(file: str | UploadedFile) -> str | None:
         return markdown_text
     except Exception as e:
         logger.exception(f"An error occurred while loading the file: {e}")
+
+
+def load_url(url: str) -> str | None:
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.text
+    except Exception as e:
+        logger.exception(e)
         return None
