@@ -25,7 +25,7 @@ Get started right away using one of the options below:
 
 You can also install and use the blueprint locally:
 
-<table>
+<table style="width:100%">
 <tr>
 <th>CLI</th>
 <th>Demo App</th>
