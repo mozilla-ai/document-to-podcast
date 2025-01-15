@@ -25,13 +25,7 @@ Get started right away using one of the options below:
 
 You can also install and use the blueprint locally:
 
-<table style="width:100%">
-<tr>
-<th>CLI</th>
-<th>Demo App</th>
-</tr>
-<tr>
-<td>
+### CLI
 
 ```bash
 pip install document-to-podcast
@@ -44,8 +38,7 @@ document-to-podcast \
 --text_to_text_model "Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf"
 ```
 
-</td>
-<td>
+### Demo App
 
 ```bash
 git clone https://github.com/mozilla-ai/document-to-podcast.git
@@ -56,9 +49,7 @@ pip install -e .
 ```bash
 python -m streamlit run demo/app.py
 ```
-</td>
-</tr>
-</table>
+
 
 ## License
 
