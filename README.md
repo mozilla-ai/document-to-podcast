@@ -17,27 +17,48 @@ It is designed to work on most local setups or with [GitHub Codespaces](https://
 
 ## Quick-start
 
-Get started with Document-to-Podcast using one of the options below:
+Get started right away using one of the options below:
 
 | Google Colab | HuggingFace Spaces  | GitHub Codespaces |
 | -------------| ------------------- | ----------------- |
 | [![Try on Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mozilla-ai/document-to-podcast/blob/main/demo/notebook.ipynb) | [![Try on Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Try%20on-Spaces-blue)](https://huggingface.co/spaces/mozilla-ai/document-to-podcast) | [![Try on Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb) |
 
-Alternatively, you can install it from pypi:
+You can also install and use the blueprint locally:
+
+<table>
+<tr>
+<th>CLI</th>
+<th>Demo App</th>
+</tr>
+<tr>
+<td>
 
 ```bash
 pip install document-to-podcast
 ```
 
-## Troubleshooting
+```bash
+document-to-podcast \
+--input_file "example_data/Mozilla-Trustworthy_AI.pdf" \
+--output_folder "example_data"
+--text_to_text_model "Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf"
+```
 
-> When starting up the codespace, I get the message `Oh no, it looks like you are offline!`
+</td>
+<td>
 
-If you are on Firefox and have Enhanced Tracking Protection `On`, try turning it `Off` for the codespace webpage.
+```bash
+git clone https://github.com/mozilla-ai/document-to-podcast.git
+cd document-to-podcast
+pip install -e .
+```
 
-> During the installation of the package, it fails with `ERROR: Failed building wheel for llama-cpp-python`
-
-You are probably missing the `GNU Make` package. A quick way to solve it is run on your terminal `sudo apt install build-essential`
+```bash
+python -m streamlit run demo/app.py
+```
+</td>
+</tr>
+</table>
 
 ## License
 

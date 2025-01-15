@@ -55,3 +55,14 @@ Get started with Document-to-Podcast using one of the options below:
          ```bash
          python -m streamlit run demo/app.py
          ```
+
+
+## Troubleshooting
+
+> When starting up the codespace, I get the message `Oh no, it looks like you are offline!`
+
+If you are on Firefox and have Enhanced Tracking Protection `On`, try turning it `Off` for the codespace webpage.
+
+> During the installation of the package, it fails with `ERROR: Failed building wheel for llama-cpp-python`
+
+You are probably missing the `GNU Make` package. A quick way to solve it is run on your terminal `sudo apt install build-essential`
