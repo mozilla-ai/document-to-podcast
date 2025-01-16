@@ -22,7 +22,7 @@ from document_to_podcast.utils import stack_audio_segments
 @st.cache_resource
 def load_text_to_text_model():
     return load_llama_cpp_model(
-        model_id="allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf"
+        model_id="bartowski/Qwen2.5-3B-Instruct-GGUF/Qwen2.5-3B-Instruct-f16.gguf"
     )
 
 
@@ -117,7 +117,7 @@ if "clean_text" in st.session_state:
 
     st.markdown(
         "For this demo, we are using the following models: \n"
-        "- [OLMoE-1B-7B-0924-Instruct](https://huggingface.co/allenai/OLMoE-1B-7B-0924-Instruct-GGUF)\n"
+        "- [Qwen2.5-3B-Instruct](https://huggingface.co/bartowski/Qwen2.5-3B-Instruct-GGUF)\n"
         "- [OuteAI/OuteTTS-0.2-500M](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
     )
     st.markdown(
