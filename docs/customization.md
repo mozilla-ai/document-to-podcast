@@ -3,15 +3,35 @@
 The Document-to-Podcast Blueprint is designed to be flexible and adaptable to your specific needs.
 This guide outlines the key parameters you can customize and explains how to make these changes depending on whether you’re running the application via app.py or the CLI pipeline.
 
-## 🖋️ **Key Parameters for Customization**
+## 🧠 **Supported models**
+
+There are 2 different parameters to customize the models being used:
+
+### **`text_to_text_model`**
+
+The language model used to generate the podcast script.
+
+Any model that can be loaded by [`LLama.from_pretrained`](https://llama-cpp-python.readthedocs.io/en/latest/#pulling-models-from-hugging-face-hub) can be used here.
+
+Format is expected to be `{org}/{repo}/{filename}`.
+For example: `Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf`.
+
+
+### **`text_to_speech_model`**
+
+The model used to generate the audio from the podcast script.
+
+You can use any of the models listed in [`TTS_LOADERS`](api.md/#document_to_podcast.inference.model_loaders.TTS_LOADERS) out of the box.
+We currently support [OuteTTS](https://github.com/edwko/OuteTTS).
+
+If you want to use a different model, you can integrate it by implementing the `_load` and `_text_to_speech` functions and registering them in [`TTS_LOADERS`](api.md/#document_to_podcast.inference.model_loaders.TTS_LOADERS) and [`TTS_INFERENCE`](api.md/#document_to_podcast.inference.model_loaders.TTS_INFERENCE).
+You can check [this repo](https://github.com/Kostis-S-Z/document-to-podcast/) where different text-to-speech models are integrated.
+
+## 🖋️ **Other Customizable Parameters**
 
 - **`input_file`**: The input file specifies the document to be processed. Supports the following formats: `pdf`, `html`, `txt`, `docx`, `md`.
 
-- **`text_to_text_model`**: The language model used to generate the podcast script. Note: The model parameter must be in GGFUF format, for example: `Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf`.
-
 - **`text_to_text_prompt`**: Defines the tone, structure, and instructions for generating the podcast script. This prompt is crucial for tailoring the conversation style to your project.
-
-- **`text_to_speech_model`**: Specifies the model used for text-to-speech conversion. You can change this to achieve the desired voice style or improve performance. Check `config.py` to choose from supported models.
 
 - **`speakers`**: Defines the podcast participants, including their names, roles, descriptions, and voice profiles. Customize this to create engaging personas and voices for your podcast.
 
