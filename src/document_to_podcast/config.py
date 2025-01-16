@@ -36,9 +36,9 @@ DEFAULT_SPEAKERS = [
     },
     {
         "id": 2,
-        "name": "Adam",
+        "name": "Michael",
         "description": "The co-host. He keeps the conversation on track, asks curious follow-up questions, and reacts with excitement or confusion, often using interjections like hmm or umm.",
-        "voice_profile": "am_adam",
+        "voice_profile": "am_michael",
     },
 ]
 
