@@ -30,15 +30,15 @@ Example:
 DEFAULT_SPEAKERS = [
     {
         "id": 1,
-        "name": "Laura",
+        "name": "Sarah",
         "description": "The main host. She explains topics clearly using anecdotes and analogies, teaching in an engaging and captivating way.",
-        "voice_profile": "female_1",
+        "voice_profile": "af_sarah",
     },
     {
         "id": 2,
-        "name": "Jon",
+        "name": "Adam",
         "description": "The co-host. He keeps the conversation on track, asks curious follow-up questions, and reacts with excitement or confusion, often using interjections like hmm or umm.",
-        "voice_profile": "male_1",
+        "voice_profile": "am_adam",
     },
 ]
 

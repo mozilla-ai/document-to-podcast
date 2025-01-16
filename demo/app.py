@@ -28,7 +28,7 @@ def load_text_to_text_model():
 
 @st.cache_resource
 def load_text_to_speech_model():
-    return load_tts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
+    return load_tts_model("hexgrad/Kokoro-82M/kokoro-v0_19.pth")
 
 
 def numpy_to_wav(audio_array: np.ndarray, sample_rate: int) -> io.BytesIO:
@@ -118,7 +118,7 @@ if "clean_text" in st.session_state:
     st.markdown(
         "For this demo, we are using the following models: \n"
         "- [Qwen2.5-3B-Instruct](https://huggingface.co/bartowski/Qwen2.5-3B-Instruct-GGUF)\n"
-        "- [OuteAI/OuteTTS-0.2-500M](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
+        "- [hexgrad/Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M)"
     )
     st.markdown(
         "You can check the [Customization Guide](https://mozilla-ai.github.io/document-to-podcast/customization/)"
