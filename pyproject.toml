@@ -16,7 +16,7 @@ dependencies = [
   "loguru",
   "markdown",
   "markitdown",
-  "outetts",
+  "outetts<0.3",
   "pydantic",
   "PyPDF2[crypto]",
   "python-docx",
