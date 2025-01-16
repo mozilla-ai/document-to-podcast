@@ -8,12 +8,14 @@
 [![Ruff](https://github.com/mozilla-ai/document-to-podcast/actions/workflows/lint.yaml/badge.svg?label=Ruff)](https://github.com/mozilla-ai/document-to-podcast/actions/workflows/lint.yaml/)
 
 This blueprint demonstrate how you can use open-source models & tools to convert input documents into a podcast featuring two speakers.
-It is designed to work on most local setups or with [GitHub Codespaces](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=888426876&skip_quickstart=true&machine=standardLinux32gb), meaning no external API calls or GPU access is required. This makes it more accessible and privacy-friendly by keeping everything local.
+It is designed to work on most local setups, meaning no external API calls or GPU access is required.
+This makes it more accessible and privacy-friendly by keeping everything local.
 
 <img src="./images/document-to-podcast-diagram.png" width="1200" alt="document-to-podcast Diagram" />
 
-### 👉 📖 For more detailed guidance on using this project, please visit our [Docs here](https://mozilla-ai.github.io/document-to-podcast/).
+### 👉 📖 For more detailed guidance on using this project, please visit our [Docs](https://mozilla-ai.github.io/document-to-podcast/).
 
+### 👉 🧠 Check the [Supported Models](https://mozilla-ai.github.io/document-to-podcast/customization/#supported-models).
 
 ## Quick-start
 
