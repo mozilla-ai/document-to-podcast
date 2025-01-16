@@ -1,5 +1,8 @@
 import os
 import PyPDF2
+from pathlib import Path
+import requests
+from tempfile import NamedTemporaryFile
 
 from docx import Document
 from loguru import logger
@@ -39,28 +42,57 @@ def load_docx(docx_file: str | UploadedFile) -> str | None:
 
 def load_file(file: str | UploadedFile) -> str | None:
     """
-    Loads the content of a file or URL and converts it to markdown.
+    Loads the content of a file and converts it to markdown.
 
     Args:
-        file (str | UploadedFile): The path to the file, a URL.
+        file: Either a file path string or a Streamlit UploadedFile object
 
     Returns:
-        str | None: The Markdown text content, or None if an error occurs.
+        The markdown text content if successful, None otherwise
     """
+    if not hasattr(file, 'name'):
+        logger.error("Invalid file object: missing 'name' attribute")
+        return None
+
+    tmp_file_path = None
     try:
-        markdown_converter = MarkItDown()
-        if isinstance(file, str):  # for URL and filepath
-            if not os.path.exists(file):
-                logger.error(f"File not found: {file}")
+        # Create temporary file
+        extension = Path(file.name).suffix
+        with NamedTemporaryFile(delete=False, suffix=extension) as tmp_file:
+            content = file.getvalue()
+            if not content:
+                logger.error("File content is empty")
                 return None
-            markdown_content = markdown_converter.convert(file)
-        elif isinstance(file, UploadedFile):
-            markdown_content = markdown_converter.convert(str(file))
-        else:
-            logger.error(f"Unsupported file type: {type(file)}")
+            tmp_file.write(content)
+            tmp_file_path = tmp_file.name
+
+        try:
+            # Convert to markdown
+            markdown_converter = MarkItDown()
+            markdown_content = markdown_converter.convert(tmp_file_path)
+            return markdown_content.text_content
+        except Exception as e:
+            logger.error(f"Unexpected conversion error: {str(e)}")
             return None
-        markdown_text = markdown_content.text_content
-        return markdown_text
+
     except Exception as e:
-        logger.exception(f"An error occurred while loading the file: {e}")
+        logger.exception(f"Unexpected error while processing file: {str(e)}")
+        return None
+    finally:
+        # Clean up temporary file
+        if tmp_file_path and Path(tmp_file_path).exists():
+            try:
+                os.unlink(tmp_file_path)
+            except Exception as e:
+                logger.warning(
+                    f"Failed to remove temporary file {tmp_file_path}: {str(e)}")
+
+
+def load_url(url: str) -> str | None:
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.text
+    except Exception as e:
+        logger.exception(e)
         return None

@@ -163,17 +163,16 @@ In this final step, the generated podcast transcript is brought to life as an au
 
  **1 - Model Loading**
 
-   - The [`model_loader.py`](api.md/#document_to_podcast.inference.model_loaders) module is responsible for loading the `text-to-speech` models using the `outetts` and `parler_tts` libraries.
+   - The [`model_loader.py`](api.md/#document_to_podcast.inference.model_loaders) module is responsible for loading the `text-to-text` and `text-to-speech` models.
 
    - The function `load_outetts_model` takes a model ID in the format `{org}/{repo}/{filename}` and loads the specified model, either on CPU or GPU, based on the `device` parameter. The parameter `language` also enables to swap between the languages the Oute package supports (as of Dec 2024: `en, zh, ja, ko`)
 
-   - The function `load_parler_tts_model_and_tokenizer` takes a model ID in the format `{repo}/{filename}` and loads the specified model and tokenizer, either on CPU or GPU, based on the `device` parameter.
 
 **2 - Text-to-Speech Audio Generation**
 
    - The [`text_to_speech.py`](api.md/#document_to_podcast.inference.text_to_speech) script converts text into audio using a specified TTS model.
 
-   - A **speaker profile** defines the voice characteristics (e.g., tone, speed, clarity) for each speaker. This is specific to each TTS package. Oute models require one of the IDs specified [here](https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers). Parler requires natural language description of the speaker's voice and you have to use a pre-defined name (see [here](https://github.com/huggingface/parler-tts/blob/main/INFERENCE.md#speaker-consistency))
+   - A **speaker profile** defines the voice characteristics (e.g., tone, speed, clarity) for each speaker. This is specific to each TTS package. Oute models require one of the IDs specified [here](https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers).
 
    - The function `text_to_speech` takes the input text (e.g. podcast script) and speaker profile, generating a waveform (audio data in a numpy array) that represents the spoken version of the text.
 
@@ -200,7 +199,7 @@ waveform = text_to_speech(
 sf.write(
     "podcast.wav",
     waveform,
-    samplerate=model.audio_codec.sr
+    samplerate=model.sample_rate
 )
 ```
 
