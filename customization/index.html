@@ -359,9 +359,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#key-parameters-for-customization" class="md-nav__link">
+  <a href="#supported-models" class="md-nav__link">
     <span class="md-ellipsis">
-      🖋️ Key Parameters for Customization
+      🧠 Supported models
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Supported models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text_to_text_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      text_to_text_model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text_to_speech_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      text_to_speech_model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-customizable-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      🖋️ Other Customizable Parameters
     </span>
   </a>
   
@@ -558,9 +591,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#key-parameters-for-customization" class="md-nav__link">
+  <a href="#supported-models" class="md-nav__link">
     <span class="md-ellipsis">
-      🖋️ Key Parameters for Customization
+      🧠 Supported models
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Supported models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text_to_text_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      text_to_text_model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text_to_speech_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      text_to_speech_model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-customizable-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      🖋️ Other Customizable Parameters
     </span>
   </a>
   
@@ -683,19 +749,26 @@
 <h1 id="customization-guide">🎨 <strong>Customization Guide</strong></h1>
 <p>The Document-to-Podcast Blueprint is designed to be flexible and adaptable to your specific needs.
 This guide outlines the key parameters you can customize and explains how to make these changes depending on whether you’re running the application via app.py or the CLI pipeline.</p>
-<h2 id="key-parameters-for-customization">🖋️ <strong>Key Parameters for Customization</strong></h2>
+<h2 id="supported-models">🧠 <strong>Supported models</strong></h2>
+<p>There are 2 different parameters to customize the models being used:</p>
+<h3 id="text_to_text_model"><strong><code>text_to_text_model</code></strong></h3>
+<p>The language model used to generate the podcast script.</p>
+<p>Any model that can be loaded by <a href="https://llama-cpp-python.readthedocs.io/en/latest/#pulling-models-from-hugging-face-hub"><code>LLama.from_pretrained</code></a> can be used here.</p>
+<p>Format is expected to be <code>{org}/{repo}/{filename}</code>.
+For example: <code>Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf</code>.</p>
+<h3 id="text_to_speech_model"><strong><code>text_to_speech_model</code></strong></h3>
+<p>The model used to generate the audio from the podcast script.</p>
+<p>You can use any of the models listed in <a href="../api/#document_to_podcast.inference.model_loaders.TTS_LOADERS"><code>TTS_LOADERS</code></a> out of the box.
+We currently support <a href="https://github.com/edwko/OuteTTS">OuteTTS</a>.</p>
+<p>If you want to use a different model, you can integrate it by implementing the <code>_load</code> and <code>_text_to_speech</code> functions and registering them in <a href="../api/#document_to_podcast.inference.model_loaders.TTS_LOADERS"><code>TTS_LOADERS</code></a> and <a href="../api/#document_to_podcast.inference.model_loaders.TTS_INFERENCE"><code>TTS_INFERENCE</code></a>.
+You can check <a href="https://github.com/Kostis-S-Z/document-to-podcast/">this repo</a> where different text-to-speech models are integrated.</p>
+<h2 id="other-customizable-parameters">🖋️ <strong>Other Customizable Parameters</strong></h2>
 <ul>
 <li>
 <p><strong><code>input_file</code></strong>: The input file specifies the document to be processed. Supports the following formats: <code>pdf</code>, <code>html</code>, <code>txt</code>, <code>docx</code>, <code>md</code>.</p>
 </li>
 <li>
-<p><strong><code>text_to_text_model</code></strong>: The language model used to generate the podcast script. Note: The model parameter must be in GGFUF format, for example: <code>Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gguf</code>.</p>
-</li>
-<li>
 <p><strong><code>text_to_text_prompt</code></strong>: Defines the tone, structure, and instructions for generating the podcast script. This prompt is crucial for tailoring the conversation style to your project.</p>
-</li>
-<li>
-<p><strong><code>text_to_speech_model</code></strong>: Specifies the model used for text-to-speech conversion. You can change this to achieve the desired voice style or improve performance. Check <code>config.py</code> to choose from supported models.</p>
 </li>
 <li>
 <p><strong><code>speakers</code></strong>: Defines the podcast participants, including their names, roles, descriptions, and voice profiles. Customize this to create engaging personas and voices for your podcast.</p>
