@@ -187,7 +187,7 @@ if "clean_text" in st.session_state:
 
     if st.session_state[gen_button]:
         audio_np = stack_audio_segments(
-            st.session_state.audio, speech_model.sample_rate
+            st.session_state.audio, speech_model.sample_rate, silence_pad=0.0
         )
         audio_wav = numpy_to_wav(audio_np, speech_model.sample_rate)
         if st.download_button(

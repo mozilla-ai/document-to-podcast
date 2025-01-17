@@ -22,7 +22,8 @@ def stack_audio_segments(
     rng = np.random.default_rng(42)
     for segment in audio_segments:
         stacked.append(segment)
-        stacked.append(
-            np.zeros(int(rng.uniform(low=0.0, high=silence_pad) * sample_rate))
-        )
+        if silence_pad > 0.0:
+            stacked.append(
+                np.zeros(int(rng.uniform(low=0.0, high=silence_pad) * sample_rate))
+            )
     return np.concatenate(stacked)
