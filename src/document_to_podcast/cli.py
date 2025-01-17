@@ -28,7 +28,7 @@ def document_to_podcast(
     output_folder: str | None = None,
     text_to_text_model: str = "bartowski/Qwen2.5-3B-Instruct-GGUF/Qwen2.5-3B-Instruct-f16.gguf",
     text_to_text_prompt: str = DEFAULT_PROMPT,
-    text_to_speech_model: str = "hexgrad/Kokoro-82M/kokoro-v0_19.pth",
+    text_to_speech_model: str = "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf",
     speakers: list[Speaker] | None = None,
     outetts_language: str = "en",  # Only applicable to OuteTTS models
     from_config: str | None = None,
@@ -64,7 +64,7 @@ def document_to_podcast(
             Defaults to DEFAULT_PROMPT.
 
         text_to_speech_model (str, optional): The text-to-speech model_id.
-            Defaults to `hexgrad/Kokoro-82M/kokoro-v0_19.pth`.
+            Defaults to `OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf`.
 
         speakers (list[Speaker] | None, optional): The speakers for the podcast.
             Defaults to DEFAULT_SPEAKERS.
