@@ -1,8 +1,9 @@
 """Streamlit app for converting documents to podcasts."""
 
+import io
+import os
 import re
 from pathlib import Path
-import io
 
 import numpy as np
 import soundfile as sf
@@ -28,7 +29,10 @@ def load_text_to_text_model():
 
 @st.cache_resource
 def load_text_to_speech_model():
-    return load_tts_model("hexgrad/Kokoro-82M/kokoro-v0_19.pth")
+    if os.environ.get("HF_SPACE") == "TRUE":
+        return load_tts_model("hexgrad/Kokoro-82M/kokoro-v0_19.pth")
+    else:
+        return load_tts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
 
 
 def numpy_to_wav(audio_array: np.ndarray, sample_rate: int) -> io.BytesIO:
@@ -115,10 +119,15 @@ if "clean_text" in st.session_state:
     text_model = load_text_to_text_model()
     speech_model = load_text_to_speech_model()
 
+    if os.environ.get("HF_SPACE") == "TRUE":
+        tts_link = "- [hexgrad/Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M)"
+    else:
+        tts_link = "- [OuteAI/OuteTTS-0.2-500M](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
+
     st.markdown(
         "For this demo, we are using the following models: \n"
         "- [Qwen2.5-3B-Instruct](https://huggingface.co/bartowski/Qwen2.5-3B-Instruct-GGUF)\n"
-        "- [hexgrad/Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M)"
+        f"{tts_link}\n"
     )
     st.markdown(
         "You can check the [Customization Guide](https://mozilla-ai.github.io/document-to-podcast/customization/)"
