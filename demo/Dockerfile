@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   git \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get install espeak-ng -y
+
 RUN useradd -m -u 1000 user
 
 USER user
@@ -18,6 +20,7 @@ ENV HOME=/home/user \
 WORKDIR $HOME/app
 
 RUN pip3 install https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.4-cu122/llama_cpp_python-0.3.4-cp310-cp310-linux_x86_64.whl
+RUN pip3 install phonemizer
 RUN pip3 install document-to-podcast
 
 COPY --chown=user . $HOME/app
