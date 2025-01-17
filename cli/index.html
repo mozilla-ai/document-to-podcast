@@ -652,7 +652,7 @@ Two files will be created:</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The path to the text-to-text model.</p>
+                <p>The text-to-text model_id.</p>
 <p>Need to be formatted as <code>owner/repo/file</code>.</p>
 <p>Need to be a gguf file.</p>
 <p>Defaults to <code>bartowski/Qwen2.5-3B-Instruct-GGUF/Qwen2.5-3B-Instruct-f16.gguf</code>.</p>
@@ -688,8 +688,8 @@ Defaults to DEFAULT_PROMPT.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The path to the text-to-speech model.
-Defaults to <code>OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf</code>.</p>
+                <p>The text-to-speech model_id.
+Defaults to <code>OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf</code>.</p>
               </div>
             </td>
             <td>
@@ -924,7 +924,7 @@ Supported languages in 0.2-500M: en, zh, ja, ko. More info: https://github.com/e
 </span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52"></a><span class="sd">                - {output_folder}/podcast.txt</span>
 </span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53"></a><span class="sd">                - {output_folder}/podcast.wav</span>
 </span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54"></a>
-</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55"></a><span class="sd">        text_to_text_model (str, optional): The path to the text-to-text model.</span>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55"></a><span class="sd">        text_to_text_model (str, optional): The text-to-text model_id.</span>
 </span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56"></a>
 </span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57"></a><span class="sd">            Need to be formatted as `owner/repo/file`.</span>
 </span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58"></a>
@@ -935,8 +935,8 @@ Supported languages in 0.2-500M: en, zh, ja, ko. More info: https://github.com/e
 </span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63"></a><span class="sd">        text_to_text_prompt (str, optional): The prompt for the text-to-text model.</span>
 </span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="sd">            Defaults to DEFAULT_PROMPT.</span>
 </span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65"></a>
-</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66"></a><span class="sd">        text_to_speech_model (str, optional): The path to the text-to-speech model.</span>
-</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67"></a><span class="sd">            Defaults to `OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf`.</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66"></a><span class="sd">        text_to_speech_model (str, optional): The text-to-speech model_id.</span>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67"></a><span class="sd">            Defaults to `OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf`.</span>
 </span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68"></a>
 </span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69"></a><span class="sd">        speakers (list[Speaker] | None, optional): The speakers for the podcast.</span>
 </span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70"></a><span class="sd">            Defaults to DEFAULT_SPEAKERS.</span>
