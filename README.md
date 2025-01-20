@@ -17,10 +17,7 @@ This makes it more accessible and privacy-friendly by keeping everything local.
 
 - [Introducing Blueprints](https://blog.mozilla.ai/introducing-blueprints-customizable-ai-workflows-for-developers/)
 
-<audio controls>
-  <source src="https://github.com/user-attachments/assets/0487640b-a800-4c60-96ae-f1b93632a87b" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
+https://github.com/user-attachments/assets/0487640b-a800-4c60-96ae-f1b93632a87b
 
 - [Attention is All You Need](https://arxiv.org/pdf/1706.03762)
 
