@@ -1,11 +1,9 @@
 """Streamlit app for converting documents to podcasts."""
 
-import re
-from pathlib import Path
 import io
 import os
-
-from tempfile import NamedTemporaryFile
+import re
+from pathlib import Path
 
 import numpy as np
 import soundfile as sf
@@ -31,7 +29,10 @@ def load_text_to_text_model():
 
 @st.cache_resource
 def load_text_to_speech_model():
-    return load_tts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
+    if os.environ.get("HF_SPACE") == "TRUE":
+        return load_tts_model("hexgrad/Kokoro-82M/kokoro-v0_19.pth")
+    else:
+        return load_tts_model("OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf")
 
 
 def numpy_to_wav(audio_array: np.ndarray, sample_rate: int) -> io.BytesIO:
@@ -118,10 +119,30 @@ if "clean_text" in st.session_state:
     text_model = load_text_to_text_model()
     speech_model = load_text_to_speech_model()
 
+    if os.environ.get("HF_SPACE") == "TRUE":
+        tts_link = "- [hexgrad/Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M)"
+        SPEAKERS = [
+            {
+                "id": 1,
+                "name": "Sarah",
+                "description": "The main host. She explains topics clearly using anecdotes and analogies, teaching in an engaging and captivating way.",
+                "voice_profile": "af_sarah",
+            },
+            {
+                "id": 2,
+                "name": "Michael",
+                "description": "The co-host. He keeps the conversation on track, asks curious follow-up questions, and reacts with excitement or confusion, often using interjections like hmm or umm.",
+                "voice_profile": "am_michael",
+            },
+        ]
+    else:
+        tts_link = "- [OuteAI/OuteTTS-0.2-500M](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
+        SPEARES = DEFAULT_SPEAKERS
+
     st.markdown(
         "For this demo, we are using the following models: \n"
         "- [Qwen2.5-3B-Instruct](https://huggingface.co/bartowski/Qwen2.5-3B-Instruct-GGUF)\n"
-        "- [OuteAI/OuteTTS-0.2-500M](https://huggingface.co/OuteAI/OuteTTS-0.2-500M-GGUF)"
+        f"{tts_link}\n"
     )
     st.markdown(
         "You can check the [Customization Guide](https://mozilla-ai.github.io/document-to-podcast/customization/)"
@@ -145,9 +166,9 @@ if "clean_text" in st.session_state:
     st.divider()
 
     st.subheader("Speaker configuration")
-    for s in DEFAULT_SPEAKERS:
+    for s in SPEAKERS:
         s.pop("id", None)
-    speakers = st.data_editor(DEFAULT_SPEAKERS, num_rows="dynamic")
+    speakers = st.data_editor(SPEAKERS, num_rows="dynamic")
 
     if st.button("Generate Podcast", on_click=gen_button_clicked):
         for n, speaker in enumerate(speakers):
@@ -190,7 +211,7 @@ if "clean_text" in st.session_state:
 
     if st.session_state[gen_button]:
         audio_np = stack_audio_segments(
-            st.session_state.audio, speech_model.sample_rate
+            st.session_state.audio, speech_model.sample_rate, silence_pad=0.0
         )
         audio_wav = numpy_to_wav(audio_np, speech_model.sample_rate)
         if st.download_button(

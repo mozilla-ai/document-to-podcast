@@ -81,10 +81,28 @@ def _load_oute_tts(model_id: str, **kwargs) -> TTSModel:
     )
 
 
+def _load_kokoro_tts(model_id: str, **kwargs) -> TTSModel:
+    from document_to_podcast.inference.kokoro.models import build_model
+
+    org, repo, filename = model_id.split("/")
+    downloaded_model = hf_hub_download(f"{org}/{repo}", filename)
+    model = build_model(downloaded_model)
+    return TTSModel(
+        model=model,
+        model_id=model_id,
+        sample_rate=24000,
+        custom_args={
+            "org": org,
+            "repo": repo,
+        },
+    )
+
+
 TTS_LOADERS = {
     # To add support for your model, add it here in the format {model_id} : _load_function
     "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf": _load_oute_tts,
     "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf": _load_oute_tts,
+    "hexgrad/Kokoro-82M/kokoro-v0_19.pth": _load_kokoro_tts,
 }
 
 

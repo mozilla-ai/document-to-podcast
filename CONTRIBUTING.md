@@ -23,6 +23,7 @@ We welcome all kinds of contributions, from improving customization, to extendin
 
 ### **Submit Pull Requests** 💻
 - Fork the repository and create a new branch for your changes.
+- Install [pre-commit](https://pre-commit.com/) to ensure the code is formatted and standardized correctly, by running `pip install pre-commit` and then `pre-commit install`.
 - Ensure your branch is up-to-date with the main branch before submitting the PR
 - Please follow the PR template, adding as much detail as possible, including how to test the changes
 

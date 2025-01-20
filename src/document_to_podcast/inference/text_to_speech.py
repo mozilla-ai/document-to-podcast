@@ -40,10 +40,25 @@ def _text_to_speech_oute(
     return output_as_np
 
 
+def _text_to_speech_kokoro(input_text, model, voice_profile, org, repo):
+    import torch
+    from huggingface_hub import hf_hub_download
+    from document_to_podcast.inference.kokoro.infer import generate
+
+    downloaded_voice = hf_hub_download(f"{org}/{repo}", f"voices/{voice_profile}.pt")
+    voicepack = torch.load(downloaded_voice).to(
+        torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    )
+
+    output_audio = generate(model, input_text, voicepack)
+    return output_audio
+
+
 TTS_INFERENCE = {
     # To add support for your model, add it here in the format {model_id} : _inference_function
     "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf": _text_to_speech_oute,
     "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf": _text_to_speech_oute,
+    "hexgrad/Kokoro-82M/kokoro-v0_19.pth": _text_to_speech_kokoro,
 }
 
 

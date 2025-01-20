@@ -52,7 +52,7 @@ def document_to_podcast(
                 - {output_folder}/podcast.txt
                 - {output_folder}/podcast.wav
 
-        text_to_text_model (str, optional): The path to the text-to-text model.
+        text_to_text_model (str, optional): The text-to-text model_id.
 
             Need to be formatted as `owner/repo/file`.
 
@@ -63,8 +63,8 @@ def document_to_podcast(
         text_to_text_prompt (str, optional): The prompt for the text-to-text model.
             Defaults to DEFAULT_PROMPT.
 
-        text_to_speech_model (str, optional): The path to the text-to-speech model.
-            Defaults to `OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf`.
+        text_to_speech_model (str, optional): The text-to-speech model_id.
+            Defaults to `OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf`.
 
         speakers (list[Speaker] | None, optional): The speakers for the podcast.
             Defaults to DEFAULT_SPEAKERS.
