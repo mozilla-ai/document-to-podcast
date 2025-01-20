@@ -1,5 +1,6 @@
+from unittest.mock import Mock
+
 from document_to_podcast.preprocessing.data_loaders import (
-    load_pdf,
     load_txt,
     load_file,
     load_url,
@@ -7,15 +8,29 @@ from document_to_podcast.preprocessing.data_loaders import (
 
 
 def test_load_pdf(example_data):
-    result = load_file(str(example_data / "Mozilla-Trustworthy_AI.pdf"))
+    file_path = example_data / "Mozilla-Trustworthy_AI.pdf"
+
+    # Create mock file using Mock
+    mock_file = Mock()
+    mock_file.name = file_path.name
+    mock_file.getvalue.return_value = open(file_path, 'rb').read()
+
+    result = load_file(mock_file)
+
     assert (
         "a Mozilla white paper on challenges and opportunities in the AI era" in result
     )
 
 
 def test_load_invalid_pdf():
-    result = load_pdf(str("invalid.pdf"))
+    # Create mock file using Mock
+    mock_file = Mock()
+    mock_file.name = "invalid.pdf"
+    mock_file.getvalue.return_value = b""
+    result = load_file(mock_file)
+
     assert result is None
+
 
 
 def test_load_html(example_data):
@@ -34,14 +49,26 @@ def test_load_invalid_html():
 
 
 def test_load_docx(example_data):
-    result = load_file(str(example_data / "Mozilla-Trustworthy_AI.docx"))
+    file_path = example_data / "Mozilla-Trustworthy_AI.docx"
+
+    # Create mock file using Mock
+    mock_file = Mock()
+    mock_file.name = file_path.name
+    mock_file.getvalue.return_value = open(file_path, 'rb').read()
+    result = load_file(mock_file)
+
     assert (
         "a Mozilla white paper on challenges and opportunities in the AI era" in result
     )
 
 
 def test_load_invalid_docx():
-    result = load_file(str("invalid.docx"))
+    # Create mock file using Mock
+    mock_file = Mock()
+    mock_file.name = "invalid.docx"
+    mock_file.getvalue.return_value = b""
+    result = load_file(mock_file)
+
     assert result is None
 
 

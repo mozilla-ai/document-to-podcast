@@ -3,6 +3,7 @@ from document_to_podcast.preprocessing.data_cleaners import (
     markdown_to_text
 )
 from document_to_podcast.preprocessing.data_loaders import load_txt, load_file
+from unittest.mock import Mock
 
 
 def test_load_and_clean_pdf(example_data):
