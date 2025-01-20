@@ -13,6 +13,18 @@ This makes it more accessible and privacy-friendly by keeping everything local.
 
 <img src="./images/document-to-podcast-diagram.png" width="1200" alt="document-to-podcast Diagram" />
 
+## Example Results
+
+- [Introducing Blueprints](https://blog.mozilla.ai/introducing-blueprints-customizable-ai-workflows-for-developers/)
+
+https://github.com/user-attachments/assets/0487640b-a800-4c60-96ae-f1b93632a87b 
+
+- [Attention is All You Need](https://arxiv.org/pdf/1706.03762)
+
+https://github.com/user-attachments/assets/0d5364e7-a57b-4976-8cb6-4ebf1cbbd37c
+
+---
+
 ### 👉 📖 For more detailed guidance on using this project, please visit our [Docs](https://mozilla-ai.github.io/document-to-podcast/).
 ### 👉 🔨 Built with
 - Python 3.10+ (use Python 3.12 for Apple M1/2/3 chips)
