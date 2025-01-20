@@ -14,7 +14,7 @@ dependencies = [
   "huggingface-hub",
   "llama-cpp-python",
   "loguru",
-  "outetts<0.3",
+  "outetts<0.4",
   "pydantic",
   "PyPDF2[crypto]",
   "python-docx",
