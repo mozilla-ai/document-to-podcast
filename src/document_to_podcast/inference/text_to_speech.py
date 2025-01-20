@@ -48,6 +48,21 @@ TTS_INFERENCE = {
 
 
 def text_to_speech(input_text: str, model: TTSModel, voice_profile: str) -> np.ndarray:
+    """
+    Generate speech from text using a TTS model.
+
+    Args:
+        input_text (str): The text to convert to speech.
+        model (TTSModel): The TTS model to use.
+        voice_profile (str): The voice profile to use for the speech.
+            The format depends on the TTSModel used.
+
+            For OuteTTS (the default), it should be a pre-defined ID like `female_1`.
+            You can find all the IDs [at this link](https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers)
+
+    Returns:
+        np.ndarray: The waveform of the speech as a 2D numpy array
+    """
     return TTS_INFERENCE[model.model_id](
         input_text, model.model, voice_profile, **model.custom_args
     )

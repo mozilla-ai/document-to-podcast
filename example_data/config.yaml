@@ -1,6 +1,6 @@
 input_file: "example_data/introducing-mozilla-ai-investing-in-trustworthy-ai.html"
 output_folder: "example_data/"
-text_to_text_model: "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf"
+text_to_text_model: "bartowski/Qwen2.5-3B-Instruct-GGUF/Qwen2.5-3B-Instruct-f16.gguf"
 text_to_speech_model: "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf"
 text_to_text_prompt: |
   You are a podcast scriptwriter generating engaging and natural-sounding conversations in JSON format. 

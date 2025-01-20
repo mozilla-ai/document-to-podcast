@@ -48,9 +48,9 @@ Cleaner input data ensures that the model works with reliable and consistent inf
      - `.zip`, `.7z`, `.rar`, `.tar`, and `.gz`
 
    - Utilizes [MarkitDown](https://github.com/microsoft/markitdown) to extract text from `.pdf` and `html`.
-      
-   - Extracts readable text from uploaded files using specialized loaders. 
-   
+
+   - Extracts readable text from uploaded files using specialized loaders.
+
 
  **2 - Text Cleaning**
 
@@ -118,7 +118,7 @@ from document_to_podcast.inference.text_to_text import text_to_text, text_to_tex
 
 # Load the model
 model = load_llama_cpp_model(
-    "allenai/OLMoE-1B-7B-0924-Instruct-GGUF/olmoe-1b-7b-0924-instruct-q8_0.gguf"
+    "bartowski/Qwen2.5-3B-Instruct-GGUF/Qwen2.5-3B-Instruct-f16.gguf"
 )
 
 # Define your input and system prompt

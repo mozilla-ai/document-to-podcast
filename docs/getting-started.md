@@ -23,7 +23,7 @@ Get started with Document-to-Podcast using one of the options below:
       python -m streamlit run demo/app.py
       ```
 
-=== "💻 pip Installation"
+=== "💻 Local Installation"
 
       You can install the project from Pypi:
 
@@ -33,7 +33,9 @@ Get started with Document-to-Podcast using one of the options below:
 
       Check the [Command Line Interface](./cli.md) guide.
 
-=== "💻 Editable Installation"
+      ---
+
+      Alternatively, you can clone and install it in editable mode:
 
       1. **Clone the Repository**
 

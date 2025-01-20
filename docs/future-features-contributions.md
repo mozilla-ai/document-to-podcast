@@ -22,7 +22,7 @@ This Blueprint is designed to be a foundation you can build upon. By extending i
 We’d love to see how you can enhance this Blueprint! If you create improvements or extend its capabilities, consider contributing them back to the project so others in the community can benefit from your work. Check out our [Contributions Guide](https://github.com/mozilla-ai/document-to-podcast/blob/main/CONTRIBUTING.md) to get started!
 
 ### 💡 **Share Your Ideas**
-Got an idea for how this Blueprint could be improved? You can share your suggestions through [GitHub Discussions](https://github.com/mozilla-ai/document-to-podcast/discussions).
+Got an idea for how this Blueprint could be improved? You can share your suggestions through [GitHub Issues](https://github.com/mozilla-ai/document-to-podcast/issues/new?template=feature_request.yaml).
 
 ### 🌍 **Build New Blueprints**
 This project is part of a larger initiative to create a collection of reusable starter code solutions that use open-source AI tools. If you’re inspired to create your own Blueprint, you can use the [Blueprint-template](https://github.com/new?template_name=Blueprint-template&template_owner=mozilla-ai) to get started.

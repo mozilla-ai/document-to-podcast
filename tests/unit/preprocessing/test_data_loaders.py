@@ -32,7 +32,6 @@ def test_load_invalid_pdf():
     assert result is None
 
 
-
 def test_load_html(example_data):
     result = load_txt(
         example_data / "introducing-mozilla-ai-investing-in-trustworthy-ai.html"

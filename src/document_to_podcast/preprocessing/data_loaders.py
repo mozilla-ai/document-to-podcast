@@ -87,7 +87,6 @@ def load_file(file: str | UploadedFile) -> str | None:
                 logger.warning(
                     f"Failed to remove temporary file {tmp_file_path}: {str(e)}")
 
-
 def load_url(url: str) -> str | None:
     try:
         response = requests.get(url)
