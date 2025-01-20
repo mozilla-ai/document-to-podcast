@@ -48,6 +48,11 @@ def load_file(file: str | UploadedFile) -> str | None:
     Returns:
         str | None: The Markdown text content, or None if an error occurs.
     """
+    if not hasattr(file, "name"):
+        logger.error("Invalid file object: missing 'name' attribute")
+        return None
+
+    tmp_file_path = None
     try:
         markdown_converter = MarkItDown()
         if isinstance(file, str):  # for URL and filepath
@@ -63,7 +68,17 @@ def load_file(file: str | UploadedFile) -> str | None:
         markdown_text = markdown_content.text_content
         return markdown_text
     except Exception as e:
-        logger.exception(f"An error occurred while loading the file: {e}")
+        logger.exception(f"Unexpected error while processing file: {str(e)}")
+        return None
+    finally:
+        # Clean up temporary file
+        if tmp_file_path and Path(tmp_file_path).exists():
+            try:
+                os.unlink(tmp_file_path)
+            except Exception as e:
+                logger.warning(
+                    f"Failed to remove temporary file {tmp_file_path}: {str(e)}"
+                )
 
 
 def load_url(url: str) -> str | None:

@@ -14,7 +14,7 @@ def test_load_pdf(example_data):
     # Create mock file using Mock
     mock_file = Mock()
     mock_file.name = file_path.name
-    mock_file.getvalue.return_value = open(file_path, 'rb').read()
+    mock_file.getvalue.return_value = open(file_path, "rb").read()
 
     result = load_file(mock_file)
 
@@ -55,7 +55,7 @@ def test_load_docx(example_data):
     # Create mock file using Mock
     mock_file = Mock()
     mock_file.name = file_path.name
-    mock_file.getvalue.return_value = open(file_path, 'rb').read()
+    mock_file.getvalue.return_value = open(file_path, "rb").read()
     result = load_file(mock_file)
 
     assert (
