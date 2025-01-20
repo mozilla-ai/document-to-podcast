@@ -36,7 +36,16 @@ Cleaner input data ensures that the model works with reliable and consistent inf
 
    - Uses functions defined in [`data_loaders.py`](api.md/#document_to_podcast.preprocessing.data_loaders)
 
-   - Supports `.html`, `.pdf`, `.txt`, and `.docx` formats.
+   - Supports following formats:
+     - `.pdf`
+     - `.html`, `.htm`
+     - `.pptx`, `.ppt`
+     - `.jpg`, `.jpeg`, and `.png`
+     - `.txt`, `.csv`, `.xml`, and `.json`
+     - `.mp3`,`.wav`, `.m4a`, and `.aac`
+     - `.xls`, and `.xlsx`,
+     - `.docx`, and `.doc`
+     - `.zip`, `.7z`, `.rar`, `.tar`, and `.gz`
 
    - Utilizes [MarkitDown](https://github.com/microsoft/markitdown) to extract text from `.pdf` and `html`.
       
