@@ -1,4 +1,6 @@
 import os
+from pathlib import Path
+
 import PyPDF2
 import requests
 
