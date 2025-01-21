@@ -4,7 +4,6 @@ import io
 import os
 import re
 from pathlib import Path
-import os
 from tempfile import NamedTemporaryFile
 
 import numpy as np
