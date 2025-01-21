@@ -50,7 +50,7 @@ def load_file(file: str | UploadedFile) -> str | None:
     Returns:
         The markdown text content if successful, None otherwise
     """
-    if not hasattr(file, 'name'):
+    if not hasattr(file, "name"):
         logger.error("Invalid file object: missing 'name' attribute")
         return None
 
@@ -85,7 +85,9 @@ def load_file(file: str | UploadedFile) -> str | None:
                 os.unlink(tmp_file_path)
             except Exception as e:
                 logger.warning(
-                    f"Failed to remove temporary file {tmp_file_path}: {str(e)}")
+                    f"Failed to remove temporary file {tmp_file_path}: {str(e)}"
+                )
+
 
 def load_url(url: str) -> str | None:
     try:
