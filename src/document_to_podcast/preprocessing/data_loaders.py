@@ -1,6 +1,6 @@
 import os
-import PyPDF2
 from pathlib import Path
+import PyPDF2
 import requests
 from tempfile import NamedTemporaryFile
 
