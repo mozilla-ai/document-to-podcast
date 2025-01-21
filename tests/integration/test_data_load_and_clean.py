@@ -7,18 +7,30 @@ from unittest.mock import Mock
 
 
 def test_load_and_clean_pdf(example_data):
-    text = markdown_to_text(load_file(str(example_data / "Mozilla-Trustworthy_AI.pdf")))
+    file_path = example_data / "Mozilla-Trustworthy_AI.pdf"
+
+    # Create mock file using Mock
+    mock_file = Mock()
+    mock_file.name = file_path.name
+    mock_file.getvalue.return_value = open(file_path, 'rb').read()
+
+    result = load_file(mock_file)
+
+    text = markdown_to_text(result)
     assert text[:50] == "Creating Trustworthy AI a Mozilla white paper on c"
 
 
 def test_load_and_clean_html(example_data):
-    text = markdown_to_text(
-        load_file(
-            str(
-                example_data / "introducing-mozilla-ai-investing-in-trustworthy-ai.html"
-            )
-        )
-    )
+    file_path = example_data / "introducing-mozilla-ai-investing-in-trustworthy-ai.html"
+
+    # Create mock file using Mock
+    mock_file = Mock()
+    mock_file.name = file_path.name
+    mock_file.getvalue.return_value = open(file_path, 'rb').read()
+
+    result = load_file(mock_file)
+
+    text = markdown_to_text(result)
     assert text[:50] == "Skip to content Mozilla Internet Culture Deep Dive"
 
 
