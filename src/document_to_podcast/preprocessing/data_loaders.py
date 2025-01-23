@@ -40,12 +40,12 @@ def load_docx(docx_file: str | UploadedFile) -> str | None:
         return None
 
 
-def load_file(file: str | UploadedFile) -> str | None:
+def load_file(file) -> str | None:
     """
     Loads the content of a file and converts it to markdown.
 
     Args:
-        file: Either a file path string or a Streamlit UploadedFile object
+        file: A Streamlit UploadedFile object.
 
     Returns:
         The markdown text content if successful, None otherwise
