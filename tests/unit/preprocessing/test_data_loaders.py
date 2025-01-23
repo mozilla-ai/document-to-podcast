@@ -1,4 +1,4 @@
-from unittest.mock import Mock
+from pytest_mock import MockerFixture
 
 from document_to_podcast.preprocessing.data_loaders import (
     load_txt,
@@ -7,11 +7,11 @@ from document_to_podcast.preprocessing.data_loaders import (
 )
 
 
-def test_load_pdf(example_data):
+def test_load_pdf(example_data, mocker: MockerFixture):
     file_path = example_data / "Mozilla-Trustworthy_AI.pdf"
 
     # Create mock file using Mock
-    mock_file = Mock()
+    mock_file = mocker.Mock()
     mock_file.name = file_path.name
     mock_file.getvalue.return_value = open(file_path, "rb").read()
 
@@ -22,9 +22,9 @@ def test_load_pdf(example_data):
     )
 
 
-def test_load_invalid_pdf():
+def test_load_invalid_pdf(mocker: MockerFixture):
     # Create mock file using Mock
-    mock_file = Mock()
+    mock_file = mocker.Mock()
     mock_file.name = "invalid.pdf"
     mock_file.getvalue.return_value = b""
     result = load_file(mock_file)
@@ -47,11 +47,11 @@ def test_load_invalid_html():
     assert result is None
 
 
-def test_load_docx(example_data):
+def test_load_docx(example_data, mocker: MockerFixture):
     file_path = example_data / "Mozilla-Trustworthy_AI.docx"
 
     # Create mock file using Mock
-    mock_file = Mock()
+    mock_file = mocker.Mock()
     mock_file.name = file_path.name
     mock_file.getvalue.return_value = open(file_path, "rb").read()
     result = load_file(mock_file)
@@ -61,9 +61,9 @@ def test_load_docx(example_data):
     )
 
 
-def test_load_invalid_docx():
+def test_load_invalid_docx(mocker: MockerFixture):
     # Create mock file using Mock
-    mock_file = Mock()
+    mock_file = mocker.Mock()
     mock_file.name = "invalid.docx"
     mock_file.getvalue.return_value = b""
     result = load_file(mock_file)

@@ -3,14 +3,14 @@ from document_to_podcast.preprocessing.data_cleaners import (
     markdown_to_text,
 )
 from document_to_podcast.preprocessing.data_loaders import load_txt, load_file
-from unittest.mock import Mock
+from pytest_mock import MockerFixture
 
 
-def test_load_and_clean_pdf(example_data):
+def test_load_and_clean_pdf(example_data, mocker: MockerFixture):
     file_path = example_data / "Mozilla-Trustworthy_AI.pdf"
 
     # Create mock file using Mock
-    mock_file = Mock()
+    mock_file = mocker.Mock()
     mock_file.name = file_path.name
     mock_file.getvalue.return_value = open(file_path, "rb").read()
 
@@ -20,11 +20,11 @@ def test_load_and_clean_pdf(example_data):
     assert text[:50] == "Creating Trustworthy AI a Mozilla white paper on c"
 
 
-def test_load_and_clean_html(example_data):
+def test_load_and_clean_html(example_data, mocker: MockerFixture):
     file_path = example_data / "introducing-mozilla-ai-investing-in-trustworthy-ai.html"
 
     # Create mock file using Mock
-    mock_file = Mock()
+    mock_file = mocker.Mock()
     mock_file.name = file_path.name
     mock_file.getvalue.return_value = open(file_path, "rb").read()
 
