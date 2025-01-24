@@ -13,7 +13,7 @@ This makes it more accessible and privacy-friendly by keeping everything local.
 
 <img src="./images/document-to-podcast-diagram.png" width="1200" alt="document-to-podcast Diagram" />
 
-📘 To explore this project further and discover other Blueprints, visit the [**Blueprints Hub**](https://developer-hub.mozilla.ai/).
+📘 To explore this project further and discover other Blueprints, visit the [**Blueprints Hub**](https://developer-hub.mozilla.ai/blueprints/create-your-own-tailored-podcast-using-your-documents).
 
 ## Example Results
 
