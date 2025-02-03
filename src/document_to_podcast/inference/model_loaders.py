@@ -81,17 +81,32 @@ def _load_oute_tts(model_id: str, **kwargs) -> TTSModel:
     )
 
 
-def _load_kokoro_legacy_tts(model_id: str, **kwargs) -> TTSModel:
-    from document_to_podcast.inference.kokoro.models import build_model
+def _load_kokoro_tts(model_id: str, **kwargs) -> TTSModel:
+    """
+    # 🇪🇸 'e' => Spanish es
+    # 🇫🇷 'f' => French fr-fr
+    # 🇮🇳 'h' => Hindi hi
+    # 🇮🇹 'i' => Italian it
+    # 🇧🇷 'p' => Brazilian Portuguese pt-br
+    # 🇺🇸 'a' => American English, 🇬🇧 'b' => British English
+    # 🇯🇵 'j' => Japanese: pip install misaki[ja]
+    # 🇨🇳 'z' => Mandarin Chinese: pip install misaki[zh]
 
-    org, repo, kokoro_version, filename = model_id.split("/")
-    downloaded_model = hf_hub_download(f"{org}/{repo}", f"{kokoro_version}/{filename}")
-    model = build_model(downloaded_model)
+    Args:
+        model_id:
+        **kwargs:
+
+    Returns:
+
+    """
+    from kokoro import KPipeline
+
+    pipeline = KPipeline(lang_code=kwargs.pop("lang_code", "a"))
     return TTSModel(
-        model=model,
+        model=pipeline,
         model_id=model_id,
         sample_rate=24000,
-        custom_args={"org": org, "repo": repo, "kokoro_version": kokoro_version},
+        custom_args={"speed": kwargs.pop("speed", 1)},
     )
 
 
@@ -99,7 +114,7 @@ TTS_LOADERS = {
     # To add support for your model, add it here in the format {model_id} : _load_function
     "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf": _load_oute_tts,
     "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf": _load_oute_tts,
-    "hexgrad/kLegacy/v0.19/kokoro-v0_19.pth": _load_kokoro_legacy_tts,
+    "hexgrad/Kokoro-82M": _load_kokoro_tts,
 }
 
 
