@@ -1,58 +1,32 @@
 import numpy as np
-from outetts.version.v1.interface import InterfaceGGUF
+from kokoro import KPipeline
 
 from document_to_podcast.inference.model_loaders import TTSModel
 
 
-def _text_to_speech_oute(
-    input_text: str,
-    model: InterfaceGGUF,
-    voice_profile: str,
-    **kwargs,
+def _text_to_speech_kokoro(
+    input_text: str, model: KPipeline, voice_profile: str
 ) -> np.ndarray:
     """
-    TTS generation function for the Oute TTS model family.
+    TTS generation function for the Kokoro model
     Args:
         input_text (str): The text to convert to speech.
-        model: A model from the Oute TTS family.
-        voice_profile: a pre-defined ID for the Oute models (e.g. "female_1")
-            more info here https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers
-        temperature (float, default = 0.3): Controls the randomness of predictions by scaling the logits.
-            Lower values make the output more focused and deterministic, higher values produce more diverse results.
-        repetition_penalty (float, default = 1.1): Applies a penalty to tokens that have already been generated,
-            reducing the likelihood of repetition and enhancing text variety.
-        max_length (int, default = 4096): Defines the maximum number of tokens for the generated text sequence.
+        model (KPipeline): The kokoro pipeline as defined in https://github.com/hexgrad/kokoro
+        voice_profile (str) : a pre-defined ID for the Kokoro models (e.g. "af_bella")
+            more info here https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md
 
     Returns:
         numpy array: The waveform of the speech as a 2D numpy array
     """
-    speaker = model.load_default_speaker(name=voice_profile)
+    generator = model(input_text, voice=voice_profile)
 
-    output = model.generate(
-        text=input_text,
-        temperature=kwargs.pop("temperature", 0.3),
-        repetition_penalty=kwargs.pop("repetition_penalty", 1.1),
-        max_length=kwargs.pop("max_length", 4096),
-        speaker=speaker,
-    )
+    _, _, audio = next(generator)  # returns graphemes/text, phonemes, audio
 
-    output_as_np = output.audio.cpu().detach().numpy().squeeze()
-    return output_as_np
-
-
-def _text_to_speech_kokoro(input_text, model, voice_profile, speed=1):
-    generator = model(
-        input_text, voice=voice_profile, speed=speed, split_pattern=r"\n+"
-    )
-    _, _, _, audio = next(generator)  # returns index, graphemes/text, phonemes, audio
-
-    return audio
+    return np.array(audio)
 
 
 TTS_INFERENCE = {
     # To add support for your model, add it here in the format {model_id} : _inference_function
-    "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf": _text_to_speech_oute,
-    "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf": _text_to_speech_oute,
     "hexgrad/Kokoro-82M": _text_to_speech_kokoro,
 }
 
@@ -64,12 +38,7 @@ def text_to_speech(input_text: str, model: TTSModel, voice_profile: str) -> np.n
     Args:
         input_text (str): The text to convert to speech.
         model (TTSModel): The TTS model to use.
-        voice_profile (str): The voice profile to use for the speech.
-            The format depends on the TTSModel used.
-
-            For OuteTTS (the default), it should be a pre-defined ID like `female_1`.
-            You can find all the IDs [at this link](https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers)
-
+        voice_profile (str): The voice profile to use for the speech. The format depends on the TTSModel used.
     Returns:
         np.ndarray: The waveform of the speech as a 2D numpy array
     """
