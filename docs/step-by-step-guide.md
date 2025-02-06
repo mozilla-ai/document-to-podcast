@@ -162,14 +162,12 @@ In this final step, the generated podcast transcript is brought to life as an au
 
    - The [`model_loader.py`](api.md/#document_to_podcast.inference.model_loaders) module is responsible for loading the `text-to-text` and `text-to-speech` models.
 
-   - The function `load_outetts_model` takes a model ID in the format `{org}/{repo}/{filename}` and loads the specified model, either on CPU or GPU, based on the `device` parameter. The parameter `language` also enables to swap between the languages the Oute package supports (as of Dec 2024: `en, zh, ja, ko`)
-
 
 **2 - Text-to-Speech Audio Generation**
 
    - The [`text_to_speech.py`](api.md/#document_to_podcast.inference.text_to_speech) script converts text into audio using a specified TTS model.
 
-   - A **speaker profile** defines the voice characteristics (e.g., tone, speed, clarity) for each speaker. This is specific to each TTS package. Oute models require one of the IDs specified [here](https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers).
+   - A **voice profile** defines the voice characteristics (e.g., tone, speed, clarity) for each speaker. This is specific to each TTS package. Kokoro models require one of the IDs specified [here](https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md).
 
    - The function `text_to_speech` takes the input text (e.g. podcast script) and speaker profile, generating a waveform (audio data in a numpy array) that represents the spoken version of the text.
 
@@ -177,19 +175,17 @@ In this final step, the generated podcast transcript is brought to life as an au
 
 ```py
 import soundfile as sf
-from document_to_podcast.inference.model_loaders import load_outetts_model
+from document_to_podcast.inference.model_loaders import load_tts_model
 from document_to_podcast.inference.text_to_speech import text_to_speech
 
 # Load the TTS model
-model = load_outetts_model(
-    "OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf"
-)
+model = load_tts_model("hexgrad/Kokoro-82M", **{"lang_code": 'a'})
 
 # Generate the waveform
 waveform = text_to_speech(
     input_text="Welcome to our amazing podcast",
     model=model,
-    voice_profile="male_1"
+    voice_profile="af_sarah"
 )
 
 # Save the audio file
@@ -227,7 +223,7 @@ This demo uses [Streamlit](https://streamlit.io/), an open-source Python framewo
 
 - The script uses `load_llama_cpp_model` from `model_loader.py` to load the LLM for generating the podcast script.
 
-- Similarly, `load_outetts_model` is used to prepare the TTS model and tokenizer for audio generation.
+- Similarly, `load_tts_model` is used to prepare the TTS model and tokenizer for audio generation.
 
 - These models are cached using `@st.cache_resource` to ensure fast and efficient reuse during app interactions.
 
