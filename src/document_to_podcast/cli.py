@@ -104,14 +104,14 @@ def document_to_podcast(
 
     logger.info(f"Loading {config.text_to_speech_model}")
 
-    if config.speakers[0]["voice_profile"][0] != config.speakers[1]["voice_profile"][0]:
+    if config.speakers[0].voice_profile[0] != config.speakers[1].voice_profile[0]:
         raise ValueError(
             "Both Kokoro speakers need to have the same language code. "
             "More info here https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md"
         )
     speech_model = load_tts_model(
         model_id=config.text_to_speech_model,
-        **{"lang_code": config.speakers[0]["voice_profile"][0]},
+        **{"lang_code": config.speakers[0].voice_profile[0]},
     )
 
     # ~4 characters per token is considered a reasonable default.
