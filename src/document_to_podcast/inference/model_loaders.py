@@ -57,7 +57,7 @@ def _load_kokoro_tts(model_id: str, **kwargs) -> TTSModel:
 
     Args:
         model_id (str): Identifier for a specific model. Kokoro currently only supports one model.
-        lang_code (str): In order to initialize model, we need to set the language used for generation. For example:
+        kwargs (str): Needs to include 'lang_code' necessary to set the language used for generation. For example:
             🇪🇸 'e' => Spanish es
             🇫🇷 'f' => French fr-fr
             🇮🇳 'h' => Hindi hi
