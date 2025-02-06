@@ -17,15 +17,17 @@ theme:
   name: material
   palette:
     - scheme: default
-      primary: "#005F6F"
+      primary: black
       toggle:
         icon: material/lightbulb
         name: Switch to dark mode
     - scheme: slate
-      primary: "#005F6F"
+      primary: grey
       toggle:
         icon: material/lightbulb-outline
         name: Switch to light mode
+  logo: images/Blueprint-logo-white.png
+  favicon: images/Blueprint-logo-black-flavicon.png
   extra_css:
     - assets/custom.css
   features:
