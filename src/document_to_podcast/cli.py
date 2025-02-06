@@ -28,9 +28,8 @@ def document_to_podcast(
     output_folder: str | None = None,
     text_to_text_model: str = "bartowski/Qwen2.5-3B-Instruct-GGUF/Qwen2.5-3B-Instruct-f16.gguf",
     text_to_text_prompt: str = DEFAULT_PROMPT,
-    text_to_speech_model: str = "OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf",
+    text_to_speech_model: str = "hexgrad/Kokoro-82M",
     speakers: list[Speaker] | None = None,
-    outetts_language: str = "en",  # Only applicable to OuteTTS models
     from_config: str | None = None,
 ):
     """
@@ -64,13 +63,10 @@ def document_to_podcast(
             Defaults to DEFAULT_PROMPT.
 
         text_to_speech_model (str, optional): The text-to-speech model_id.
-            Defaults to `OuteAI/OuteTTS-0.2-500M-GGUF/OuteTTS-0.2-500M-FP16.gguf`.
+            Defaults to `hexgrad/Kokoro-82M`.
 
         speakers (list[Speaker] | None, optional): The speakers for the podcast.
             Defaults to DEFAULT_SPEAKERS.
-
-        outetts_language (str): For OuteTTS models we need to specify which language to use.
-            Supported languages in 0.2-500M: en, zh, ja, ko. More info: https://github.com/edwko/OuteTTS
 
         from_config (str, optional): The path to the config file. Defaults to None.
 
@@ -87,7 +83,6 @@ def document_to_podcast(
             text_to_text_prompt=text_to_text_prompt,
             text_to_speech_model=text_to_speech_model,
             speakers=[Speaker.model_validate(speaker) for speaker in speakers],
-            outetts_language=outetts_language,
         )
 
     output_folder = Path(config.output_folder)
@@ -108,8 +103,15 @@ def document_to_podcast(
     text_model = load_llama_cpp_model(model_id=config.text_to_text_model)
 
     logger.info(f"Loading {config.text_to_speech_model}")
+
+    if config.speakers[0]["voice_profile"][0] != config.speakers[1]["voice_profile"][0]:
+        raise ValueError(
+            "Both Kokoro speakers need to have the same language code. "
+            "More info here https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md"
+        )
     speech_model = load_tts_model(
-        model_id=config.text_to_speech_model, outetts_language=outetts_language
+        model_id=config.text_to_speech_model,
+        **{"lang_code": config.speakers[0]["voice_profile"][0]},
     )
 
     # ~4 characters per token is considered a reasonable default.
