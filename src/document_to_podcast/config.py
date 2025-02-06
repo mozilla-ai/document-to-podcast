@@ -30,15 +30,15 @@ Example:
 DEFAULT_SPEAKERS = [
     {
         "id": 1,
-        "name": "Laura",
+        "name": "Sarah",
         "description": "The main host. She explains topics clearly using anecdotes and analogies, teaching in an engaging and captivating way.",
-        "voice_profile": "female_1",
+        "voice_profile": "af_sarah",
     },
     {
         "id": 2,
-        "name": "Jon",
+        "name": "Michael",
         "description": "The co-host. He keeps the conversation on track, asks curious follow-up questions, and reacts with excitement or confusion, often using interjections like hmm or umm.",
-        "voice_profile": "male_1",
+        "voice_profile": "am_michael",
     },
 ]
 
@@ -95,4 +95,3 @@ class Config(BaseModel):
     text_to_text_prompt: Annotated[str, AfterValidator(validate_text_to_text_prompt)]
     text_to_speech_model: Annotated[str, AfterValidator(validate_text_to_speech_model)]
     speakers: list[Speaker]
-    outetts_language: str = "en"
