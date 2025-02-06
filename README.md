@@ -1,4 +1,13 @@
-<p align="center"><img src="./images/Blueprints-logo.png" width="35%" alt="Project logo"/></p>
+<p align="center">
+  <picture>
+    <!-- When the user prefers dark mode, show the white logo -->
+    <source media="(prefers-color-scheme: dark)" srcset="./images/Blueprint-logo-white.png">
+    <!-- When the user prefers light mode, show the black logo -->
+    <source media="(prefers-color-scheme: light)" srcset="./images/Blueprint-logo-black.png">
+    <!-- Fallback: default to the black logo -->
+    <img src="./images/Blueprint-logo-black.png" width="35%" alt="Project logo"/>
+  </picture>
+</p>
 
 # Document-to-podcast: a Blueprint by Mozilla.ai for generating podcasts from documents using local AI
 
