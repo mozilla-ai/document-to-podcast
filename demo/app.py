@@ -115,11 +115,7 @@ if "clean_text" in st.session_state:
 
     SPEAKERS = DEFAULT_SPEAKERS
 
-    # Get which language is used for generation from the first character of the Kokoro voice profile
-    language_code = SPEAKERS[0]["voice_profile"][0]
-
     text_model = load_text_to_text_model()
-    speech_model = load_text_to_speech_model(lang_code=language_code)
 
     st.markdown(
         "For this demo, we are using the following models: \n"
@@ -162,6 +158,15 @@ if "clean_text" in st.session_state:
                 speaker.get(x, None) for x in ["name", "description", "voice_profile"]
             )
         )
+        if speakers[0]["voice_profile"][0] != speakers[1]["voice_profile"][0]:
+            raise ValueError(
+                "Both Kokoro speakers need to have the same language code. "
+                "More info here https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md"
+            )
+        # Get which language is used for generation from the first character of the Kokoro voice profile
+        language_code = speakers[0]["voice_profile"][0]
+        speech_model = load_text_to_speech_model(lang_code=language_code)
+
         system_prompt = DEFAULT_PROMPT.replace("{SPEAKERS}", speakers_str)
         with st.spinner("Generating Podcast..."):
             text = ""
