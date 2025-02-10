@@ -18,6 +18,7 @@ dependencies = [
   "pydantic",
   "PyPDF2[crypto]",
   "python-docx",
+  "soundfile",
   "streamlit",
 ]
 
