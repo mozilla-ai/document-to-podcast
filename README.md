@@ -79,6 +79,11 @@ pip install -e .
 python -m streamlit run demo/app.py
 ```
 
+## System requirements
+  - OS: Windows, macOS, or Linux
+  - Python 3.10+ / 3.12+ for Apple M chips
+  - Minimum RAM: 8 GB
+  - Disk space: 20 GB minimum
 
 ## License
 
