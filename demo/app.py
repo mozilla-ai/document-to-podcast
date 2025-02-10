@@ -22,7 +22,7 @@ from document_to_podcast.utils import stack_audio_segments
 @st.cache_resource
 def load_text_to_text_model():
     return load_llama_cpp_model(
-        model_id="bartowski/Qwen2.5-3B-Instruct-GGUF/Qwen2.5-3B-Instruct-f16.gguf"
+        model_id="bartowski/Qwen2.5-7B-Instruct-GGUF/Qwen2.5-7B-Instruct-Q8_0.gguf"
     )
 
 

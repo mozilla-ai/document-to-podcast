@@ -106,7 +106,7 @@ from document_to_podcast.inference.text_to_text import text_to_text, text_to_tex
 
 # Load the model
 model = load_llama_cpp_model(
-    "bartowski/Qwen2.5-3B-Instruct-GGUF/Qwen2.5-3B-Instruct-f16.gguf"
+    "bartowski/Qwen2.5-7B-Instruct-GGUF/Qwen2.5-7B-Instruct-Q8_0.gguf"
 )
 
 # Define your input and system prompt

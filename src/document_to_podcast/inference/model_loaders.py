@@ -9,7 +9,7 @@ def load_llama_cpp_model(model_id: str) -> Llama:
     Loads the given model_id using Llama.from_pretrained.
 
     Examples:
-        >>> model = load_llama_cpp_model("bartowski/Qwen2.5-3B-Instruct-GGUF/Qwen2.5-3B-Instruct-f16.gguf")
+        >>> model = load_llama_cpp_model("bartowski/Qwen2.5-7B-Instruct-GGUF/Qwen2.5-7B-Instruct-Q8_0.gguf")
 
     Args:
         model_id (str): The model id to load.

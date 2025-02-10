@@ -29,7 +29,9 @@ def test_document_to_podcast(tmp_path):
     input_file = tmp_path / "input_file.md"
     input_file.write_text(EXAMPLE_INPUT)
     document_to_podcast(
-        input_file=str(input_file), output_folder=str(tmp_path / "output")
+        input_file=str(input_file),
+        output_folder=str(tmp_path / "output"),
+        text_to_text_model="bartowski/SmolLM2-1.7B-Instruct-GGUF/SmolLM2-1.7B-Instruct-f16.gguf",
     )
     assert (tmp_path / "output" / "podcast.txt").exists()
     assert (tmp_path / "output" / "podcast.wav").exists()
