@@ -766,8 +766,8 @@ For example: <code>Qwen/Qwen2.5-1.5B-Instruct-GGUF/qwen2.5-1.5b-instruct-q8_0.gg
 <h3 id="text_to_speech_model"><strong><code>text_to_speech_model</code></strong></h3>
 <p>The model used to generate the audio from the podcast script.</p>
 <p>You can use any of the models listed in <a href="../api/#document_to_podcast.inference.model_loaders.TTS_LOADERS"><code>TTS_LOADERS</code></a> out of the box.
-We currently support <a href="https://github.com/edwko/OuteTTS">OuteTTS</a>.</p>
-<p>If you want to use a different model, you can integrate it by implementing the <code>_load</code> and <code>_text_to_speech</code> functions and registering them in <a href="../api/#document_to_podcast.inference.model_loaders.TTS_LOADERS"><code>TTS_LOADERS</code></a> and <a href="../api/#document_to_podcast.inference.model_loaders.TTS_INFERENCE"><code>TTS_INFERENCE</code></a>.
+We currently support <a href="https://huggingface.co/hexgrad/Kokoro-82M">Kokoro-82M</a>.</p>
+<p>If you want to use a different model, you can integrate it by implementing the <code>_load</code> and <code>_text_to_speech</code> functions and registering them in <a href="../api/#document_to_podcast.inference.model_loaders.TTS_LOADERS"><code>TTS_LOADERS</code></a> and <a href="../api/#document_to_podcast.inference.text_to_speech.TTS_INFERENCE"><code>TTS_INFERENCE</code></a>.
 You can check <a href="https://github.com/Kostis-S-Z/document-to-podcast/">this repo</a> where different text-to-speech models are integrated.</p>
 <h2 id="other-customizable-parameters">🖋️ <strong>Other Customizable Parameters</strong></h2>
 <ul>

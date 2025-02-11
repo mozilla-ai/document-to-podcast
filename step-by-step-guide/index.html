@@ -924,12 +924,7 @@
 <h3 id="key-components-in-this-step_2">⚙️ <strong>Key Components in this Step</strong></h3>
 <p><strong>1 - Model Loading</strong></p>
 <ul>
-<li>
-<p>The <a href="../api/#document_to_podcast.inference.model_loaders"><code>model_loader.py</code></a> module is responsible for loading the <code>text-to-text</code> and <code>text-to-speech</code> models.</p>
-</li>
-<li>
-<p>The function <code>load_outetts_model</code> takes a model ID in the format <code>{org}/{repo}/{filename}</code> and loads the specified model, either on CPU or GPU, based on the <code>device</code> parameter. The parameter <code>language</code> also enables to swap between the languages the Oute package supports (as of Dec 2024: <code>en, zh, ja, ko</code>)</p>
-</li>
+<li>The <a href="../api/#document_to_podcast.inference.model_loaders"><code>model_loader.py</code></a> module is responsible for loading the <code>text-to-text</code> and <code>text-to-speech</code> models.</li>
 </ul>
 <p><strong>2 - Text-to-Speech Audio Generation</strong></p>
 <ul>
@@ -937,7 +932,7 @@
 <p>The <a href="../api/#document_to_podcast.inference.text_to_speech"><code>text_to_speech.py</code></a> script converts text into audio using a specified TTS model.</p>
 </li>
 <li>
-<p>A <strong>speaker profile</strong> defines the voice characteristics (e.g., tone, speed, clarity) for each speaker. This is specific to each TTS package. Oute models require one of the IDs specified <a href="https://github.com/edwko/OuteTTS/tree/main/outetts/version/v1/default_speakers">here</a>.</p>
+<p>A <strong>voice profile</strong> defines the voice characteristics (e.g., tone, speed, clarity) for each speaker. This is specific to each TTS package. Kokoro models require one of the IDs specified <a href="https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md">here</a>.</p>
 </li>
 <li>
 <p>The function <code>text_to_speech</code> takes the input text (e.g. podcast script) and speaker profile, generating a waveform (audio data in a numpy array) that represents the spoken version of the text.</p>
@@ -945,27 +940,25 @@
 </ul>
 <h3 id="api-example_2">🔍 <strong>API Example</strong></h3>
 <div class="language-py highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">soundfile</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sf</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">document_to_podcast.inference.model_loaders</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_outetts_model</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">document_to_podcast.inference.model_loaders</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_tts_model</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">document_to_podcast.inference.text_to_speech</span><span class="w"> </span><span class="kn">import</span> <span class="n">text_to_speech</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># Load the TTS model</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">model</span> <span class="o">=</span> <span class="n">load_outetts_model</span><span class="p">(</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="s2">&quot;OuteAI/OuteTTS-0.1-350M-GGUF/OuteTTS-0.1-350M-FP16.gguf&quot;</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">)</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Generate the waveform</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">waveform</span> <span class="o">=</span> <span class="n">text_to_speech</span><span class="p">(</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="n">input_text</span><span class="o">=</span><span class="s2">&quot;Welcome to our amazing podcast&quot;</span><span class="p">,</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="n">voice_profile</span><span class="o">=</span><span class="s2">&quot;male_1&quot;</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">)</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="c1"># Save the audio file</span>
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="n">sf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    <span class="s2">&quot;podcast.wav&quot;</span><span class="p">,</span>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    <span class="n">waveform</span><span class="p">,</span>
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    <span class="n">samplerate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">sample_rate</span>
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="p">)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">model</span> <span class="o">=</span> <span class="n">load_tts_model</span><span class="p">(</span><span class="s2">&quot;hexgrad/Kokoro-82M&quot;</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s2">&quot;lang_code&quot;</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">})</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># Generate the waveform</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">waveform</span> <span class="o">=</span> <span class="n">text_to_speech</span><span class="p">(</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="n">input_text</span><span class="o">=</span><span class="s2">&quot;Welcome to our amazing podcast&quot;</span><span class="p">,</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="n">voice_profile</span><span class="o">=</span><span class="s2">&quot;af_sarah&quot;</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">)</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="c1"># Save the audio file</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="n">sf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="s2">&quot;podcast.wav&quot;</span><span class="p">,</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="n">waveform</span><span class="p">,</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    <span class="n">samplerate</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">sample_rate</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">)</span>
 </span></code></pre></div>
 <h2 id="bringing-it-all-together-in-apppy"><strong>Bringing It All Together in <code>app.py</code></strong></h2>
 <p>The <code>app.py</code> demo app is shows you how all the components of the Document-to-Podcast Blueprint can come together. It demonstrates how you can take the individual steps—Document Pre-Processing, Podcast Script Generation, and Audio Podcast Generation—and integrate them into a functional application. This is the heart of the Blueprint in action, showing how you can build an app using the provided tools and components.</p>
@@ -994,7 +987,7 @@
 <p>The script uses <code>load_llama_cpp_model</code> from <code>model_loader.py</code> to load the LLM for generating the podcast script.</p>
 </li>
 <li>
-<p>Similarly, <code>load_outetts_model</code> is used to prepare the TTS model and tokenizer for audio generation.</p>
+<p>Similarly, <code>load_tts_model</code> is used to prepare the TTS model and tokenizer for audio generation.</p>
 </li>
 <li>
 <p>These models are cached using <code>@st.cache_resource</code> to ensure fast and efficient reuse during app interactions.</p>
