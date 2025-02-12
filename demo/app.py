@@ -56,6 +56,7 @@ def gen_button_clicked():
     st.session_state[gen_button] = True
 
 
+sample_rate = 24000
 st.title("Document To Podcast")
 
 st.header("Upload a File")
@@ -166,6 +167,7 @@ if "clean_text" in st.session_state:
         # Get which language is used for generation from the first character of the Kokoro voice profile
         language_code = speakers[0]["voice_profile"][0]
         speech_model = load_text_to_speech_model(lang_code=language_code)
+        sample_rate = speech_model.sample_rate
 
         system_prompt = DEFAULT_PROMPT.replace("{SPEAKERS}", speakers_str)
         with st.spinner("Generating Podcast..."):
@@ -190,7 +192,7 @@ if "clean_text" in st.session_state:
                             speech_model,
                             voice_profile,
                         )
-                    st.audio(speech, sample_rate=speech_model.sample_rate)
+                    st.audio(speech, sample_rate=sample_rate)
 
                     st.session_state.audio.append(speech)
                     text = ""
@@ -198,9 +200,9 @@ if "clean_text" in st.session_state:
 
     if st.session_state[gen_button]:
         audio_np = stack_audio_segments(
-            st.session_state.audio, speech_model.sample_rate, silence_pad=0.0
+            st.session_state.audio, sample_rate, silence_pad=0.0
         )
-        audio_wav = numpy_to_wav(audio_np, speech_model.sample_rate)
+        audio_wav = numpy_to_wav(audio_np, sample_rate)
         if st.download_button(
             label="Save Podcast to audio file",
             data=audio_wav,
