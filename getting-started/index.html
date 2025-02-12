@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../images/Blueprint-logo-black-flavicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.d7758b05.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.8608ea7d.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -580,6 +580,10 @@
 <p>During the installation of the package, it fails with <code>ERROR: Failed building wheel for llama-cpp-python</code></p>
 </blockquote>
 <p>You are probably missing the <code>GNU Make</code> package. A quick way to solve it is run on your terminal <code>sudo apt install build-essential</code></p>
+<blockquote>
+<p>When running the Streamlit demo app I get: <code>RuntimeError: Tried to instantiate class '__path__._path', but it does not exist! Ensure that it is registered via torch::class_</code></p>
+</blockquote>
+<p>This seems to be an <a href="https://discuss.streamlit.io/t/message-error-about-torch/90886">issue</a> with Streamlit, as of Feb 2025. If the app works fine, you can ignore it for now.</p>
 
 
 
