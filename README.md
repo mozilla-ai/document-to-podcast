@@ -85,6 +85,10 @@ python -m streamlit run demo/app.py
   - Minimum RAM: 8 GB
   - Disk space: 20 GB minimum
 
+## Troubleshooting
+
+If you are having issues / bugs, check our [Troubleshooting](https://mozilla-ai.github.io/document-to-podcast/getting-started/#troubleshooting) section, before opening a new issue.
+
 ## License
 
 This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
