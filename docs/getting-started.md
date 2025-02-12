@@ -66,3 +66,7 @@ If you are on Firefox and have Enhanced Tracking Protection `On`, try turning it
 > During the installation of the package, it fails with `ERROR: Failed building wheel for llama-cpp-python`
 
 You are probably missing the `GNU Make` package. A quick way to solve it is run on your terminal `sudo apt install build-essential`
+
+> When running the Streamlit demo app I get: `RuntimeError: Tried to instantiate class '__path__._path', but it does not exist! Ensure that it is registered via torch::class_`
+
+This seems to be an [issue](https://discuss.streamlit.io/t/message-error-about-torch/90886/4) with Streamlit, as of Feb 2025. If the app works fine, you can ignore it for now.
