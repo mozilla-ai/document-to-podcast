@@ -1,7 +1,7 @@
 {
     "hostRequirements": {
-     "cpus": 2,
-     "memory": "8gb",
+     "cpus": 4,
+     "memory": "16gb",
      "storage": "32gb"
     },
     "name": "Python Development Container",
