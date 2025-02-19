@@ -38,10 +38,7 @@ https://github.com/user-attachments/assets/0d5364e7-a57b-4976-8cb6-4ebf1cbbd37c
 
 ### 👉 📖 For more detailed guidance on using this project, please visit our [Docs](https://mozilla-ai.github.io/document-to-podcast/).
 ### 👉 🔨 Built with
-- Python 3.10+ (use Python 3.12 for Apple M1/2/3 chips)
-- [Llama-cpp](https://github.com/abetlen/llama-cpp-python)
-- [Streamlit](https://streamlit.io/) (UI demo)
-
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Python](https://img.shields.io/badge/Python-3.12%2B%20(Apple%20Silicon)-blue) [![llama.cpp](https://img.shields.io/badge/llama.cpp-E76F00?logo=cplusplus&logoColor=white&labelColor=1E1E1E)](https://github.com/ggml-org/llama.cpp) [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
 ### 👉 🧠 Check the [Supported Models](https://mozilla-ai.github.io/document-to-podcast/customization/#supported-models).
 
 ## Quick-start
