@@ -9,20 +9,33 @@
   </picture>
 </p>
 
-# Document-to-podcast: a Blueprint by Mozilla.ai for generating podcasts from documents using local AI
+<div align="center">
 
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Python](https://img.shields.io/badge/Python-3.12%2B%20(Apple%20Silicon)-blue)
+[![llama.cpp](https://img.shields.io/badge/llama.cpp-E76F00?logo=cplusplus&logoColor=white&labelColor=1E1E1E)](https://github.com/ggml-org/llama.cpp)
+[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![](https://dcbadge.limes.pink/api/server/YuMNeuKStr?style=flat)](https://discord.gg/YuMNeuKStr)
 [![Docs](https://github.com/mozilla-ai/document-to-podcast/actions/workflows/docs.yaml/badge.svg)](https://github.com/mozilla-ai/document-to-podcast/actions/workflows/docs.yaml/)
 [![Tests](https://github.com/mozilla-ai/document-to-podcast/actions/workflows/tests.yaml/badge.svg)](https://github.com/mozilla-ai/document-to-podcast/actions/workflows/tests.yaml/)
 [![Ruff](https://github.com/mozilla-ai/document-to-podcast/actions/workflows/lint.yaml/badge.svg?label=Ruff)](https://github.com/mozilla-ai/document-to-podcast/actions/workflows/lint.yaml/)
+
+[Blueprints Hub](https://developer-hub.mozilla.ai/)
+| [Documentation](https://mozilla-ai.github.io/document-to-podcast/)
+| [Getting Started](https://mozilla-ai.github.io/document-to-podcast/Getting-started)
+| [Supported Models](https://mozilla-ai.github.io/document-to-podcast/customization/#supported-models)
+| [Contributing](CONTRIBUTING.md)
+
+</div>
+
+# Document-to-podcast: a Blueprint by Mozilla.ai for generating podcasts from documents using local AI
 
 This blueprint demonstrate how you can use open-source models & tools to convert input documents into a podcast featuring two speakers.
 It is designed to work on most local setups, meaning no external API calls or GPU access is required.
 This makes it more accessible and privacy-friendly by keeping everything local.
 
 <img src="./images/document-to-podcast-diagram.png" width="1200" alt="document-to-podcast Diagram" />
-
-📘 To explore this project further and discover other Blueprints, visit the [**Blueprints Hub**](https://developer-hub.mozilla.ai/blueprints/create-your-own-tailored-podcast-using-your-documents).
 
 ## Example Results
 
@@ -35,11 +48,6 @@ https://github.com/user-attachments/assets/0487640b-a800-4c60-96ae-f1b93632a87b
 https://github.com/user-attachments/assets/0d5364e7-a57b-4976-8cb6-4ebf1cbbd37c
 
 ---
-
-### 👉 📖 For more detailed guidance on using this project, please visit our [Docs](https://mozilla-ai.github.io/document-to-podcast/).
-### 👉 🔨 Built with
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Python](https://img.shields.io/badge/Python-3.12%2B%20(Apple%20Silicon)-blue) [![llama.cpp](https://img.shields.io/badge/llama.cpp-E76F00?logo=cplusplus&logoColor=white&labelColor=1E1E1E)](https://github.com/ggml-org/llama.cpp) [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
-### 👉 🧠 Check the [Supported Models](https://mozilla-ai.github.io/document-to-podcast/customization/#supported-models).
 
 ## Quick-start
 
