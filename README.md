@@ -23,7 +23,7 @@
 
 [Blueprints Hub](https://developer-hub.mozilla.ai/)
 | [Documentation](https://mozilla-ai.github.io/document-to-podcast/)
-| [Getting Started](https://mozilla-ai.github.io/document-to-podcast/Getting-started)
+| [Getting Started](https://mozilla-ai.github.io/document-to-podcast/getting-started)
 | [Supported Models](https://mozilla-ai.github.io/document-to-podcast/customization/#supported-models)
 | [Contributing](CONTRIBUTING.md)
 
