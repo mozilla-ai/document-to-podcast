@@ -41,22 +41,27 @@ def numpy_to_wav(audio_array: np.ndarray, sample_rate: int) -> io.BytesIO:
     return wav_io
 
 
-script = "script"
-audio = "audio"
-gen_button = "generate podcast button"
-if script not in st.session_state:
-    st.session_state[script] = ""
-if audio not in st.session_state:
-    st.session_state.audio = []
-if gen_button not in st.session_state:
-    st.session_state[gen_button] = False
+# --- Session State Initialization ---
+# Using the robust initialization from the working demo
+script_key = "script"
+audio_key = "audio"
+gen_button_key = "generate_podcast_button"
+audio_wav_key = "podcast_audio_wav"  # Key for the downloadable audio data
+
+if script_key not in st.session_state:
+    st.session_state[script_key] = ""
+if audio_key not in st.session_state:
+    st.session_state[audio_key] = []
+if gen_button_key not in st.session_state:
+    st.session_state[gen_button_key] = False
+if audio_wav_key not in st.session_state:
+    st.session_state[audio_wav_key] = None
 
 
 def gen_button_clicked():
-    st.session_state[gen_button] = True
+    st.session_state[gen_button_key] = True
 
 
-sample_rate = 24000
 st.title("Document To Podcast")
 
 st.markdown("Built with: ⭐ https://github.com/mozilla-ai/document-to-podcast ⭐")
@@ -130,7 +135,6 @@ if "clean_text" in st.session_state:
         " for more information on how to use different models."
     )
 
-    # ~4 characters per token is considered a reasonable default.
     max_characters = text_model.n_ctx() * 4
     if len(clean_text) > max_characters:
         st.warning(
@@ -152,6 +156,11 @@ if "clean_text" in st.session_state:
     speakers = st.data_editor(SPEAKERS, num_rows="dynamic")
 
     if st.button("Generate Podcast", on_click=gen_button_clicked):
+        # CHANGE 1: Reset state for a new generation
+        st.session_state[script_key] = ""
+        st.session_state[audio_key] = []
+        st.session_state[audio_wav_key] = None
+
         for n, speaker in enumerate(speakers):
             speaker["id"] = n + 1
         speakers_str = "\n".join(
@@ -166,7 +175,6 @@ if "clean_text" in st.session_state:
                 "Both Kokoro speakers need to have the same language code. "
                 "More info here https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md"
             )
-        # Get which language is used for generation from the first character of the Kokoro voice profile
         language_code = speakers[0]["voice_profile"][0]
         speech_model = load_text_to_speech_model(lang_code=language_code)
         sample_rate = speech_model.sample_rate
@@ -179,7 +187,7 @@ if "clean_text" in st.session_state:
             ):
                 text += chunk
                 if text.endswith("\n") and "Speaker" in text:
-                    st.session_state.script += text
+                    st.session_state[script_key] += text
                     st.write(text)
 
                     speaker_id = re.search(r"Speaker (\d+)", text).group(1)
@@ -196,25 +204,44 @@ if "clean_text" in st.session_state:
                         )
                     st.audio(speech, sample_rate=sample_rate)
 
-                    st.session_state.audio.append(speech)
+                    st.session_state[audio_key].append(speech)
                     text = ""
-        st.session_state.script += "}"
+        st.session_state[script_key] += "}"
 
-    if st.session_state[gen_button]:
-        audio_np = stack_audio_segments(
-            st.session_state.audio, sample_rate, silence_pad=0.0
-        )
-        audio_wav = numpy_to_wav(audio_np, sample_rate)
-        if st.download_button(
-            label="Save Podcast to audio file",
-            data=audio_wav,
-            file_name="podcast.wav",
-        ):
-            st.markdown("Podcast saved to disk!")
+        # CHANGE 2: Prepare and save the downloadable data immediately after generation
+        if st.session_state[audio_key]:
+            audio_np = stack_audio_segments(st.session_state[audio_key], sample_rate)
+            st.session_state[audio_wav_key] = numpy_to_wav(audio_np, sample_rate)
 
-        if st.download_button(
-            label="Save Podcast script to text file",
-            data=st.session_state.script,
-            file_name="script.txt",
-        ):
-            st.markdown("Script saved to disk!")
+    # CHANGE 3: Replace the old download section with the working fragment-based one
+    if st.session_state.get(gen_button_key, False):
+        st.subheader("💾 Download Artifacts")
+
+        if st.session_state.get(script_key) and st.session_state.get(audio_wav_key):
+            col1, col2 = st.columns(2)
+
+            with col1:
+                with st.fragment:
+                    if st.download_button(
+                        label="Download Script (.txt)",
+                        data=st.session_state[script_key],
+                        file_name="podcast_script.txt",
+                        mime="text/plain",
+                        use_container_width=True,
+                    ):
+                        st.success("Script download started!")
+
+            with col2:
+                with st.fragment:
+                    if st.download_button(
+                        label="Download Audio (.wav)",
+                        data=st.session_state[audio_wav_key],
+                        file_name="podcast.wav",
+                        mime="audio/wav",
+                        use_container_width=True,
+                    ):
+                        st.success("Audio download started!")
+        else:
+            st.info(
+                "Generated content will be available for download after generation."
+            )
