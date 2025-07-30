@@ -46,7 +46,7 @@ def numpy_to_wav(audio_array: np.ndarray, sample_rate: int) -> io.BytesIO:
 script_key = "script"
 audio_key = "audio"
 gen_button_key = "generate_podcast_button"
-audio_wav_key = "podcast_audio_wav" # Key for the downloadable audio data
+audio_wav_key = "podcast_audio_wav"  # Key for the downloadable audio data
 
 if script_key not in st.session_state:
     st.session_state[script_key] = ""
@@ -242,4 +242,6 @@ if "clean_text" in st.session_state:
                     ):
                         st.success("Audio download started!")
         else:
-            st.info("Generated content will be available for download after generation.")
+            st.info(
+                "Generated content will be available for download after generation."
+            )
