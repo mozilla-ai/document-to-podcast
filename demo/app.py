@@ -52,7 +52,15 @@ if gen_button not in st.session_state:
     st.session_state[gen_button] = False
 
 
+def clear_podcast_state():
+    st.session_state["clean_text"] = None
+    st.session_state[gen_button] = False
+    st.session_state.script = ""
+    st.session_state.audio = []
+
+
 def gen_button_clicked():
+    clear_podcast_state()
     st.session_state[gen_button] = True
 
 
@@ -64,11 +72,15 @@ st.markdown("Built with: ‚≠ê https://github.com/mozilla-ai/document-to-podcast ‚
 st.header("Upload a File")
 
 uploaded_file = st.file_uploader(
-    "Choose a file", type=["pdf", "html", "txt", "docx", "md"]
+    "Choose a file",
+    type=["pdf", "html", "txt", "docx", "md"],
+    on_change=clear_podcast_state,
 )
 
 st.header("Or Enter a Website URL")
-url = st.text_input("URL", placeholder="https://blog.mozilla.ai/...")
+url = st.text_input(
+    "URL", placeholder="https://blog.mozilla.ai/...", on_change=clear_podcast_state
+)
 
 if uploaded_file is not None or url:
     st.divider()
@@ -92,6 +104,7 @@ if uploaded_file is not None or url:
         st.text_area(
             f"Number of characters before cleaning: {len(raw_text)}",
             f"{raw_text[:500]} . . .",
+            on_change=clear_podcast_state,
         )
 
     clean_text = DATA_CLEANERS[extension](raw_text)
@@ -100,12 +113,13 @@ if uploaded_file is not None or url:
         st.text_area(
             f"Number of characters after cleaning: {len(clean_text)}",
             f"{clean_text[:500]} . . .",
+            on_change=clear_podcast_state,
         )
     st.session_state["clean_text"] = clean_text
 
 st.divider()
 
-if "clean_text" in st.session_state:
+if "clean_text" in st.session_state and st.session_state["clean_text"]:
     clean_text = st.session_state["clean_text"]
 
     st.divider()
@@ -149,7 +163,9 @@ if "clean_text" in st.session_state:
     st.subheader("Speaker configuration")
     for s in SPEAKERS:
         s.pop("id", None)
-    speakers = st.data_editor(SPEAKERS, num_rows="dynamic")
+    speakers = st.data_editor(
+        SPEAKERS, num_rows="dynamic", on_change=clear_podcast_state
+    )
 
     if st.button("Generate Podcast", on_click=gen_button_clicked):
         for n, speaker in enumerate(speakers):
