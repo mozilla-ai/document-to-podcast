@@ -41,6 +41,34 @@ def numpy_to_wav(audio_array: np.ndarray, sample_rate: int) -> io.BytesIO:
     return wav_io
 
 
+@st.fragment
+def download_audio(audio_wav: io.BytesIO):
+    """
+    Display button to download audio file of the podcast. Wrap in fragment so
+    the app is not refreshed when clicked.
+    """
+    if st.download_button(
+        label="Save Podcast to audio file",
+        data=audio_wav,
+        file_name="podcast.wav",
+    ):
+        st.markdown("Podcast saved to disk!")
+
+
+@st.fragment
+def download_script():
+    """
+    Display button to download the text script of the podcast. Wrap in fragment
+    so the app is not refreshed when clicked.
+    """
+    if st.download_button(
+        label="Save Podcast script to text file",
+        data=st.session_state.script,
+        file_name="script.txt",
+    ):
+        st.markdown("Script saved to disk!")
+
+
 script = "script"
 audio = "audio"
 gen_button = "generate podcast button"
@@ -205,16 +233,6 @@ if "clean_text" in st.session_state:
             st.session_state.audio, sample_rate, silence_pad=0.0
         )
         audio_wav = numpy_to_wav(audio_np, sample_rate)
-        if st.download_button(
-            label="Save Podcast to audio file",
-            data=audio_wav,
-            file_name="podcast.wav",
-        ):
-            st.markdown("Podcast saved to disk!")
 
-        if st.download_button(
-            label="Save Podcast script to text file",
-            data=st.session_state.script,
-            file_name="script.txt",
-        ):
-            st.markdown("Script saved to disk!")
+        download_audio(audio_wav)
+        download_script()
