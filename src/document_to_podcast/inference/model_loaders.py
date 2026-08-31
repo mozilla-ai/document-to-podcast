@@ -1,7 +1,8 @@
+from dataclasses import dataclass, field
+
 import torch
 from kokoro import KPipeline
 from llama_cpp import Llama
-from dataclasses import dataclass, field
 
 
 def load_llama_cpp_model(model_id: str) -> Llama:
