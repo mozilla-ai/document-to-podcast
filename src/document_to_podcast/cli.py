@@ -7,10 +7,10 @@ from fire import Fire
 from loguru import logger
 
 from document_to_podcast.config import (
-    Config,
-    Speaker,
     DEFAULT_PROMPT,
     DEFAULT_SPEAKERS,
+    Config,
+    Speaker,
 )
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
@@ -111,7 +111,7 @@ def document_to_podcast(
         )
     speech_model = load_tts_model(
         model_id=config.text_to_speech_model,
-        **{"lang_code": config.speakers[0].voice_profile[0]},
+        lang_code=config.speakers[0].voice_profile[0],
     )
 
     # ~4 characters per token is considered a reasonable default.
