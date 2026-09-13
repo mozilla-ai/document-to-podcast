@@ -1,13 +1,34 @@
 FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
 
+ARG PYTHON_VERSION=3.13.15
+
 RUN apt-get update && apt-get install --no-install-recommends -y \
   espeak-ng \
   build-essential \
-  python3.10 \
-  python3.10-dev \
-  python3-pip \
+  ca-certificates \
+  curl \
   git \
+  libbz2-dev \
+  libffi-dev \
+  liblzma-dev \
+  libncursesw5-dev \
+  libreadline-dev \
+  libsqlite3-dev \
+  libssl-dev \
+  tk-dev \
+  uuid-dev \
+  wget \
+  xz-utils \
+  zlib1g-dev \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL "https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz" -o /tmp/Python.tgz \
+  && tar -xzf /tmp/Python.tgz -C /tmp \
+  && cd "/tmp/Python-${PYTHON_VERSION}" \
+  && ./configure --enable-optimizations --with-ensurepip=install \
+  && make -j"$(nproc)" \
+  && make altinstall \
+  && rm -rf /tmp/Python.tgz "/tmp/Python-${PYTHON_VERSION}"
 
 RUN useradd -m -u 1000 user
 
@@ -18,9 +39,9 @@ ENV HOME=/home/user \
 
 WORKDIR $HOME/app
 
-RUN pip3 install https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.4-cu122/llama_cpp_python-0.3.4-cp310-cp310-linux_x86_64.whl
-RUN pip3 install phonemizer
-RUN pip3 install document-to-podcast
+RUN python3.13 -m pip install --user --no-cache-dir --upgrade pip \
+  && CMAKE_ARGS="-DGGML_CUDA=on" python3.13 -m pip install --user --no-cache-dir llama-cpp-python \
+  && python3.13 -m pip install --user --no-cache-dir phonemizer document-to-podcast
 
 COPY --chown=user . $HOME/app
 

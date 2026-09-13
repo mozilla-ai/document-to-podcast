@@ -9,7 +9,7 @@ Blueprints empower developers to easily integrate AI capabilities into their pro
 These docs are your companion to mastering the **Document-to-Podcast Blueprint**—a local-first approach for transforming documents into engaging podcasts.
 
 ### Built with
-- Python 3.10+
+- Python 3.10 through 3.13, including Python 3.13.15
 - [Llama-cpp](https://github.com/abetlen/llama-cpp-python) (text-to-text, i.e script generation)
 - [Streamlit](https://streamlit.io/) (UI demo)
 

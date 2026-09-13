@@ -11,7 +11,7 @@
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Python](https://img.shields.io/badge/Python-3.10--3.13-blue)
 ![Python](https://img.shields.io/badge/Python-3.12%2B%20(Apple%20Silicon)-blue)
 [![llama.cpp](https://img.shields.io/badge/llama.cpp-E76F00?logo=cplusplus&logoColor=white&labelColor=1E1E1E)](https://github.com/ggml-org/llama.cpp)
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
@@ -86,7 +86,7 @@ python -m streamlit run demo/app.py
 
 ## System requirements
   - OS: Windows, macOS, or Linux
-  - Python 3.10+ / 3.12+ for Apple M chips
+  - Python 3.10 through 3.13 (including Python 3.13.15) / 3.12+ for Apple M chips
   - Minimum RAM: 8 GB
   - Disk space: 20 GB minimum
 
