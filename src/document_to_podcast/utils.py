@@ -1,10 +1,8 @@
-from typing import List
-
 import numpy as np
 
 
 def stack_audio_segments(
-    audio_segments: List[np.ndarray], sample_rate: int, silence_pad: float = 1.0
+    audio_segments: list[np.ndarray], sample_rate: int, silence_pad: float = 1.0
 ) -> np.ndarray:
     """
     Stack / concatenate all the individual audio segments (speaker audios) sequentially to form the complete podcast.
