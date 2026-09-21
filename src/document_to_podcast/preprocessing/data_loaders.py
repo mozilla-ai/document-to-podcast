@@ -1,6 +1,5 @@
 import PyPDF2
 import requests
-
 from docx import Document
 from loguru import logger
 from streamlit.runtime.uploaded_file_manager import UploadedFile
