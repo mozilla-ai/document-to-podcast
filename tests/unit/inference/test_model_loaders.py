@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Any
 
 import pytest
 from kokoro import KPipeline
@@ -28,7 +28,7 @@ def test_load_llama_cpp_model():
 def test_load_tts_model(
     model_id: str,
     expected_model_type: KPipeline,
-    expected_custom_args: Dict[str, Any],
+    expected_custom_args: dict[str, Any],
 ) -> None:
     model = load_tts_model(model_id)
     assert isinstance(model.model, expected_model_type)
