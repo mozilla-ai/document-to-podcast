@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing_extensions import Annotated
+from typing import Annotated
 
 from pydantic import BaseModel, FilePath
 from pydantic.functional_validators import AfterValidator
@@ -7,7 +7,6 @@ from pydantic.functional_validators import AfterValidator
 from document_to_podcast.inference.model_loaders import TTS_LOADERS
 from document_to_podcast.inference.text_to_speech import TTS_INFERENCE
 from document_to_podcast.preprocessing import DATA_LOADERS
-
 
 DEFAULT_PROMPT = """
 You are a podcast scriptwriter generating engaging and natural-sounding conversations in JSON format.
