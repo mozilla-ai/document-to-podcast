@@ -116,8 +116,7 @@ input_text = (
     "and growing consumer awareness of environmental issues."
 )
 
-system_prompt = (
-    """
+system_prompt = """
     You are a podcast scriptwriter generating engaging and natural-sounding conversations in JSON format.
     - Write dynamic, easy-to-follow dialogue.
     - Include natural interruptions and interjections.
@@ -129,7 +128,6 @@ system_prompt = (
       "Speaker 2": "Hi! I'm excited to hear about this. Can you explain...",
     }
     """
-)
 
 # Generate a podcast script from the input text
 podcast_script = text_to_text(input_text, model, system_prompt)
@@ -148,7 +146,6 @@ print(podcast_script)
 # Example of real-time script generation with streaming
 for chunk in text_to_text_stream(input_text, model, system_prompt):
     print(chunk, end="")
-
 ```
 
 
@@ -179,21 +176,15 @@ from document_to_podcast.inference.model_loaders import load_tts_model
 from document_to_podcast.inference.text_to_speech import text_to_speech
 
 # Load the TTS model
-model = load_tts_model("hexgrad/Kokoro-82M", **{"lang_code": 'a'})
+model = load_tts_model("hexgrad/Kokoro-82M", **{"lang_code": "a"})
 
 # Generate the waveform
 waveform = text_to_speech(
-    input_text="Welcome to our amazing podcast",
-    model=model,
-    voice_profile="af_sarah"
+    input_text="Welcome to our amazing podcast", model=model, voice_profile="af_sarah"
 )
 
 # Save the audio file
-sf.write(
-    "podcast.wav",
-    waveform,
-    samplerate=model.sample_rate
-)
+sf.write("podcast.wav", waveform, samplerate=model.sample_rate)
 ```
 
 ## **Bringing It All Together in `app.py`**
