@@ -1,8 +1,9 @@
-from document_to_podcast.preprocessing import DATA_CLEANERS
 import pytest
 import requests
 from bs4 import BeautifulSoup
 from requests.exceptions import RequestException
+
+from document_to_podcast.preprocessing import DATA_CLEANERS
 
 
 def test_url_content_cleaning():

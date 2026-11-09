@@ -8,14 +8,14 @@ import numpy as np
 import soundfile as sf
 import streamlit as st
 
-from document_to_podcast.inference.text_to_speech import text_to_speech
-from document_to_podcast.preprocessing import DATA_LOADERS, DATA_CLEANERS
+from document_to_podcast.config import DEFAULT_PROMPT, DEFAULT_SPEAKERS, Speaker
 from document_to_podcast.inference.model_loaders import (
     load_llama_cpp_model,
     load_tts_model,
 )
-from document_to_podcast.config import DEFAULT_PROMPT, DEFAULT_SPEAKERS, Speaker
+from document_to_podcast.inference.text_to_speech import text_to_speech
 from document_to_podcast.inference.text_to_text import text_to_text_stream
+from document_to_podcast.preprocessing import DATA_CLEANERS, DATA_LOADERS
 from document_to_podcast.utils import stack_audio_segments
 
 
@@ -28,7 +28,7 @@ def load_text_to_text_model():
 
 @st.cache_resource
 def load_text_to_speech_model(lang_code: str):
-    return load_tts_model("hexgrad/Kokoro-82M", **{"lang_code": lang_code})
+    return load_tts_model("hexgrad/Kokoro-82M", lang_code=lang_code)
 
 
 def numpy_to_wav(audio_array: np.ndarray, sample_rate: int) -> io.BytesIO:
