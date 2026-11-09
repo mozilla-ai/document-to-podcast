@@ -1,7 +1,7 @@
 from document_to_podcast.preprocessing.data_cleaners import (
     clean_html,
-    clean_with_regex,
     clean_markdown,
+    clean_with_regex,
 )
 from document_to_podcast.preprocessing.data_loaders import load_pdf, load_txt
 
